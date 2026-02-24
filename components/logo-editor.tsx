@@ -329,37 +329,20 @@ export function LogoEditor() {
           )}
         </div>
 
-        {/* Zoom controls — bottom right */}
-        <div className="absolute bottom-24 right-3 md:bottom-20 md:right-4 z-20 flex items-center gap-1 bg-background/80 backdrop-blur-sm rounded-lg border border-border shadow-sm p-0.5">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 rounded-md"
-            onClick={() => setZoom((z) => Math.max(50, z - 25))}
-            disabled={zoom <= 50}
-          >
-            <ZoomOut className="h-3.5 w-3.5" />
-          </Button>
-          <button
-            onClick={resetView}
-            className="text-[10px] font-medium text-muted-foreground tabular-nums w-10 text-center hover:text-foreground transition-colors"
-          >
-            {zoom}%
-          </button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 rounded-md"
-            onClick={() => setZoom((z) => Math.min(200, z + 25))}
-            disabled={zoom >= 200}
-          >
-            <ZoomIn className="h-3.5 w-3.5" />
-          </Button>
-        </div>
-
         {/* Floating prompt — ChatGPT style */}
         <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none p-3 md:p-4" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
           <div className="max-w-2xl mx-auto pointer-events-auto">
+            {(zoom !== 100 || pan.x !== 0 || pan.y !== 0) && (
+              <div className="flex justify-center mb-2">
+                <button
+                  onClick={resetView}
+                  className="flex items-center gap-1.5 bg-background/80 backdrop-blur-sm rounded-full border border-border shadow-sm px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <RotateCcw className="h-3 w-3" />
+                  Reset view
+                </button>
+              </div>
+            )}
             {(isProcessing || lastResponse) && (
               <div className="text-[11px] text-muted-foreground text-center mb-1.5 truncate">
                 {isProcessing ? "Updating logo..." : lastResponse}
