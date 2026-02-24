@@ -122,6 +122,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                         placeholder="e.g., TechFlow"
                         value={brandName}
                         onChange={(e) => setBrandName(e.target.value)}
+                        autoComplete="off"
                         className="mt-1 h-10"
                       />
                     </div>
@@ -132,6 +133,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                         placeholder="e.g., Innovate with ease"
                         value={tagline}
                         onChange={(e) => setTagline(e.target.value)}
+                        autoComplete="off"
                         className="mt-1 h-10"
                       />
                     </div>
@@ -140,7 +142,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                       <div className="mt-1">
                         <Combobox items={industries} defaultValue={industries[0]}>
                           <ComboboxTrigger render={<Button variant="outline" className="w-full justify-between font-normal h-10"><ComboboxValue /></Button>} />
-                          <ComboboxContent>
+                          <ComboboxContent className="!min-w-[var(--anchor-width)]">
                             <ComboboxInput showTrigger={false} placeholder="Search industry..." />
                             <ComboboxEmpty>No industry found.</ComboboxEmpty>
                             <ComboboxList>
