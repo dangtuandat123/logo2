@@ -1,0 +1,23 @@
+import { Header } from "./components/landing/header"
+import { Hero } from "./components/landing/hero"
+import { Features } from "./components/landing/features"
+import { Showcase } from "./components/landing/showcase"
+import { Pricing } from "./components/landing/pricing"
+import { Cta } from "./components/landing/cta"
+import { Footer } from "./components/landing/footer"
+
+export default function LandingPage() {
+  return (
+    <div className="min-h-dvh bg-background selection:bg-primary/30 selection:text-primary-foreground">
+      <Header />
+      <main>
+        <Hero />
+        <Features />
+        <Showcase />
+        <Pricing />
+        <Cta />
+      </main>
+      <Footer />
+    </div>
+  )
+}
