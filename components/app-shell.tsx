@@ -133,8 +133,37 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </TooltipProvider>
       </aside>
 
-      {/* Main Content - safe area bottom for mobile nav */}
-      <main className="flex-1 flex flex-col overflow-hidden pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pb-0">
+      {/* Mobile Top Header */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 border-b border-border bg-sidebar/95 backdrop-blur-xl">
+        <div className="flex items-center justify-between h-12 px-4">
+          <div className="flex items-center gap-2.5">
+            <Link href="/app" className="flex items-center justify-center w-7 h-7 rounded-lg bg-primary shrink-0">
+              <Sparkles className="h-3.5 w-3.5 text-primary-foreground" />
+            </Link>
+            <span className="font-semibold text-sm font-[family-name:var(--font-heading)]">
+              {pathname === "/app" && "Dashboard"}
+              {pathname === "/app/create" && "Create Logo"}
+              {pathname.startsWith("/app/create/generating") && "Generating..."}
+              {pathname === "/app/projects" && "My Logos"}
+              {pathname === "/app/settings" && "Settings"}
+              {pathname.startsWith("/app/editor") && "Editor"}
+            </span>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="w-8 h-8 rounded-lg text-muted-foreground"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content - safe area for mobile header + bottom nav */}
+      <main className="flex-1 flex flex-col overflow-hidden pt-12 pb-[calc(3.5rem+env(safe-area-inset-bottom))] md:pt-0 md:pb-0">
         {children}
       </main>
 

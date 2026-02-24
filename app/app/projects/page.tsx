@@ -15,6 +15,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { cn } from "@/lib/utils"
 
 const logos = [
@@ -65,10 +75,13 @@ const logos = [
 export default function ProjectsPage() {
   const [search, setSearch] = useState("")
   const [view, setView] = useState<"grid" | "list">("grid")
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null)
 
   const filtered = logos.filter((l) =>
     l.name.toLowerCase().includes(search.toLowerCase())
   )
+
+  const logoToDelete = logos.find((l) => l.id === deleteTarget)
 
   return (
     <div className="flex-1 overflow-auto">
@@ -161,7 +174,10 @@ export default function ProjectsPage() {
                         <DropdownMenuItem>
                           <Copy className="h-4 w-4 mr-2" /> Duplicate
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={() => setDeleteTarget(logo.id)}
+                        >
                           <Trash2 className="h-4 w-4 mr-2" /> Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -172,7 +188,7 @@ export default function ProjectsPage() {
             ))}
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="flex flex-col gap-2.5">
             {filtered.map((logo) => (
               <Link key={logo.id} href={`/app/editor/${logo.id}`}>
                 <Card className={cn(
@@ -192,7 +208,7 @@ export default function ProjectsPage() {
                       </p>
                     </div>
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
+                      <DropdownMenuTrigger asChild onClick={(e) => e.preventDefault()}>
                         <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
                           <MoreHorizontal className="h-4 w-4" />
                           <span className="sr-only">More options</span>
@@ -205,7 +221,13 @@ export default function ProjectsPage() {
                         <DropdownMenuItem>
                           <Copy className="h-4 w-4 mr-2" /> Duplicate
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            setDeleteTarget(logo.id)
+                          }}
+                        >
                           <Trash2 className="h-4 w-4 mr-2" /> Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -217,6 +239,27 @@ export default function ProjectsPage() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirm Dialog */}
+      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete &quot;{logoToDelete?.name}&quot;?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the logo and all associated files.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => setDeleteTarget(null)}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

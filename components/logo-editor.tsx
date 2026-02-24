@@ -175,7 +175,7 @@ export function LogoEditor() {
       {/* Main content: logo + chat, side by side on desktop, stacked on mobile */}
       <div className="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden">
         {/* Logo display area - clean, centered, no decorations */}
-        <div className="flex items-center justify-center bg-muted/30 md:flex-1 shrink-0 h-[40dvh] md:h-auto">
+        <div className="flex items-center justify-center bg-muted/30 md:flex-1 shrink-0 h-[35dvh] md:h-auto">
           <div
             className="w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] drop-shadow-xl transition-all duration-300"
             dangerouslySetInnerHTML={{ __html: svgContent }}
@@ -183,9 +183,9 @@ export function LogoEditor() {
         </div>
 
         {/* Chat panel - always fully visible, takes remaining space */}
-        <div className="flex-1 flex flex-col min-h-0 border-t md:border-t-0 md:border-l border-border md:w-[360px] lg:w-[400px] md:flex-none bg-card">
+        <div className="flex-1 flex flex-col min-h-0 border-t md:border-t-0 md:border-l border-border md:w-[360px] lg:w-[400px] md:flex-none bg-muted/30">
           {/* Chat header */}
-          <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border shrink-0">
+          <div className="flex items-center gap-2 px-4 py-1.5 border-b border-border shrink-0">
             <div className="flex items-center justify-center w-6 h-6 rounded-md bg-primary/10">
               <Sparkles className="h-3.5 w-3.5 text-primary" />
             </div>
@@ -256,7 +256,7 @@ export function LogoEditor() {
                 value={command}
                 onChange={(e) => setCommand(e.target.value)}
                 placeholder="Describe a change..."
-                className="rounded-xl h-10 text-sm bg-background"
+                className="rounded-xl h-10 text-sm bg-card"
                 disabled={isProcessing}
               />
               <Button
