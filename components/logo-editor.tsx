@@ -333,7 +333,7 @@ export function LogoEditor() {
         <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none p-3 md:p-4" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
           <div className="max-w-2xl mx-auto pointer-events-auto">
             {(zoom !== 100 || pan.x !== 0 || pan.y !== 0) && (
-              <div className="flex justify-center mb-2">
+              <div className="flex justify-start mb-2">
                 <button
                   onClick={resetView}
                   className="flex items-center gap-1.5 bg-background/80 backdrop-blur-sm rounded-full border border-border shadow-sm px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
