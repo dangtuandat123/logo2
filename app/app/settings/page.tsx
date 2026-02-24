@@ -30,8 +30,8 @@ export default function SettingsPage() {
   }, [])
 
   return (
-    <div className="flex-1 overflow-y-scroll">
-      <div className="p-3 sm:p-4 md:p-6 max-w-3xl mx-auto">
+    <div className="flex-1 overflow-y-scroll overflow-x-hidden">
+      <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto">
         <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)] mb-2">
           Settings
         </h1>

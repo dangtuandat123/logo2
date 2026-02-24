@@ -87,8 +87,8 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-auto p-3 sm:p-4 md:p-6">
-        <div className="max-w-2xl mx-auto">
+      <div className="flex-1 overflow-y-scroll overflow-x-hidden">
+        <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto">
           {/* Progress + Step Label */}
           <div className="mb-3 sm:mb-4">
             <div className="flex items-center justify-between mb-3">

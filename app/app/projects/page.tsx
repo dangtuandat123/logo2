@@ -84,7 +84,7 @@ export default function ProjectsPage() {
   const logoToDelete = logos.find((l) => l.id === deleteTarget)
 
   return (
-    <div className="flex-1 overflow-auto">
+    <div className="flex-1 overflow-y-scroll overflow-x-hidden">
       <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-2">

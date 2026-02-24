@@ -1,11 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { PlusCircle, Sparkles, TrendingUp, Clock, FolderOpen } from "lucide-react"
+import { PlusCircle, Sparkles, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardAction } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
 
 const recentLogos = [
   {
@@ -28,77 +27,38 @@ const recentLogos = [
   },
 ]
 
-const stats = [
-  { label: "Total Logos", value: "12", icon: Sparkles },
-  { label: "This Month", value: "4", icon: TrendingUp },
-  { label: "Last Created", value: "2h", icon: Clock },
-  { label: "Projects", value: "3", icon: FolderOpen },
-]
-
 export default function DashboardPage() {
   return (
-    <div className="flex-1 overflow-auto">
+    <div className="flex-1 overflow-y-scroll overflow-x-hidden">
       <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="flex items-start sm:items-center justify-between mb-2">
-          <div>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight font-[family-name:var(--font-heading)]">
-              Welcome back
-            </h1>
-            <p className="text-sm text-muted-foreground mt-0.5 sm:mt-1">
-              Create and manage your AI-generated logos
-            </p>
-          </div>
-          <Button asChild className="hidden sm:flex gap-2">
-            <Link href="/app/create">
-              <PlusCircle className="h-4 w-4" />
-              New Logo
-            </Link>
-          </Button>
-        </div>
+        {/* Hero CTA - Tạo logo mới */}
+        <Card className="mb-6 sm:mb-8 overflow-hidden border-primary/20">
+          <CardContent className="p-0">
+            <div className="relative flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-5 sm:p-8">
+              {/* Gradient background decoration */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
 
-        <Separator className="mb-6 sm:mb-8" />
-
-        {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-          {stats.map((stat) => (
-            <Card key={stat.label} className="py-4">
-              <CardContent className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 shrink-0">
-                  <stat.icon className="h-4 w-4 text-primary" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-2xl font-bold font-[family-name:var(--font-heading)] leading-none">
-                    {stat.value}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1 truncate">{stat.label}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Quick Create */}
-        <Card className="mb-6 sm:mb-8 border-primary/20 bg-primary/5">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 shrink-0">
-                <Sparkles className="h-6 w-6 text-primary" />
+              <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-primary/10 shrink-0">
+                <Sparkles className="h-7 w-7 sm:h-8 sm:w-8 text-primary" />
               </div>
-              <div>
-                <CardTitle>Create a new logo with AI</CardTitle>
-                <CardDescription>Describe your brand and let AI generate a unique logo for you</CardDescription>
+
+              <div className="relative flex-1 text-center sm:text-left">
+                <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)] tracking-tight">
+                  Create a new logo
+                </h1>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Describe your brand and let AI design a unique logo for you in seconds.
+                </p>
               </div>
-            </div>
-            <CardAction>
-              <Button asChild>
+
+              <Button asChild size="lg" className="relative gap-2 rounded-xl">
                 <Link href="/app/create">
-                  <PlusCircle className="h-4 w-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Create</span>
+                  <PlusCircle className="h-5 w-5" />
+                  Get Started
                 </Link>
               </Button>
-            </CardAction>
-          </CardHeader>
+            </div>
+          </CardContent>
         </Card>
 
         {/* Recent Logos */}
@@ -108,10 +68,13 @@ export default function DashboardPage() {
               <h2 className="text-base sm:text-lg font-semibold font-[family-name:var(--font-heading)]">
                 Recent Logos
               </h2>
-              <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">{recentLogos.length}</Badge>
+              <Badge variant="secondary">{recentLogos.length}</Badge>
             </div>
-            <Button variant="ghost" size="sm" asChild className="text-muted-foreground text-xs sm:text-sm">
-              <Link href="/app/projects">View All</Link>
+            <Button variant="ghost" size="sm" asChild className="text-muted-foreground text-xs sm:text-sm gap-1">
+              <Link href="/app/projects">
+                View All
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
             </Button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
