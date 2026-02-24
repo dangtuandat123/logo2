@@ -3,10 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import {
   Download,
-  Send,
   RotateCcw,
-  Copy,
-  Check,
   ArrowLeft,
   Sparkles,
   ZoomIn,
@@ -14,9 +11,9 @@ import {
   FileCode,
   FileImage,
   ChevronDown,
+  ArrowUp,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   Tooltip,
   TooltipContent,
@@ -56,9 +53,8 @@ export function LogoEditor() {
   const [svgContent, setSvgContent] = useState(sampleSVG)
   const [command, setCommand] = useState("")
   const [isProcessing, setIsProcessing] = useState(false)
-  const [copied, setCopied] = useState(false)
   const [lastResponse, setLastResponse] = useState("")
-  const inputRef = useRef<HTMLInputElement>(null)
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [zoom, setZoom] = useState(100)
   const [pan, setPan] = useState({ x: 0, y: 0 })
   const lastTouchRef = useRef<{ dist: number; x: number; y: number } | null>(null)
@@ -137,8 +133,16 @@ export function LogoEditor() {
   }, [])
 
   useEffect(() => {
-    if (lastResponse) inputRef.current?.focus()
+    if (lastResponse) textareaRef.current?.focus()
   }, [lastResponse])
+
+  // Tự động điều chỉnh chiều cao textarea
+  const adjustTextareaHeight = useCallback(() => {
+    const textarea = textareaRef.current
+    if (!textarea) return
+    textarea.style.height = 'auto'
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`
+  }, [])
 
   const processCommand = (text: string) => {
     if (!text.trim() || isProcessing) return
@@ -174,7 +178,7 @@ export function LogoEditor() {
       setLastResponse(
         newSvg !== svgContent
           ? `✅ Done — "${userMsg}"`
-          : `Applied — "${userMsg}"`
+          : ""
       )
       setIsProcessing(false)
     }, 1000)
@@ -212,11 +216,7 @@ export function LogoEditor() {
     img.src = url
   }
 
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(svgContent)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
@@ -249,24 +249,7 @@ export function LogoEditor() {
               </TooltipTrigger>
               <TooltipContent>Reset to original</TooltipContent>
             </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 rounded-lg text-muted-foreground"
-                  onClick={handleCopy}
-                >
-                  {copied ? (
-                    <Check className="h-4 w-4 text-emerald-500" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                  <span className="sr-only">Copy SVG</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{copied ? "Copied!" : "Copy SVG code"}</TooltipContent>
-            </Tooltip>
+
             <DropdownMenu>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -374,43 +357,47 @@ export function LogoEditor() {
           </Button>
         </div>
 
-        {/* Floating prompt — bottom center */}
+        {/* Floating prompt — ChatGPT style */}
         <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none p-3 md:p-4" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
-          <div className="max-w-xl mx-auto pointer-events-auto">
+          <div className="max-w-2xl mx-auto pointer-events-auto">
             {(isProcessing || lastResponse) && (
               <div className="text-[11px] text-muted-foreground text-center mb-1.5 truncate">
                 {isProcessing ? "Updating logo..." : lastResponse}
               </div>
             )}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                processCommand(command)
-              }}
-            >
-              <div className="rounded-2xl border border-border bg-background/90 backdrop-blur-md shadow-lg focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary/50 transition-all">
-                <div className="flex items-center gap-2 px-3 py-2.5">
-                  <Sparkles className="h-4 w-4 text-primary shrink-0" />
-                  <Input
-                    ref={inputRef}
-                    value={command}
-                    onChange={(e) => setCommand(e.target.value)}
-                    placeholder="Ex: change color to blue..."
-                    className="border-0 shadow-none focus-visible:ring-0 h-auto p-0 text-sm bg-transparent placeholder:text-muted-foreground/60"
-                    disabled={isProcessing}
-                  />
-                  <Button
-                    type="submit"
-                    size="icon"
-                    disabled={!command.trim() || isProcessing}
-                    className="rounded-xl h-8 w-8 shrink-0"
-                  >
-                    <Send className="h-3.5 w-3.5" />
-                    <span className="sr-only">Send</span>
-                  </Button>
-                </div>
+            <div className="rounded-3xl border border-border bg-background/95 backdrop-blur-xl shadow-lg focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary/50 transition-all">
+              <div className="flex items-end gap-3 pl-5 pr-3 py-2.5">
+                <textarea
+                  ref={textareaRef}
+                  value={command}
+                  onChange={(e) => {
+                    setCommand(e.target.value)
+                    adjustTextareaHeight()
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      processCommand(command)
+                    }
+                  }}
+                  placeholder="Describe changes to your logo..."
+                  rows={1}
+                  disabled={isProcessing}
+                  autoComplete="off"
+                  className="flex-1 resize-none bg-transparent text-sm leading-6 py-1.5 placeholder:text-muted-foreground/50 focus:outline-none disabled:opacity-50 max-h-[120px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                />
+                <Button
+                  type="button"
+                  size="icon"
+                  disabled={!command.trim() || isProcessing}
+                  onClick={() => processCommand(command)}
+                  className="rounded-full h-9 w-9 shrink-0 mb-0.5"
+                >
+                  <ArrowUp className="h-4 w-4" />
+                  <span className="sr-only">Send</span>
+                </Button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
