@@ -72,7 +72,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
           {/* Progress + Step Label */}
           <div className="mb-3 sm:mb-4">
             <div className="flex items-center justify-between mb-3">
-              <Badge variant="outline" className="text-xs">
+              <Badge className="bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300 text-xs">
                 Step {step} of {steps.length} — {steps[step - 1].label}
               </Badge>
               <span className="text-xs text-muted-foreground">{Math.round(progressValue)}%</span>

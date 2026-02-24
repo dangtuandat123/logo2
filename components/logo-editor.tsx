@@ -182,15 +182,15 @@ export function LogoEditor() {
           />
         </div>
 
-        {/* Chat panel - always fully visible, takes remaining space */}
-        <div className="flex-1 flex flex-col min-h-0 border-t md:border-t-0 md:border-l border-border md:w-[360px] lg:w-[400px] md:flex-none bg-muted/30">
-          {/* Chat header */}
-          <div className="flex items-center gap-2 px-4 py-1.5 border-b border-border shrink-0">
-            <div className="flex items-center justify-center w-6 h-6 rounded-md bg-primary/10">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
+        {/* Chat panel - visually distinct sidebar */}
+        <div className="flex-1 flex flex-col min-h-0 border-t md:border-t-0 md:border-l border-border md:w-[360px] lg:w-[400px] md:flex-none bg-sidebar">
+          {/* Chat header — gradient accent */}
+          <div className="flex items-center gap-2.5 px-4 py-2 bg-gradient-to-r from-primary/15 via-primary/10 to-transparent border-b border-primary/10 shrink-0">
+            <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-primary shadow-sm">
+              <Sparkles className="h-3.5 w-3.5 text-primary-foreground" />
             </div>
             <div>
-              <h2 className="text-sm font-semibold leading-none">AI Editor</h2>
+              <h2 className="text-sm font-bold leading-none">AI Editor</h2>
               <p className="text-[11px] text-muted-foreground mt-0.5">Describe changes naturally</p>
             </div>
           </div>
@@ -227,14 +227,14 @@ export function LogoEditor() {
             </div>
           </div>
 
-          {/* Suggestion chips - shown when no messages from user yet */}
+          {/* Suggestion chips */}
           {messages.length <= 1 && !isProcessing && (
             <div className="flex flex-wrap gap-1.5 px-3 md:px-4 pb-2 shrink-0">
               {suggestions.map((s) => (
                 <button
                   key={s}
                   onClick={() => processCommand(s)}
-                  className="text-xs px-3 py-1.5 rounded-full border border-border bg-background text-muted-foreground hover:text-foreground hover:border-foreground/20 transition-colors active:scale-95"
+                  className="text-xs px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 hover:border-primary/30 font-medium transition-colors active:scale-95"
                 >
                   {s}
                 </button>
@@ -242,8 +242,8 @@ export function LogoEditor() {
             </div>
           )}
 
-          {/* Input */}
-          <div className="p-3 md:p-4 pt-2 md:pt-2 border-t border-border shrink-0" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+          {/* Input — frosted glass with glow */}
+          <div className="p-3 md:p-4 pt-2 md:pt-2 border-t border-border/50 bg-background/50 backdrop-blur-sm shrink-0" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
             <form
               onSubmit={(e) => {
                 e.preventDefault()
@@ -256,14 +256,14 @@ export function LogoEditor() {
                 value={command}
                 onChange={(e) => setCommand(e.target.value)}
                 placeholder="Describe a change..."
-                className="rounded-xl h-10 text-sm bg-card"
+                className="rounded-xl h-10 text-sm bg-background shadow-sm ring-1 ring-border focus-visible:ring-primary/50"
                 disabled={isProcessing}
               />
               <Button
                 type="submit"
                 size="icon"
                 disabled={!command.trim() || isProcessing}
-                className="rounded-xl h-10 w-10 shrink-0"
+                className="rounded-xl h-10 w-10 shrink-0 shadow-sm"
               >
                 <Send className="h-4 w-4" />
                 <span className="sr-only">Send</span>

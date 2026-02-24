@@ -108,7 +108,7 @@ export default function DashboardPage() {
               <h2 className="text-base sm:text-lg font-semibold font-[family-name:var(--font-heading)]">
                 Recent Logos
               </h2>
-              <Badge variant="secondary">{recentLogos.length}</Badge>
+              <Badge className="bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">{recentLogos.length}</Badge>
             </div>
             <Button variant="ghost" size="sm" asChild className="text-muted-foreground text-xs sm:text-sm">
               <Link href="/app/projects">View All</Link>

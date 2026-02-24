@@ -92,7 +92,7 @@ export default function ProjectsPage() {
             <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)]">
               My Logos
             </h1>
-            <Badge variant="secondary">{logos.length}</Badge>
+            <Badge className="bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">{logos.length}</Badge>
           </div>
           <Tabs value={view} onValueChange={(v) => setView(v as "grid" | "list")}>
             <TabsList className="h-8 sm:h-9">

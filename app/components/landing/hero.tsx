@@ -18,7 +18,7 @@ export function Hero() {
     return (
         <section className="relative overflow-hidden">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 md:pt-36 pb-12 sm:pb-16 md:pb-24 text-center">
-                <Badge variant="secondary" className="mb-6 sm:mb-8 font-medium gap-2 py-1.5 px-3">
+                <Badge className="mb-6 sm:mb-8 font-medium gap-2 py-1.5 px-3 bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
                     <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     AI-Powered Logo Creation
                 </Badge>

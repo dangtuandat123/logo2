@@ -152,7 +152,7 @@ export default function SettingsPage() {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-semibold">Free Plan</p>
-                      <Badge variant="secondary">Active</Badge>
+                      <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">Active</Badge>
                     </div>
                     <p className="text-xs text-muted-foreground mt-0.5">5 logos per month</p>
                   </div>
