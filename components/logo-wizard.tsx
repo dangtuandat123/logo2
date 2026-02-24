@@ -10,6 +10,16 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxTrigger,
+  ComboboxValue,
+} from "@/components/ui/combobox"
 import { cn } from "@/lib/utils"
 
 const logoStyles = [
@@ -31,9 +41,19 @@ const colorPalettes = [
 ]
 
 const industries = [
-  "Technology", "Healthcare", "Finance", "Education",
-  "Food & Beverage", "Fashion", "Sports", "Music",
-  "Travel", "Real Estate", "Consulting", "E-commerce",
+  { value: "", label: "Select industry", icon: "" },
+  { value: "technology", label: "Technology", icon: "💻" },
+  { value: "healthcare", label: "Healthcare", icon: "🏥" },
+  { value: "finance", label: "Finance", icon: "💰" },
+  { value: "education", label: "Education", icon: "📚" },
+  { value: "food-beverage", label: "Food & Beverage", icon: "🍔" },
+  { value: "fashion", label: "Fashion", icon: "👗" },
+  { value: "sports", label: "Sports", icon: "⚽" },
+  { value: "music", label: "Music", icon: "🎵" },
+  { value: "travel", label: "Travel", icon: "✈️" },
+  { value: "real-estate", label: "Real Estate", icon: "🏠" },
+  { value: "consulting", label: "Consulting", icon: "💼" },
+  { value: "e-commerce", label: "E-commerce", icon: "🛒" },
 ]
 
 const steps = [
@@ -117,21 +137,22 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                     </div>
                     <div>
                       <Label className="text-sm">Industry</Label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-1.5">
-                        {industries.map((ind) => (
-                          <button
-                            key={ind}
-                            onClick={() => setIndustry(ind)}
-                            className={cn(
-                              "px-3 py-2 rounded-lg text-sm font-medium transition-all border active:scale-[0.97]",
-                              industry === ind
-                                ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                                : "bg-card border-border text-foreground hover:border-primary/50"
-                            )}
-                          >
-                            {ind}
-                          </button>
-                        ))}
+                      <div className="mt-1">
+                        <Combobox items={industries} defaultValue={industries[0]}>
+                          <ComboboxTrigger render={<Button variant="outline" className="w-full justify-between font-normal h-10"><ComboboxValue /></Button>} />
+                          <ComboboxContent>
+                            <ComboboxInput showTrigger={false} placeholder="Search industry..." />
+                            <ComboboxEmpty>No industry found.</ComboboxEmpty>
+                            <ComboboxList>
+                              {(item) => (
+                                <ComboboxItem key={item.value} value={item}>
+                                  {item.icon && <span className="mr-2">{item.icon}</span>}
+                                  {item.label}
+                                </ComboboxItem>
+                              )}
+                            </ComboboxList>
+                          </ComboboxContent>
+                        </Combobox>
                       </div>
                     </div>
                   </div>

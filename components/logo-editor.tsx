@@ -127,7 +127,7 @@ export function LogoEditor() {
   }, [])
 
   useEffect(() => {
-    inputRef.current?.focus()
+    if (lastResponse) inputRef.current?.focus()
   }, [lastResponse])
 
   const processCommand = (text: string) => {
