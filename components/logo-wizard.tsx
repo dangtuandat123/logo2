@@ -67,24 +67,24 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-auto p-4 sm:p-6 md:p-8">
+      <div className="flex-1 overflow-auto p-3 sm:p-4 md:p-6">
         <div className="max-w-2xl mx-auto">
           {/* Progress + Step Label */}
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-3 sm:mb-4">
             <div className="flex items-center justify-between mb-3">
               <Badge variant="outline" className="text-xs">
                 Step {step} of {steps.length} — {steps[step - 1].label}
               </Badge>
               <span className="text-xs text-muted-foreground">{Math.round(progressValue)}%</span>
             </div>
-            <Progress value={progressValue} className="h-2" />
+            <Progress value={progressValue} className="h-1.5" />
           </div>
 
           {/* Step Content wrapped in Card */}
           <Card>
-            <CardContent className="p-5 sm:p-6 min-h-[320px] sm:min-h-[380px]">
+            <CardContent className="p-4 sm:p-5">
               {step === 1 && (
-                <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
+                <div className="space-y-3 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] mb-1">
                       Tell us about your brand
@@ -94,7 +94,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                     </p>
                   </div>
                   <Separator />
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <div>
                       <Label htmlFor="brandName" className="text-sm">Brand Name *</Label>
                       <Input
@@ -102,7 +102,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                         placeholder="e.g., TechFlow"
                         value={brandName}
                         onChange={(e) => setBrandName(e.target.value)}
-                        className="mt-1.5 h-11"
+                        className="mt-1 h-10"
                       />
                     </div>
                     <div>
@@ -112,7 +112,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                         placeholder="e.g., Innovate with ease"
                         value={tagline}
                         onChange={(e) => setTagline(e.target.value)}
-                        className="mt-1.5 h-11"
+                        className="mt-1 h-10"
                       />
                     </div>
                     <div>
@@ -123,7 +123,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                             key={ind}
                             onClick={() => setIndustry(ind)}
                             className={cn(
-                              "px-3 py-2.5 rounded-xl text-sm font-medium transition-all border active:scale-[0.97]",
+                              "px-3 py-2 rounded-lg text-sm font-medium transition-all border active:scale-[0.97]",
                               industry === ind
                                 ? "bg-primary text-primary-foreground border-primary shadow-sm"
                                 : "bg-card border-border text-foreground hover:border-primary/50"
@@ -139,7 +139,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
               )}
 
               {step === 2 && (
-                <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
+                <div className="space-y-3 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] mb-1">
                       Choose your style
@@ -170,7 +170,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
               )}
 
               {step === 3 && (
-                <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
+                <div className="space-y-3 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] mb-1">
                       Pick your colors
@@ -268,7 +268,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
       </div>
 
       {/* Sticky bottom navigation */}
-      <div className="shrink-0 border-t border-border bg-background px-4 sm:px-6 md:px-8 py-3 sm:py-4">
+      <div className="shrink-0 border-t border-border bg-background px-3 sm:px-4 md:px-6 py-2.5 sm:py-3">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
           <Button
             variant="outline"

@@ -38,7 +38,7 @@ const stats = [
 export default function DashboardPage() {
   return (
     <div className="flex-1 overflow-auto">
-      <div className="p-4 sm:p-6 md:p-8 max-w-5xl mx-auto">
+      <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex items-start sm:items-center justify-between mb-2">
           <div>
