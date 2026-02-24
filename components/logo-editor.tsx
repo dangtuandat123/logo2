@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import {
   Download,
   Send,
@@ -9,9 +9,17 @@ import {
   Check,
   ArrowLeft,
   Sparkles,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
@@ -33,38 +41,99 @@ const sampleSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"
   <text x="200" y="340" font-family="system-ui, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">TECHFLOW</text>
 </svg>`
 
-const suggestions = [
-  "Change color to blue",
-  "Make the shape round",
-  "Make text bigger",
-  "Use dark background",
-]
-
-type Message = {
-  role: "user" | "assistant"
-  text: string
-}
 
 export function LogoEditor() {
   const [svgContent, setSvgContent] = useState(sampleSVG)
   const [command, setCommand] = useState("")
-  const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", text: "Your logo is ready! Describe any changes you'd like to make." },
-  ])
   const [isProcessing, setIsProcessing] = useState(false)
   const [copied, setCopied] = useState(false)
-  const chatEndRef = useRef<HTMLDivElement>(null)
+  const [lastResponse, setLastResponse] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
+  const [zoom, setZoom] = useState(100)
+  const [pan, setPan] = useState({ x: 0, y: 0 })
+  const lastTouchRef = useRef<{ dist: number; x: number; y: number } | null>(null)
+  const lastPanRef = useRef<{ x: number; y: number } | null>(null)
+  const isDragging = useRef(false)
+  const lastMouseRef = useRef<{ x: number; y: number } | null>(null)
+
+  // Pinch-to-zoom & pan touch handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX
+      const dy = e.touches[0].clientY - e.touches[1].clientY
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2
+      const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2
+      lastTouchRef.current = { dist, x: cx, y: cy }
+      lastPanRef.current = null
+    } else if (e.touches.length === 1) {
+      lastPanRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      lastTouchRef.current = null
+    }
+  }, [])
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2 && lastTouchRef.current) {
+      e.preventDefault()
+      const dx = e.touches[0].clientX - e.touches[1].clientX
+      const dy = e.touches[0].clientY - e.touches[1].clientY
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      const scale = dist / lastTouchRef.current.dist
+      setZoom((z) => Math.round(Math.min(300, Math.max(50, z * scale))))
+      lastTouchRef.current = { ...lastTouchRef.current, dist }
+    } else if (e.touches.length === 1 && lastPanRef.current) {
+      e.preventDefault()
+      const deltaX = e.touches[0].clientX - lastPanRef.current.x
+      const deltaY = e.touches[0].clientY - lastPanRef.current.y
+      setPan((p) => ({ x: p.x + deltaX, y: p.y + deltaY }))
+      lastPanRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+    }
+  }, [])
+
+  const handleTouchEnd = useCallback(() => {
+    lastTouchRef.current = null
+    lastPanRef.current = null
+  }, [])
+
+  const resetView = useCallback(() => {
+    setZoom(100)
+    setPan({ x: 0, y: 0 })
+  }, [])
+
+  // Mouse wheel zoom
+  const handleWheel = useCallback((e: React.WheelEvent) => {
+    e.preventDefault()
+    setZoom((z) => Math.round(Math.min(300, Math.max(50, z - e.deltaY * 0.5))))
+  }, [])
+
+  // Mouse drag pan
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (e.button !== 0) return
+    isDragging.current = true
+    lastMouseRef.current = { x: e.clientX, y: e.clientY }
+  }, [])
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging.current || !lastMouseRef.current) return
+    const deltaX = e.clientX - lastMouseRef.current.x
+    const deltaY = e.clientY - lastMouseRef.current.y
+    setPan((p) => ({ x: p.x + deltaX, y: p.y + deltaY }))
+    lastMouseRef.current = { x: e.clientX, y: e.clientY }
+  }, [])
+
+  const handleMouseUp = useCallback(() => {
+    isDragging.current = false
+    lastMouseRef.current = null
+  }, [])
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages, isProcessing])
+    inputRef.current?.focus()
+  }, [lastResponse])
 
   const processCommand = (text: string) => {
     if (!text.trim() || isProcessing) return
 
     const userMsg = text.trim()
-    setMessages((prev) => [...prev, { role: "user", text: userMsg }])
     setCommand("")
     setIsProcessing(true)
 
@@ -92,16 +161,11 @@ export function LogoEditor() {
       }
 
       setSvgContent(newSvg)
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          text:
-            newSvg !== svgContent
-              ? "Done! I've updated your logo."
-              : "Changes applied. What else would you like to tweak?",
-        },
-      ])
+      setLastResponse(
+        newSvg !== svgContent
+          ? `✅ Done — "${userMsg}"`
+          : `Applied — "${userMsg}"`
+      )
       setIsProcessing(false)
     }, 1000)
   }
@@ -137,137 +201,161 @@ export function LogoEditor() {
           <div className="h-4 w-px bg-border" />
           <h1 className="text-sm font-semibold truncate">TECHFLOW Logo</h1>
         </div>
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 rounded-lg text-muted-foreground"
-            onClick={() => setSvgContent(sampleSVG)}
-          >
-            <RotateCcw className="h-4 w-4" />
-            <span className="sr-only">Reset</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 rounded-lg text-muted-foreground"
-            onClick={handleCopy}
-          >
-            {copied ? (
-              <Check className="h-4 w-4 text-emerald-500" />
-            ) : (
-              <Copy className="h-4 w-4" />
-            )}
-            <span className="sr-only">Copy SVG</span>
-          </Button>
-          <Button
-            size="sm"
-            onClick={handleDownload}
-            className="rounded-lg gap-1.5 h-8 text-xs font-medium"
-          >
-            <Download className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Export SVG</span>
-            <span className="sm:hidden">Export</span>
-          </Button>
-        </div>
+        <TooltipProvider delayDuration={0}>
+          <div className="flex items-center gap-1">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 rounded-lg text-muted-foreground"
+                  onClick={() => setSvgContent(sampleSVG)}
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  <span className="sr-only">Reset</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Reset to original</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 rounded-lg text-muted-foreground"
+                  onClick={handleCopy}
+                >
+                  {copied ? (
+                    <Check className="h-4 w-4 text-emerald-500" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
+                  <span className="sr-only">Copy SVG</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{copied ? "Copied!" : "Copy SVG code"}</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="sm"
+                  onClick={handleDownload}
+                  className="rounded-lg gap-1.5 h-8 text-xs font-medium"
+                >
+                  <Download className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Export SVG</span>
+                  <span className="sm:hidden">Export</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Download as SVG file</TooltipContent>
+            </Tooltip>
+          </div>
+        </TooltipProvider>
       </header>
 
-      {/* Main content: logo + chat, side by side on desktop, stacked on mobile */}
-      <div className="flex-1 flex flex-col md:flex-row min-h-0 overflow-hidden">
-        {/* Logo display area - clean, centered, no decorations */}
-        <div className="flex items-center justify-center bg-muted/30 md:flex-1 shrink-0 h-[35dvh] md:h-auto">
+      {/* Full-screen logo area with floating prompt */}
+      <div className="flex-1 relative overflow-hidden">
+        {/* Logo canvas with dot grid */}
+        <div
+          className="absolute inset-0 flex items-center justify-center touch-none pb-20 cursor-grab active:cursor-grabbing"
+          style={{ backgroundImage: 'radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px)', backgroundSize: '20px 20px' }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onWheel={handleWheel}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
           <div
-            className="w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] md:w-[300px] md:h-[300px] lg:w-[360px] lg:h-[360px] drop-shadow-xl transition-all duration-300"
-            dangerouslySetInnerHTML={{ __html: svgContent }}
-          />
-        </div>
-
-        {/* Chat panel - visually distinct sidebar */}
-        <div className="flex-1 flex flex-col min-h-0 border-t md:border-t-0 md:border-l border-border md:w-[360px] lg:w-[400px] md:flex-none bg-sidebar">
-          {/* Chat header — gradient accent */}
-          <div className="flex items-center gap-2.5 px-4 py-2 bg-gradient-to-r from-primary/15 via-primary/10 to-transparent border-b border-primary/10 shrink-0">
-            <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-primary shadow-sm">
-              <Sparkles className="h-3.5 w-3.5 text-primary-foreground" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold leading-none">AI Editor</h2>
-              <p className="text-[11px] text-muted-foreground mt-0.5">Describe changes naturally</p>
-            </div>
+            className={cn(
+              "drop-shadow-xl pointer-events-none select-none",
+              isProcessing && "scale-95 opacity-40 blur-[2px] transition-all duration-500"
+            )}
+            style={{
+              transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom / 100})`,
+            }}
+          >
+            <div
+              className="w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] md:w-[320px] md:h-[320px] lg:w-[400px] lg:h-[400px]"
+              dangerouslySetInnerHTML={{ __html: svgContent }}
+            />
           </div>
-
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-3 md:p-4 min-h-0">
-            <div className="flex flex-col gap-2.5">
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    "text-[13px] leading-relaxed rounded-2xl px-3.5 py-2.5 max-w-[85%] break-words",
-                    msg.role === "user"
-                      ? "bg-primary text-primary-foreground ml-auto rounded-br-md"
-                      : "bg-muted text-foreground rounded-bl-md"
-                  )}
-                >
-                  {msg.text}
-                </div>
-              ))}
-              {isProcessing && (
-                <div className="bg-muted text-foreground text-[13px] rounded-2xl rounded-bl-md px-3.5 py-2.5 max-w-[85%]">
-                  <span className="flex items-center gap-2">
-                    <span className="flex gap-0.5">
-                      <span className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <span className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <span className="w-1.5 h-1.5 bg-muted-foreground/60 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
-                    </span>
-                    <span className="text-muted-foreground">Updating logo...</span>
-                  </span>
-                </div>
-              )}
-              <div ref={chatEndRef} />
-            </div>
-          </div>
-
-          {/* Suggestion chips */}
-          {messages.length <= 1 && !isProcessing && (
-            <div className="flex flex-wrap gap-1.5 px-3 md:px-4 pb-2 shrink-0">
-              {suggestions.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => processCommand(s)}
-                  className="text-xs px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 hover:border-primary/30 font-medium transition-colors active:scale-95"
-                >
-                  {s}
-                </button>
-              ))}
+          {isProcessing && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none">
+              <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/15 backdrop-blur-sm animate-pulse">
+                <Sparkles className="h-6 w-6 text-primary" />
+              </div>
+              <span className="text-xs font-medium text-muted-foreground">Updating...</span>
             </div>
           )}
+        </div>
 
-          {/* Input — frosted glass with glow */}
-          <div className="p-3 md:p-4 pt-2 md:pt-2 border-t border-border/50 bg-background/50 backdrop-blur-sm shrink-0" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+        {/* Zoom controls — bottom right */}
+        <div className="absolute bottom-24 right-3 md:bottom-20 md:right-4 z-20 flex items-center gap-1 bg-background/80 backdrop-blur-sm rounded-lg border border-border shadow-sm p-0.5">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 rounded-md"
+            onClick={() => setZoom((z) => Math.max(50, z - 25))}
+            disabled={zoom <= 50}
+          >
+            <ZoomOut className="h-3.5 w-3.5" />
+          </Button>
+          <button
+            onClick={resetView}
+            className="text-[10px] font-medium text-muted-foreground tabular-nums w-10 text-center hover:text-foreground transition-colors"
+          >
+            {zoom}%
+          </button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 rounded-md"
+            onClick={() => setZoom((z) => Math.min(200, z + 25))}
+            disabled={zoom >= 200}
+          >
+            <ZoomIn className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+
+        {/* Floating prompt — bottom center */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none p-3 md:p-4" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+          <div className="max-w-xl mx-auto pointer-events-auto">
+            {(isProcessing || lastResponse) && (
+              <div className="text-[11px] text-muted-foreground text-center mb-1.5 truncate">
+                {isProcessing ? "Updating logo..." : lastResponse}
+              </div>
+            )}
             <form
               onSubmit={(e) => {
                 e.preventDefault()
                 processCommand(command)
               }}
-              className="flex gap-2"
             >
-              <Input
-                ref={inputRef}
-                value={command}
-                onChange={(e) => setCommand(e.target.value)}
-                placeholder="Describe a change..."
-                className="rounded-xl h-10 text-sm bg-background shadow-sm ring-1 ring-border focus-visible:ring-primary/50"
-                disabled={isProcessing}
-              />
-              <Button
-                type="submit"
-                size="icon"
-                disabled={!command.trim() || isProcessing}
-                className="rounded-xl h-10 w-10 shrink-0 shadow-sm"
-              >
-                <Send className="h-4 w-4" />
-                <span className="sr-only">Send</span>
-              </Button>
+              <div className="rounded-2xl border border-border bg-background/90 backdrop-blur-md shadow-lg focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary/50 transition-all">
+                <div className="flex items-center gap-2 px-3 py-2.5">
+                  <Sparkles className="h-4 w-4 text-primary shrink-0" />
+                  <Input
+                    ref={inputRef}
+                    value={command}
+                    onChange={(e) => setCommand(e.target.value)}
+                    placeholder="Ex: change color to blue..."
+                    className="border-0 shadow-none focus-visible:ring-0 h-auto p-0 text-sm bg-transparent placeholder:text-muted-foreground/60"
+                    disabled={isProcessing}
+                  />
+                  <Button
+                    type="submit"
+                    size="icon"
+                    disabled={!command.trim() || isProcessing}
+                    className="rounded-xl h-8 w-8 shrink-0"
+                  >
+                    <Send className="h-3.5 w-3.5" />
+                    <span className="sr-only">Send</span>
+                  </Button>
+                </div>
+              </div>
             </form>
           </div>
         </div>
