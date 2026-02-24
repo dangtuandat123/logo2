@@ -2,10 +2,13 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Search, Grid3X3, List, MoreHorizontal, Trash2, Download, Copy } from "lucide-react"
+import { Search, Grid3X3, List, MoreHorizontal, Trash2, Download, Copy, PlusCircle, FolderOpen } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -70,46 +73,66 @@ export default function ProjectsPage() {
   return (
     <div className="flex-1 overflow-auto">
       <div className="p-4 sm:p-6 md:p-8 max-w-5xl mx-auto">
-        <div className="flex items-center justify-between mb-4 sm:mb-6">
-          <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)]">
-            My Logos
-          </h1>
-          <div className="flex items-center gap-1">
-            <Button
-              variant={view === "grid" ? "secondary" : "ghost"}
-              size="icon"
-              className="h-8 w-8 sm:h-9 sm:w-9"
-              onClick={() => setView("grid")}
-            >
-              <Grid3X3 className="h-4 w-4" />
-              <span className="sr-only">Grid view</span>
-            </Button>
-            <Button
-              variant={view === "list" ? "secondary" : "ghost"}
-              size="icon"
-              className="h-8 w-8 sm:h-9 sm:w-9"
-              onClick={() => setView("list")}
-            >
-              <List className="h-4 w-4" />
-              <span className="sr-only">List view</span>
-            </Button>
+        {/* Header */}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)]">
+              My Logos
+            </h1>
+            <Badge variant="secondary">{logos.length}</Badge>
           </div>
+          <Tabs value={view} onValueChange={(v) => setView(v as "grid" | "list")}>
+            <TabsList className="h-8 sm:h-9">
+              <TabsTrigger value="grid" className="gap-1.5 text-xs px-2.5">
+                <Grid3X3 className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Grid</span>
+              </TabsTrigger>
+              <TabsTrigger value="list" className="gap-1.5 text-xs px-2.5">
+                <List className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">List</span>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
 
+        <Separator className="mb-4 sm:mb-6" />
+
+        {/* Search */}
         <div className="relative mb-4 sm:mb-6">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search logos..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 h-10 rounded-xl"
+            className="pl-10 h-10"
           />
         </div>
 
-        {view === "grid" ? (
+        {/* Empty State */}
+        {filtered.length === 0 ? (
+          <Card className="py-12">
+            <CardContent className="flex flex-col items-center text-center">
+              <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-muted mb-4">
+                <FolderOpen className="h-7 w-7 text-muted-foreground" />
+              </div>
+              <p className="font-semibold text-base mb-1">No logos found</p>
+              <p className="text-sm text-muted-foreground mb-4">
+                {search ? `No results for "${search}"` : "Create your first logo to get started"}
+              </p>
+              {!search && (
+                <Button asChild>
+                  <Link href="/app/create">
+                    <PlusCircle className="h-4 w-4 mr-2" />
+                    Create Logo
+                  </Link>
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        ) : view === "grid" ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             {filtered.map((logo) => (
-              <Card key={logo.id} className="group border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-200 overflow-hidden">
+              <Card key={logo.id} className="group hover:border-primary/30 hover:shadow-lg transition-all duration-200 overflow-hidden py-0">
                 <CardContent className="p-0">
                   <Link href={`/app/editor/${logo.id}`}>
                     <div className="aspect-square bg-muted/50 flex items-center justify-center p-5 sm:p-8 group-hover:bg-muted/80 transition-colors">
@@ -153,7 +176,7 @@ export default function ProjectsPage() {
             {filtered.map((logo) => (
               <Link key={logo.id} href={`/app/editor/${logo.id}`}>
                 <Card className={cn(
-                  "group border-border/50 hover:border-primary/30 transition-all duration-200 active:scale-[0.99]"
+                  "group hover:border-primary/30 transition-all duration-200 active:scale-[0.99] py-0"
                 )}>
                   <CardContent className="p-2.5 sm:p-3 flex items-center gap-3 sm:gap-4">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted/50 rounded-lg flex items-center justify-center p-1 sm:p-1.5 shrink-0">
@@ -165,7 +188,7 @@ export default function ProjectsPage() {
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-sm truncate">{logo.name}</p>
                       <p className="text-[11px] sm:text-xs text-muted-foreground">
-                        {logo.style} - {logo.date}
+                        {logo.style} · {logo.date}
                       </p>
                     </div>
                     <DropdownMenu>

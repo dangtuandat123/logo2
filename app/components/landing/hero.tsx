@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 const showcaseLogos = [
@@ -31,7 +32,9 @@ export function Hero() {
                     professional logo. Edit with natural language until it is perfect.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 sm:mt-12">
+                <Separator className="max-w-xs mx-auto my-8 sm:my-10" />
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <Button size="lg" asChild className="gap-2 h-14 px-8 text-base w-full sm:w-auto">
                         <Link href="/register">
                             Start Creating
