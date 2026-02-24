@@ -11,6 +11,9 @@ import {
   Sparkles,
   ZoomIn,
   ZoomOut,
+  FileCode,
+  FileImage,
+  ChevronDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,6 +23,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
@@ -170,7 +180,7 @@ export function LogoEditor() {
     }, 1000)
   }
 
-  const handleDownload = () => {
+  const handleDownloadSVG = () => {
     const blob = new Blob([svgContent], { type: "image/svg+xml" })
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
@@ -178,6 +188,28 @@ export function LogoEditor() {
     a.download = "logo.svg"
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  const handleDownloadPNG = (scale: number = 1) => {
+    const size = 400 * scale
+    const canvas = document.createElement("canvas")
+    canvas.width = size
+    canvas.height = size
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    const img = new Image()
+    const svgBlob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" })
+    const url = URL.createObjectURL(svgBlob)
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, size, size)
+      URL.revokeObjectURL(url)
+      const a = document.createElement("a")
+      a.href = canvas.toDataURL("image/png")
+      a.download = `logo-${size}x${size}.png`
+      a.click()
+    }
+    img.src = url
   }
 
   const handleCopy = async () => {
@@ -235,20 +267,42 @@ export function LogoEditor() {
               </TooltipTrigger>
               <TooltipContent>{copied ? "Copied!" : "Copy SVG code"}</TooltipContent>
             </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  size="sm"
-                  onClick={handleDownload}
-                  className="rounded-lg gap-1.5 h-8 text-xs font-medium"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Export SVG</span>
-                  <span className="sm:hidden">Export</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Download as SVG file</TooltipContent>
-            </Tooltip>
+            <DropdownMenu>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      size="sm"
+                      className="rounded-lg gap-1.5 h-8 text-xs font-medium"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      <span className="hidden sm:inline">Export</span>
+                      <ChevronDown className="h-3 w-3 opacity-60" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                </TooltipTrigger>
+                <TooltipContent>Export logo</TooltipContent>
+              </Tooltip>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={handleDownloadSVG}>
+                  <FileCode />
+                  SVG (vector)
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleDownloadPNG(1)}>
+                  <FileImage />
+                  PNG 400×400
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleDownloadPNG(2)}>
+                  <FileImage />
+                  PNG 800×800
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleDownloadPNG(4)}>
+                  <FileImage />
+                  PNG 1600×1600
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </TooltipProvider>
       </header>
