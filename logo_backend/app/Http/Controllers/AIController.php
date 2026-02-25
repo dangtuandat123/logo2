@@ -86,6 +86,8 @@ class AIController extends Controller
 
     public function edit(Request $request)
     {
+        \Illuminate\Support\Facades\Log::info('Edit attempt data: ', $request->all());
+
         $request->validate([
             'project_id' => 'required|exists:projects,id',
             'command' => 'required|string|max:255',
