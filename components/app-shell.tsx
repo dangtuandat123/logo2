@@ -28,10 +28,10 @@ import {
 } from "@/components/ui/tooltip"
 
 const navItems = [
-  { href: "/app", icon: Home, label: "Tổng quan" },
-  { href: "/app/create", icon: PlusCircle, label: "Tạo mới" },
-  { href: "/app/projects", icon: FolderOpen, label: "Logo của tôi" },
-  { href: "/app/billing", icon: CreditCard, label: "Nạp Kim Cương" },
+  { href: "/app", icon: Home, label: "Home" },
+  { href: "/app/create", icon: PlusCircle, label: "Tạo" },
+  { href: "/app/projects", icon: FolderOpen, label: "Dự án" },
+  { href: "/app/billing", icon: Gem, label: "Nạp" },
   { href: "/app/settings", icon: Settings, label: "Cài đặt" },
 ]
 
@@ -159,7 +159,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Mobile Bottom Nav - with safe area insets */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-sidebar/95 backdrop-blur-xl">
-        <div className="flex items-center justify-around h-14 px-1" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+        <div className="flex items-center justify-between h-16 px-2 sm:px-4 gap-1" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
           {navItems.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -169,14 +169,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center justify-center gap-0.5 min-w-[3.5rem] py-1 rounded-lg transition-colors active:scale-95",
+                  "flex flex-1 flex-col items-center justify-center gap-1 p-2 rounded-xl transition-all active:scale-95",
                   isActive
-                    ? "text-primary"
-                    : "text-muted-foreground active:text-foreground"
+                    ? "bg-primary/10 text-primary shadow-sm"
+                    : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
                 )}
               >
-                <item.icon className={cn("h-5 w-5", isActive && "drop-shadow-sm")} />
-                <span className="text-[10px] font-medium leading-none">{item.label}</span>
+                <item.icon className={cn("h-5 w-5", isActive && "drop-shadow-[0_0_8px_rgba(var(--primary-rgb),0.5)]")} />
+                <span className={cn("text-[10px] leading-none", isActive ? "font-bold" : "font-medium")}>{item.label}</span>
               </Link>
             )
           })}
