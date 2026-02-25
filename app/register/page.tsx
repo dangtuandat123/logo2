@@ -3,7 +3,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Sparkles, Eye, EyeOff, Check } from "lucide-react"
+import { Eye, EyeOff, Check } from "lucide-react"
+import { AppLogo } from "@/components/app-logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -39,8 +40,8 @@ export default function RegisterPage() {
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-primary/10 rounded-full blur-3xl" />
         </div>
         <div className="relative text-center max-w-md px-8">
-          <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mx-auto mb-8">
-            <Sparkles className="h-8 w-8 text-primary-foreground" />
+          <div className="flex items-center justify-center mx-auto mb-8">
+            <AppLogo size={64} />
           </div>
           <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-4">
             Bắt đầu sáng tạo cùng LogoAI
@@ -70,9 +71,7 @@ export default function RegisterPage() {
         <div className="w-full max-w-sm">
           {/* Mobile Logo */}
           <div className="lg:hidden flex items-center gap-2 mb-6 sm:mb-8">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary">
-              <Sparkles className="h-4 w-4 text-primary-foreground" />
-            </div>
+            <AppLogo size={32} />
             <span className="font-bold text-lg font-[family-name:var(--font-heading)]">
               LogoAI
             </span>

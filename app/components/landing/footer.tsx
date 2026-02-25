@@ -1,6 +1,6 @@
 import Link from "next/link"
-import { Sparkles } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
+import { AppLogo } from "@/components/app-logo"
 
 const footerLinks = [
     { label: "Tính năng", href: "#features" },
@@ -14,9 +14,7 @@ export function Footer() {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
                     <div className="flex items-center gap-2">
-                        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary">
-                            <Sparkles className="h-4 w-4 text-primary-foreground" />
-                        </div>
+                        <AppLogo size={32} />
                         <span className="font-bold text-lg font-[family-name:var(--font-heading)]">
                             LogoAI
                         </span>

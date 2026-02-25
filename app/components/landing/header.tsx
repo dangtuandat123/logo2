@@ -3,7 +3,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useTheme } from "next-themes"
-import { Sparkles, Sun, Moon, Menu, X } from "lucide-react"
+import { Sun, Moon, Menu, X } from "lucide-react"
+import { AppLogo } from "@/components/app-logo"
 import { Button } from "@/components/ui/button"
 
 export function Header() {
@@ -14,9 +15,7 @@ export function Header() {
     <header className="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border/50">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14 sm:h-16">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary">
-            <Sparkles className="h-4 w-4 text-primary-foreground" />
-          </div>
+          <AppLogo size={32} />
           <span className="font-bold text-lg font-[family-name:var(--font-heading)]">
             LogoAI
           </span>

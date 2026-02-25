@@ -9,7 +9,6 @@ import {
   PlusCircle,
   FolderOpen,
   Settings,
-  Sparkles,
   LogOut,
   Moon,
   Sun,
@@ -18,7 +17,7 @@ import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { CommandMenu } from "@/components/command-menu"
-import { Separator } from "@/components/ui/separator"
+import { AppLogo } from "@/components/app-logo"
 import {
   Tooltip,
   TooltipContent,
@@ -59,9 +58,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <aside className="hidden md:flex w-[72px] flex-col items-center border-r border-border bg-sidebar py-4 lg:py-6 gap-1">
         <Link
           href="/app"
-          className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary mb-3 shrink-0"
+          className="flex items-center justify-center mb-3 shrink-0"
         >
-          <Sparkles className="h-5 w-5 text-primary-foreground" />
+          <AppLogo size={40} />
         </Link>
 
         <TooltipProvider delayDuration={0}>
