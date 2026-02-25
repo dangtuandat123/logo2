@@ -2,16 +2,18 @@
 
 import { useState } from "react"
 import { CreditCard, Gem, ArrowUpRight, History } from "lucide-react"
+import { VietQRModal } from "@/components/vietqr-modal"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 
 const diamondPackages = [
-    { name: "Starter", diamonds: 50, price: "49.000₫", bonus: "" },
-    { name: "Popular", diamonds: 120, price: "99.000₫", bonus: "+20%" },
-    { name: "Best Value", diamonds: 280, price: "199.000₫", bonus: "+40%" },
+    { name: "Starter", diamonds: 50, price: "49.000₫", numericPrice: 49000, bonus: "" },
+    { name: "Popular", diamonds: 120, price: "99.000₫", numericPrice: 99000, bonus: "+20%" },
+    { name: "Best Value", diamonds: 280, price: "199.000₫", numericPrice: 199000, bonus: "+40%" },
 ]
 
 const transactionHistory = [
@@ -22,6 +24,9 @@ const transactionHistory = [
 ]
 
 export default function BillingPage() {
+    const [selectedPackage, setSelectedPackage] = useState<any>(null)
+    const [customDiamonds, setCustomDiamonds] = useState<number>(20)
+
     return (
         <div className="flex-1 overflow-y-scroll overflow-x-hidden">
             <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto space-y-6">
@@ -71,7 +76,7 @@ export default function BillingPage() {
                                 <CardDescription>Kim cương không bao giờ hết hạn. Thanh toán an toàn qua VNPay, Momo, hoặc Thẻ quốc tế.</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     {diamondPackages.map((pkg) => (
                                         <div
                                             key={pkg.name}
@@ -104,12 +109,43 @@ export default function BillingPage() {
 
                                             <Button
                                                 variant={pkg.name === "Popular" ? "default" : "outline"}
-                                                className="w-full h-10 font-bold"
+                                                className="w-full h-10 font-bold cursor-pointer"
+                                                onClick={() => setSelectedPackage(pkg)}
                                             >
                                                 {pkg.price}
                                             </Button>
                                         </div>
                                     ))}
+
+                                    {/* Custom Package */}
+                                    <div className="relative p-5 rounded-xl border border-border/50 bg-background/50 flex flex-col items-center text-center transition-all hover:border-primary/50">
+                                        <p className="text-sm text-muted-foreground font-medium mb-3 mt-2">Tùy chọn</p>
+
+                                        <div className="flex items-center justify-center gap-1.5 mb-4 border-b border-border hover:border-primary/50 transition-colors pb-1 px-4 group">
+                                            <Gem className="h-5 w-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                                            <Input
+                                                type="number"
+                                                min={20}
+                                                value={customDiamonds || ""}
+                                                onChange={(e) => setCustomDiamonds(parseInt(e.target.value) || 0)}
+                                                className="w-16 sm:w-20 h-8 text-2xl font-extrabold font-[family-name:var(--font-heading)] bg-transparent border-0 ring-0 focus-visible:ring-0 p-0 text-center text-foreground/80 focus:text-foreground shadow-none"
+                                            />
+                                        </div>
+
+                                        <Button
+                                            variant="outline"
+                                            className="w-full h-10 font-bold cursor-pointer"
+                                            disabled={customDiamonds < 20}
+                                            onClick={() => setSelectedPackage({
+                                                name: "Tùy chọn",
+                                                diamonds: customDiamonds,
+                                                numericPrice: customDiamonds * 1000,
+                                                price: new Intl.NumberFormat('vi-VN').format(customDiamonds * 1000) + '₫'
+                                            })}
+                                        >
+                                            {customDiamonds >= 20 ? (new Intl.NumberFormat('vi-VN').format(customDiamonds * 1000) + '₫') : "Tối thiểu 20"}
+                                        </Button>
+                                    </div>
                                 </div>
                             </CardContent>
                         </Card>
@@ -162,6 +198,12 @@ export default function BillingPage() {
                     </div>
                 </div>
             </div>
+
+            <VietQRModal
+                isOpen={!!selectedPackage}
+                onClose={() => setSelectedPackage(null)}
+                packageInfo={selectedPackage}
+            />
         </div>
     )
 }

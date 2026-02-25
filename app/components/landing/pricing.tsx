@@ -1,8 +1,10 @@
 "use client"
 import Link from "next/link"
-
+import { useState } from "react"
+import { VietQRModal } from "@/components/vietqr-modal"
 import { Gem, Zap, Download, FileType, Wand2, Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
@@ -13,6 +15,7 @@ const diamondPackages = [
         name: "Starter",
         diamonds: 50,
         price: "49.000₫",
+        numericPrice: 49000,
         bonus: null,
         desc: "Dùng thử, trải nghiệm",
         popular: false,
@@ -22,6 +25,7 @@ const diamondPackages = [
         name: "Popular",
         diamonds: 120,
         price: "99.000₫",
+        numericPrice: 99000,
         bonus: "+20%",
         desc: "Phổ biến nhất, tiết kiệm hơn",
         popular: true,
@@ -31,6 +35,7 @@ const diamondPackages = [
         name: "Best Value",
         diamonds: 280,
         price: "199.000₫",
+        numericPrice: 199000,
         bonus: "+40%",
         desc: "Giá trị tốt nhất, dùng lâu dài",
         popular: false,
@@ -69,6 +74,9 @@ const faqs = [
 ]
 
 export function Pricing() {
+    const [selectedPackage, setSelectedPackage] = useState<any>(null)
+    const [customDiamonds, setCustomDiamonds] = useState<number>(20)
+
     return (
         <section id="pricing" className="min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 border-t border-border/50 relative overflow-hidden bg-background">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -109,15 +117,15 @@ export function Pricing() {
                 </div>
 
                 {/* Diamond packages */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto mb-20 sm:mb-32">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto mb-20 sm:mb-32">
                     {diamondPackages.map((pkg) => (
                         <Card
                             key={pkg.name}
                             className={cn(
                                 "relative overflow-hidden transition-all duration-500 bg-card/40 backdrop-blur-xl border-border/50",
                                 pkg.popular
-                                    ? "border-primary/60 shadow-[0_0_30px_-10px_var(--color-primary)] scale-100 md:scale-105 z-10 ring-1 ring-primary/20"
-                                    : "scale-100 mt-0 md:mt-4 hover:border-primary/50"
+                                    ? "border-primary/60 shadow-[0_0_30px_-10px_var(--color-primary)] scale-100 lg:scale-105 z-10 ring-1 ring-primary/20"
+                                    : "scale-100 mt-0 lg:mt-4 hover:border-primary/50"
                             )}
                         >
                             {pkg.popular && (
@@ -160,18 +168,60 @@ export function Pricing() {
                                     variant={pkg.popular ? "default" : "outline"}
                                     size="lg"
                                     className={cn(
-                                        "w-full h-12 text-base font-semibold transition-all",
+                                        "w-full h-12 text-base font-semibold transition-all cursor-pointer",
                                         pkg.popular
                                             ? "shadow-[0_0_15px_-3px_var(--color-primary)] hover:shadow-[0_0_25px_-3px_var(--color-primary)]"
                                             : "bg-background/50 backdrop-blur-sm"
                                     )}
-                                    asChild
+                                    onClick={() => setSelectedPackage(pkg)}
                                 >
-                                    <Link href="/register">{pkg.cta}</Link>
+                                    {pkg.cta}
                                 </Button>
                             </CardContent>
                         </Card>
                     ))}
+
+                    {/* Custom Package */}
+                    <Card className="relative overflow-hidden transition-all duration-500 bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary/50 flex flex-col scale-100 mt-0 lg:mt-4">
+                        <CardContent className="p-8 relative z-10 text-center flex flex-col flex-1">
+                            <h3 className="font-bold text-xl mb-1">Tùy Chọn</h3>
+                            <p className="text-muted-foreground text-sm mb-6">Nạp theo nhu cầu (Tối thiểu 20)</p>
+
+                            <div className="mb-2 flex items-center justify-center gap-2 border-b border-primary/20 hover:border-primary/50 transition-colors pb-1 mx-4 group">
+                                <Gem className="h-6 w-6 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                                <Input
+                                    type="number"
+                                    min={20}
+                                    value={customDiamonds || ""}
+                                    onChange={(e) => setCustomDiamonds(parseInt(e.target.value) || 0)}
+                                    className="w-20 sm:w-24 h-12 text-4xl sm:text-5xl font-extrabold font-[family-name:var(--font-heading)] tracking-tight bg-transparent border-0 ring-0 focus-visible:ring-0 p-0 text-center text-foreground/80 focus:text-foreground shadow-none"
+                                />
+                            </div>
+
+                            <div className="h-6 mb-5"></div> {/* Placeholder for bonus badge space */}
+
+                            <div className="mb-8 mt-auto">
+                                <span className={cn("text-3xl font-bold", customDiamonds < 20 && "text-muted-foreground text-2xl")}>
+                                    {customDiamonds >= 20 ? (new Intl.NumberFormat('vi-VN').format(customDiamonds * 1000) + '₫') : "Tối thiểu 20"}
+                                </span>
+                            </div>
+
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                className="w-full h-12 text-base font-semibold transition-all cursor-pointer bg-background/50 backdrop-blur-sm mt-auto"
+                                disabled={customDiamonds < 20}
+                                onClick={() => setSelectedPackage({
+                                    name: "Tùy chọn",
+                                    diamonds: customDiamonds,
+                                    numericPrice: customDiamonds * 1000,
+                                    price: new Intl.NumberFormat('vi-VN').format(customDiamonds * 1000) + '₫'
+                                })}
+                            >
+                                Mua Ngay
+                            </Button>
+                        </CardContent>
+                    </Card>
                 </div>
 
                 {/* FAQ Section */}
@@ -195,6 +245,12 @@ export function Pricing() {
                     </Accordion>
                 </div>
             </div>
+
+            <VietQRModal
+                isOpen={!!selectedPackage}
+                onClose={() => setSelectedPackage(null)}
+                packageInfo={selectedPackage}
+            />
         </section>
     )
 }
