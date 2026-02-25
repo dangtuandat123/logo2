@@ -27,10 +27,10 @@ import {
 } from "@/components/ui/tooltip"
 
 const navItems = [
-  { href: "/app", icon: Home, label: "Home" },
-  { href: "/app/create", icon: PlusCircle, label: "Create" },
-  { href: "/app/projects", icon: FolderOpen, label: "Logos" },
-  { href: "/app/settings", icon: Settings, label: "Settings" },
+  { href: "/app", icon: Home, label: "Tổng quan" },
+  { href: "/app/create", icon: PlusCircle, label: "Tạo mới" },
+  { href: "/app/projects", icon: FolderOpen, label: "Logo của tôi" },
+  { href: "/app/settings", icon: Settings, label: "Cài đặt" },
 ]
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -111,7 +111,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="right" sideOffset={8}>
-                Toggle theme
+                Đổi giao diện
               </TooltipContent>
             </Tooltip>
 
@@ -126,7 +126,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right" sideOffset={8}>
-                Sign out
+                Đăng xuất
               </TooltipContent>
             </Tooltip>
           </div>
@@ -141,12 +141,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Sparkles className="h-3.5 w-3.5 text-primary-foreground" />
             </Link>
             <span className="font-semibold text-sm font-[family-name:var(--font-heading)]">
-              {pathname === "/app" && "Dashboard"}
-              {pathname === "/app/create" && "Create Logo"}
-              {pathname.startsWith("/app/create/generating") && "Generating..."}
-              {pathname === "/app/projects" && "My Logos"}
-              {pathname === "/app/settings" && "Settings"}
-              {pathname.startsWith("/app/editor") && "Editor"}
+              {pathname === "/app" && "Tổng quan"}
+              {pathname === "/app/create" && "Tạo Logo"}
+              {pathname.startsWith("/app/create/generating") && "Đang tạo..."}
+              {pathname === "/app/projects" && "Logo của tôi"}
+              {pathname === "/app/settings" && "Cài đặt"}
+              {pathname.startsWith("/app/editor") && "Chỉnh sửa"}
             </span>
           </div>
           <Button
@@ -157,7 +157,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           >
             <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
+            <span className="sr-only">Đổi giao diện</span>
           </Button>
         </div>
       </div>

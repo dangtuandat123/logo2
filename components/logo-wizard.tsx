@@ -94,23 +94,25 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
   const progressValue = (step / steps.length) * 100
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-background relative">
+      {/* Fixed Top Progress Bar */}
+      <div className="shrink-0 z-20 bg-background/80 backdrop-blur-xl border-b border-border/30 px-4 sm:px-6 md:px-8 py-3 sm:py-4 shadow-sm">
+        <div className="max-w-5xl mx-auto animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="flex items-center justify-between mb-2.5 sm:mb-3 text-sm font-medium">
+            <Badge className="bg-primary/10 text-primary border-primary/20 backdrop-blur-md px-3 py-1 shadow-sm font-semibold tracking-wide">
+              Bước {step}/{steps.length} — {steps[step - 1].label}
+            </Badge>
+            <span className="text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full border border-border/50 text-xs font-bold tracking-wider">{Math.round(progressValue)}%</span>
+          </div>
+          <Progress value={progressValue} className="h-2 bg-muted/50 border border-border/50 overflow-hidden rounded-full [&>div]:bg-gradient-to-r [&>div]:from-primary/80 [&>div]:to-primary [&>div]:shadow-[0_0_10px_rgba(var(--color-primary),0.5)]" />
+        </div>
+      </div>
+
       <div
         ref={scrollContainerRef}
         className="flex-1 overflow-y-scroll overflow-x-hidden"
       >
-        <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto">
-          {/* Progress + Step Label */}
-          <div className="mb-6 sm:mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
-            <div className="flex items-center justify-between mb-3 text-sm font-medium">
-              <Badge className="bg-primary/10 text-primary border-primary/20 backdrop-blur-md px-3 py-1 shadow-sm font-semibold tracking-wide">
-                Bước {step}/{steps.length} — {steps[step - 1].label}
-              </Badge>
-              <span className="text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full border border-border/50 text-xs font-bold tracking-wider">{Math.round(progressValue)}%</span>
-            </div>
-            <Progress value={progressValue} className="h-2 bg-muted/50 border border-border/50 overflow-hidden rounded-full [&>div]:bg-gradient-to-r [&>div]:from-primary/80 [&>div]:to-primary [&>div]:shadow-[0_0_10px_rgba(var(--color-primary),0.5)]" />
-          </div>
-
+        <div className="p-4 sm:p-5 md:p-8 max-w-5xl mx-auto">
           {/* Step Content wrapped in Card */}
           <Card className="bg-card/40 backdrop-blur-sm border-border/60 shadow-lg relative overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700">
             <div className="absolute top-0 right-0 -mt-20 -mr-20 w-48 h-48 bg-primary/10 rounded-full blur-[48px] animate-[pulse_6s_ease-in-out_infinite]" />
