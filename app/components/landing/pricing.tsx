@@ -1,18 +1,15 @@
 "use client"
+import Link from "next/link"
 
 import { useState } from "react"
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
+import { Check, Star, Download, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Star } from "lucide-react"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
+import { Badge } from "@/components/ui/badge"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { cn } from "@/lib/utils"
 
 const faqs = [
     {
@@ -37,9 +34,9 @@ export function Pricing() {
     const [isYearly, setIsYearly] = useState(false)
 
     return (
-        <section id="pricing" className="py-16 sm:py-24 border-t border-border/50 relative overflow-hidden">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-12 sm:mb-20">
+        <section id="pricing" className="snap-start min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 border-t border-border/50 relative overflow-hidden bg-background">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <div className="text-center mb-10 sm:mb-16">
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-[family-name:var(--font-heading)] text-balance">
                         Simple, transparent pricing
                     </h2>
@@ -94,16 +91,22 @@ export function Pricing() {
                     ].map((plan) => (
                         <Card
                             key={plan.name}
-                            className={`relative overflow-hidden ${plan.popular ? "border-primary shadow-md scale-100 md:scale-105 z-10" : "scale-100 mt-0 md:mt-4"}`}
+                            className={cn(
+                                "relative overflow-hidden transition-all duration-500 bg-card/40 backdrop-blur-xl border-border/50",
+                                plan.popular ? "border-primary/60 shadow-[0_0_30px_-10px_var(--color-primary)] scale-100 md:scale-105 z-10 ring-1 ring-primary/20" : "scale-100 mt-0 md:mt-4 hover:border-primary/50"
+                            )}
                         >
                             {plan.popular && (
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent pointer-events-none" />
+                            )}
+                            {plan.popular && (
                                 <div className="absolute top-5 right-5 z-20">
-                                    <div className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider">
+                                    <Badge className="bg-primary/20 text-primary hover:bg-primary/30 border-0 shadow-sm backdrop-blur-md">
                                         Most Popular
-                                    </div>
+                                    </Badge>
                                 </div>
                             )}
-                            <CardContent className="p-8">
+                            <CardContent className="p-8 relative z-10">
                                 <h3 className="font-bold text-2xl mb-2">{plan.name}</h3>
                                 <p className="text-muted-foreground text-sm mb-6 h-10">{plan.desc}</p>
                                 <div className="mb-8 flex items-baseline gap-2">
@@ -115,8 +118,8 @@ export function Pricing() {
                                 <ul className="space-y-4 mb-8">
                                     {plan.features.map((f) => (
                                         <li key={f} className="flex items-start gap-3 text-sm font-medium">
-                                            <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
-                                                <Star className="h-3 w-3 text-primary" />
+                                            <div className="flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mt-0.5 border border-primary/20 shadow-sm">
+                                                <Star className="h-2.5 w-2.5 text-primary" />
                                             </div>
                                             <span>{f}</span>
                                         </li>
@@ -125,7 +128,10 @@ export function Pricing() {
                                 <Button
                                     variant={plan.popular ? "default" : "outline"}
                                     size="lg"
-                                    className="w-full h-12 text-base font-semibold"
+                                    className={cn(
+                                        "w-full h-12 text-base font-semibold transition-all",
+                                        plan.popular ? "shadow-[0_0_15px_-3px_var(--color-primary)] hover:shadow-[0_0_25px_-3px_var(--color-primary)]" : "bg-background/50 backdrop-blur-sm"
+                                    )}
                                     asChild
                                 >
                                     <Link href="/register">{plan.cta}</Link>

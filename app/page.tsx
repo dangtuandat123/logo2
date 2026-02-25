@@ -8,16 +8,18 @@ import { Footer } from "./components/landing/footer"
 
 export default function LandingPage() {
   return (
-    <div className="min-h-dvh bg-background selection:bg-primary/30 selection:text-primary-foreground">
+    <div className="h-[100dvh] w-full max-w-[100vw] overflow-y-auto overflow-x-hidden snap-y snap-mandatory scroll-smooth bg-background selection:bg-primary/30 selection:text-primary-foreground relative">
       <Header />
-      <main>
+      <main className="flex flex-col w-full">
         <Hero />
         <Features />
         <Showcase />
         <Pricing />
-        <Cta />
+        <section className="snap-start min-h-[100dvh] w-full flex flex-col justify-between shrink-0">
+          <Cta />
+          <Footer />
+        </section>
       </main>
-      <Footer />
     </div>
   )
 }

@@ -4,33 +4,36 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Sparkles } from "lucide-react"
 
 export function Cta() {
     return (
-        <section className="py-20 sm:py-32 border-t border-border/50 bg-background relative overflow-hidden">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-[family-name:var(--font-heading)] text-balance mb-6 text-foreground">
-                    Ready to create your stunning logo?
+        <div className="flex-1 w-full flex flex-col justify-center py-20 sm:py-32 bg-background relative overflow-hidden">
+            {/* Animated Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-purple-500/5 animate-gradient bg-300%" />
+
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center relative z-10">
+                <Badge className="mb-6 font-semibold py-1.5 px-4 bg-primary/10 text-primary border-primary/20 backdrop-blur-md">
+                    <Sparkles className="h-3.5 w-3.5 mr-2 inline" />
+                    Start Creating Now
+                </Badge>
+
+                <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-heading)] text-balance mb-6 text-foreground tracking-tight">
+                    Bring your <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">brand</span> to life.
                 </h2>
-                <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-pretty text-lg sm:text-xl md:text-2xl leading-relaxed mb-10">
-                    Join thousands of designers and founders using AI to build their brand identity instantly.
+                <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto tracking-normal">
+                    Join thousands of founders and creators who are building beautiful logos in seconds, not weeks.
                 </p>
-                <form className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
-                    <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        className="h-14 text-base px-5 bg-background border-border shrink-0"
-                        required
-                    />
-                    <Button size="lg" type="submit" className="gap-2 h-14 px-8 text-base w-full sm:w-auto shrink-0">
-                        Start Free Trial
-                        <ArrowRight className="h-5 w-5" />
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-md mx-auto">
+                    <Button size="lg" className="w-full h-14 text-lg font-bold shadow-[0_0_30px_-5px_var(--color-primary)] hover:shadow-[0_0_40px_-5px_var(--color-primary)] hover:-translate-y-1 transition-all">
+                        Start Building Free
                     </Button>
-                </form>
-                <p className="text-sm text-muted-foreground mt-4">
-                    No credit card required. 5 free logos on sign up.
+                </div>
+                <p className="text-sm text-muted-foreground mt-6 font-medium">
+                    No credit card required. Generate 5 pristine logos on sign up.
                 </p>
             </div>
-        </section>
+        </div>
     )
 }
