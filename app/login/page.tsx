@@ -8,6 +8,9 @@ import { AppLogo } from "@/components/app-logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useAuth } from "@/contexts/AuthContext"
+import { toast } from "sonner"
+import api from "@/lib/api"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -16,12 +19,24 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login } = useAuth()
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setTimeout(() => {
+
+    try {
+      const response = await api.post('/login', { email, password })
+      login(response.data.token, response.data.user)
+      toast.success(response.data.message || 'Đăng nhập thành công')
       router.push("/app")
-    }, 800)
+    } catch (error: any) {
+      console.error(error)
+      const msg = error.response?.data?.message || 'Lỗi đăng nhập, vui lòng kiểm tra lại.'
+      toast.error(msg)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

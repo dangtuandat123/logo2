@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { CreditCard, Gem, ArrowUpRight, History } from "lucide-react"
+import { useState, useEffect } from "react"
+import { CreditCard, Gem, ArrowUpRight, History, Loader2 } from "lucide-react"
 import { VietQRModal } from "@/components/vietqr-modal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,6 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/contexts/AuthContext"
+import api from "@/lib/api"
+import { toast } from "sonner"
 
 const diamondPackages = [
     { name: "Starter", diamonds: 50, price: "49.000₫", numericPrice: 49000, bonus: "" },
@@ -16,16 +19,46 @@ const diamondPackages = [
     { name: "Best Value", diamonds: 280, price: "199.000₫", numericPrice: 199000, bonus: "+40%" },
 ]
 
-const transactionHistory = [
-    { id: "TX-9982", date: "25 Tháng 2, 2026", type: "Nạp tiền", amount: "+120", price: "99.000₫", status: "Thành công" },
-    { id: "TX-9981", date: "24 Tháng 2, 2026", type: "Tạo Logo", amount: "-10", price: "-", status: "Thành công" },
-    { id: "TX-9980", date: "22 Tháng 2, 2026", type: "Xuất Vector SVG", amount: "-5", price: "-", status: "Thành công" },
-    { id: "TX-9979", date: "20 Tháng 2, 2026", type: "Quà tặng hệ thống", amount: "+20", price: "0₫", status: "Thành công" },
-]
-
 export default function BillingPage() {
+    const { user, fetchUser } = useAuth()
     const [selectedPackage, setSelectedPackage] = useState<any>(null)
     const [customDiamonds, setCustomDiamonds] = useState<number>(20)
+    const [transactions, setTransactions] = useState<any[]>([])
+    const [isLoadingTx, setIsLoadingTx] = useState(true)
+    const [isCreatingOrder, setIsCreatingOrder] = useState(false)
+
+    useEffect(() => {
+        const fetchHistory = async () => {
+            try {
+                const res = await api.get('/transactions')
+                setTransactions(res.data)
+            } catch (error) {
+                console.error("Failed to load transactions", error)
+            } finally {
+                setIsLoadingTx(false)
+            }
+        }
+        fetchHistory()
+    }, [])
+
+    const handleSelectPackage = async (pkg: any) => {
+        setIsCreatingOrder(true)
+        try {
+            const res = await api.post('/transactions/create-order', {
+                diamonds: pkg.diamonds,
+                amount: pkg.numericPrice
+            })
+            setSelectedPackage({
+                ...pkg,
+                order_id: res.data.order_id
+            })
+        } catch (error) {
+            console.error("Order creation failed", error)
+            toast.error("Không thể tạo đơn hàng lúc này. Vui lòng thử lại.")
+        } finally {
+            setIsCreatingOrder(false)
+        }
+    }
 
     return (
         <div className="flex-1 overflow-y-scroll overflow-x-hidden">
@@ -59,7 +92,7 @@ export default function BillingPage() {
                                     </div>
                                     <div>
                                         <p className="font-bold text-4xl text-foreground font-[family-name:var(--font-heading)] leading-none">
-                                            120
+                                            {user?.diamonds ?? 0}
                                         </p>
                                         <p className="text-xs text-primary font-medium mt-1">Kim cương</p>
                                     </div>
@@ -110,7 +143,8 @@ export default function BillingPage() {
                                             <Button
                                                 variant={pkg.name === "Popular" ? "default" : "outline"}
                                                 className="w-full h-10 font-bold cursor-pointer"
-                                                onClick={() => setSelectedPackage(pkg)}
+                                                onClick={() => handleSelectPackage(pkg)}
+                                                disabled={isCreatingOrder}
                                             >
                                                 {pkg.price}
                                             </Button>
@@ -135,8 +169,8 @@ export default function BillingPage() {
                                         <Button
                                             variant="outline"
                                             className="w-full h-10 font-bold cursor-pointer"
-                                            disabled={customDiamonds < 20}
-                                            onClick={() => setSelectedPackage({
+                                            disabled={customDiamonds < 20 || isCreatingOrder}
+                                            onClick={() => handleSelectPackage({
                                                 name: "Tùy chọn",
                                                 diamonds: customDiamonds,
                                                 numericPrice: customDiamonds * 1000,
@@ -161,35 +195,46 @@ export default function BillingPage() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="flex-1 overflow-hidden flex flex-col">
-                                <div className="space-y-4 pr-2">
-                                    {transactionHistory.map((tx) => (
-                                        <div key={tx.id} className="flex items-start justify-between gap-2 pb-4 border-b border-border/50 last:border-0 last:pb-0">
-                                            <div>
-                                                <p className="text-sm font-medium">{tx.type}</p>
-                                                <div className="flex items-center gap-2 mt-1">
-                                                    <p className="text-[10px] text-muted-foreground">{tx.date}</p>
-                                                    {tx.price !== "-" && (
-                                                        <>
-                                                            <span className="text-[10px] text-border">•</span>
-                                                            <p className="text-[10px] text-muted-foreground">{tx.price}</p>
-                                                        </>
-                                                    )}
+                                {isLoadingTx ? (
+                                    <div className="flex items-center justify-center py-10">
+                                        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                                    </div>
+                                ) : transactions.length === 0 ? (
+                                    <div className="flex flex-col items-center justify-center py-10 text-muted-foreground text-sm">
+                                        <History className="h-8 w-8 mb-2 opacity-20" />
+                                        <p>Chưa có giao dịch nào.</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4 pr-2 overflow-y-auto">
+                                        {transactions.map((tx) => (
+                                            <div key={tx.id} className="flex items-start justify-between gap-2 pb-4 border-b border-border/50 last:border-0 last:pb-0">
+                                                <div>
+                                                    <p className="text-sm font-medium">{tx.description}</p>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <p className="text-[10px] text-muted-foreground">
+                                                            {new Date(tx.created_at).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col items-end">
+                                                    <p className={cn(
+                                                        "text-sm font-bold flex items-center gap-1",
+                                                        tx.amount > 0 ? "text-emerald-500" : "text-foreground"
+                                                    )}>
+                                                        {tx.amount > 0 ? `+${tx.amount}` : tx.amount} <Gem className="h-3 w-3" />
+                                                    </p>
+                                                    <Badge variant="outline" className={cn(
+                                                        "text-[9px] mt-1 px-1.5",
+                                                        tx.status === 'completed' && "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+                                                        tx.status === 'pending' && "bg-orange-500/10 text-orange-500 border-orange-500/20"
+                                                    )}>
+                                                        {tx.status === 'completed' ? 'Thành công' : tx.status === 'pending' ? 'Chờ thanh toán' : tx.status}
+                                                    </Badge>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col items-end">
-                                                <p className={cn(
-                                                    "text-sm font-bold flex items-center gap-1",
-                                                    tx.amount.startsWith("+") ? "text-emerald-500" : "text-foreground"
-                                                )}>
-                                                    {tx.amount} <Gem className="h-3 w-3" />
-                                                </p>
-                                                <Badge variant="outline" className="text-[9px] mt-1 px-1.5 bg-background/50">
-                                                    {tx.status}
-                                                </Badge>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
                                 <Button variant="ghost" className="w-full mt-4 text-xs text-muted-foreground h-8">
                                     Xem tất cả
                                 </Button>
@@ -201,7 +246,10 @@ export default function BillingPage() {
 
             <VietQRModal
                 isOpen={!!selectedPackage}
-                onClose={() => setSelectedPackage(null)}
+                onClose={() => {
+                    setSelectedPackage(null)
+                    fetchUser() // Refresh balance in case they paid
+                }}
                 packageInfo={selectedPackage}
             />
         </div>

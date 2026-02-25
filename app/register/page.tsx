@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/contexts/AuthContext"
+import { toast } from "sonner"
+import api from "@/lib/api"
 
 const passwordReqs = [
   { label: "Ít nhất 8 ký tự", test: (p: string) => p.length >= 8 },
@@ -24,12 +27,24 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login } = useAuth()
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setTimeout(() => {
+
+    try {
+      const response = await api.post('/register', { name, email, password })
+      login(response.data.token, response.data.user)
+      toast.success(response.data.message || 'Đăng ký thành công')
       router.push("/app")
-    }, 800)
+    } catch (error: any) {
+      console.error(error)
+      const msg = error.response?.data?.message || 'Lỗi đăng ký, vui lòng kiểm tra lại.'
+      toast.error(msg)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

@@ -20,6 +20,7 @@ interface VietQRModalProps {
         diamonds: number
         price: string
         numericPrice: number // e.g., 49000
+        order_id: string
     } | null
 }
 
@@ -49,7 +50,7 @@ export function VietQRModal({ isOpen, onClose, packageInfo }: VietQRModalProps) 
         bankName: "Techcombank",
         accountNumber: "1903658291001",
         accountName: "NGUYEN VAN A",
-        content: `SLOX ${Math.floor(10000 + Math.random() * 90000)}`, // Random order ID
+        content: packageInfo.order_id, // Real order ID from backend
     }
 
     // Generate VietQR URL (Using VietQR.io Quick Link API)

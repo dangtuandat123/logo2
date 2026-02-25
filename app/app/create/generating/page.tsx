@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Sparkles } from "lucide-react"
+import { Sparkles, Loader2 } from "lucide-react"
+import { toast } from "sonner"
+import api from "@/lib/api"
+import { useAuth } from "@/contexts/AuthContext"
 
 const loadingMessages = [
   "Đang phân tích định vị thương hiệu...",
@@ -16,38 +19,92 @@ const loadingMessages = [
 
 export default function GeneratingPage() {
   const router = useRouter()
+  const { fetchUser } = useAuth()
+  const [errorStatus, setErrorStatus] = useState<number | null>(null)
   const [progress, setProgress] = useState(0)
   const [messageIndex, setMessageIndex] = useState(0)
 
   useEffect(() => {
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressInterval)
-          return 100
+    let progressInterval: NodeJS.Timeout
+    let messageInterval: NodeJS.Timeout
+
+    if (!errorStatus) {
+      progressInterval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 95) return 95 // Hold at 95% until API returns
+          return prev + 1.5
+        })
+      }, 500)
+
+      messageInterval = setInterval(() => {
+        setMessageIndex((prev) =>
+          prev < loadingMessages.length - 1 ? prev + 1 : prev
+        )
+      }, 3000)
+    }
+
+    const generateLogo = async () => {
+      try {
+        const configStr = sessionStorage.getItem("logoConfig")
+        if (!configStr) {
+          toast.error("Không tìm thấy cấu hình logo. Đang quay lại...")
+          router.push("/app/create")
+          return
         }
-        return prev + 1.5
-      })
-    }, 50)
 
-    const messageInterval = setInterval(() => {
-      setMessageIndex((prev) =>
-        prev < loadingMessages.length - 1 ? prev + 1 : prev
-      )
-    }, 600)
+        const config = JSON.parse(configStr)
+        // Ensure palette is an array of strings
+        if (typeof config.palette === 'string') {
+          config.palette = [config.palette]
+        }
 
-    const timer = setTimeout(() => {
-      // In a real app this would be the ID returned from the backend after generation
-      const mockProjectId = `proj_${Math.random().toString(36).substring(2, 9)}`
-      router.push(`/app/editor/${mockProjectId}`)
-    }, 3800)
+        const response = await api.post('/generate-logo', config)
+
+        // Success
+        setProgress(100)
+        setTimeout(() => {
+          fetchUser() // Refresh diamonds
+          sessionStorage.removeItem("logoConfig")
+          router.push(`/app/editor/${response.data.project_id}`)
+        }, 500)
+
+      } catch (error: any) {
+        console.error("Generate error", error)
+        clearInterval(progressInterval)
+        clearInterval(messageInterval)
+
+        const status = error.response?.status
+        setErrorStatus(status || 500)
+
+        if (status === 402) {
+          toast.error("Bạn không đủ 10 Kim cương để tạo logo. Vui lòng nạp thêm.")
+          setTimeout(() => router.push("/app/billing"), 2000)
+        } else {
+          toast.error("Có lỗi xảy ra trong quá trình tạo logo. Vui lòng thử lại sau.")
+          setTimeout(() => router.push("/app/create"), 2000)
+        }
+      }
+    }
+
+    generateLogo()
 
     return () => {
       clearInterval(progressInterval)
       clearInterval(messageInterval)
-      clearTimeout(timer)
     }
-  }, [router])
+  }, [router, fetchUser, errorStatus])
+
+  if (errorStatus === 402) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mb-6">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+        <h2 className="text-xl font-bold font-[family-name:var(--font-heading)] mb-2">Không đủ Kim Cương!</h2>
+        <p className="text-muted-foreground mb-4">Bạn cần dùng 10💎 để tạo Logo AI. Đang chuyển hướng đến trang nạp...</p>
+      </div>
+    )
+  }
 
   return (
     <div className="flex-1 flex items-center justify-center p-4 sm:p-6">

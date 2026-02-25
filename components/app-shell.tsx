@@ -18,6 +18,7 @@ import {
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { useAuth } from "@/contexts/AuthContext"
 import { CommandMenu } from "@/components/command-menu"
 import { AppLogo } from "@/components/app-logo"
 import {
@@ -38,6 +39,7 @@ const navItems = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
+  const { user, logout } = useAuth()
 
   // Khóa scroll trên html/body khi AppShell mount, mở lại khi unmount
   useEffect(() => {
@@ -101,7 +103,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <TooltipTrigger asChild>
                 <Link href="/app/billing" className="flex flex-col items-center justify-center p-2 mb-2 bg-primary/10 rounded-xl cursor-pointer hover:bg-primary/20 transition-colors">
                   <Gem className="h-5 w-5 text-primary mb-0.5" />
-                  <span className="text-[10px] font-bold text-primary">120</span>
+                  <span className="text-[10px] font-bold text-primary">{user?.diamonds ?? 0}</span>
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right" sideOffset={8}>
@@ -131,13 +133,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link
-                  href="/"
-                  className="flex items-center justify-center w-10 h-10 rounded-xl text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-all"
+                <button
+                  onClick={logout}
+                  className="w-10 h-10 flex items-center justify-center rounded-xl text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-all"
                 >
                   <LogOut className="h-5 w-5" />
                   <span className="sr-only">Sign out</span>
-                </Link>
+                </button>
               </TooltipTrigger>
               <TooltipContent side="right" sideOffset={8}>
                 Đăng xuất

@@ -57,13 +57,18 @@ const sampleSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"
   <text x="200" y="340" font-family="system-ui, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">TECHFLOW</text>
 </svg>`
 
-export function LogoEditor() {
-  const [svgContent, setSvgContent] = useState(sampleSVG)
-  const [originalSvg, setOriginalSvg] = useState(sampleSVG)
-  const [brandInfo, setBrandInfo] = useState({ name: "TECHFLOW", palette: "indigo" })
+import { toast } from "sonner"
+import api from "@/lib/api"
+import { useAuth } from "@/contexts/AuthContext"
+
+export function LogoEditor({ projectId }: { projectId: string }) {
+  const [svgContent, setSvgContent] = useState<string>("")
+  const [originalSvg, setOriginalSvg] = useState<string>("")
+  const [brandInfo, setBrandInfo] = useState({ name: "Đang tải...", palette: [] as string[] })
   const [command, setCommand] = useState("")
   const [isProcessing, setIsProcessing] = useState(false)
   const [lastResponse, setLastResponse] = useState("")
+  const { fetchUser, user } = useAuth()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [zoom, setZoom] = useState(100)
   const [pan, setPan] = useState({ x: 0, y: 0 })
@@ -148,46 +153,24 @@ export function LogoEditor() {
 
   // On mount, load config from sessionStorage and generate base SVG
   useEffect(() => {
-    const configStr = sessionStorage.getItem("logoConfig")
-    if (configStr) {
+    const fetchProject = async () => {
       try {
-        const config = JSON.parse(configStr)
-        const name = config.brandName || "TECHFLOW"
-        // Ensure name isn't too long to break SVG (basic validation)
-        const safeName = name.length > 20 ? name.substring(0, 20) + "..." : name
-        const paletteId = config.palette || "indigo"
-
-        setBrandInfo({ name: safeName, palette: paletteId })
-
-        const colors = colorPalettes[paletteId as keyof typeof colorPalettes] || colorPalettes.indigo
-        const color1 = colors[0]
-        const color2 = colors[1]
-
-        const generatedSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-  <defs>
-    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:${color1};stop-opacity:1" />
-      <stop offset="100%" style="stop-color:${color2};stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  <rect width="400" height="400" rx="48" fill="url(#grad1)"/>
-  <g transform="translate(200,200)">
-    <polygon points="0,-80 69.3,40 -69.3,40" fill="white" opacity="0.95"/>
-    <circle cx="0" cy="0" r="28" fill="url(#grad1)"/>
-    <circle cx="0" cy="-80" r="8" fill="white" opacity="0.7"/>
-    <circle cx="69.3" cy="40" r="8" fill="white" opacity="0.7"/>
-    <circle cx="-69.3" cy="40" r="8" fill="white" opacity="0.7"/>
-  </g>
-  <text x="200" y="340" font-family="system-ui, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">${safeName.toUpperCase()}</text>
-</svg>`
-
-        setSvgContent(generatedSvg)
-        setOriginalSvg(generatedSvg)
-      } catch (e) {
-        console.error("Failed to parse logo config", e)
+        const res = await api.get(`/projects/${projectId}`)
+        const data = res.data
+        if (data.svg_content) {
+          setSvgContent(data.svg_content)
+          setOriginalSvg(data.svg_content)
+          setBrandInfo({ name: data.brand_name, palette: data.palette || [] })
+        } else {
+          toast.error("Logo đang được tạo hoặc bị lỗi.")
+        }
+      } catch (error) {
+        toast.error("Không thể tải thông tin dự án.")
+        console.error(error)
       }
     }
-  }, [])
+    fetchProject()
+  }, [projectId])
 
   // Tự động điều chỉnh chiều cao textarea
   const adjustTextareaHeight = useCallback(() => {
@@ -197,70 +180,57 @@ export function LogoEditor() {
     textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`
   }, [])
 
-  const processCommand = (text: string) => {
+  const processCommand = async (text: string) => {
     if (!text.trim() || isProcessing) return
 
     const userMsg = text.trim()
     setCommand("")
     setIsProcessing(true)
 
-    setTimeout(() => {
-      let newSvg = svgContent
-      const lower = userMsg.toLowerCase()
+    try {
+      const res = await api.post('/edit-logo', {
+        project_id: projectId,
+        prompt: userMsg
+      })
 
-      // Extract current active colors from the SVG to replace them dynamically
-      const colorMatch = svgContent.match(/stop-color:(#[a-fA-F0-9]{6})/g)
-
-      let currentColor1 = "#6366f1"
-      let currentColor2 = "#8b5cf6"
-
-      if (colorMatch && colorMatch.length >= 2) {
-        currentColor1 = colorMatch[0].replace("stop-color:", "")
-        currentColor2 = colorMatch[1].replace("stop-color:", "")
+      setSvgContent(res.data.svg_content)
+      setLastResponse(`✅ ${userMsg}`)
+      fetchUser() // Refresh diamonds balance
+    } catch (error: any) {
+      console.error(error)
+      if (error.response?.status === 402) {
+        toast.error("Không đủ Kim Cương! Cần 2💎 để chỉnh sửa bằng AI.")
+      } else {
+        toast.error(error.response?.data?.message || "Lỗi khi gọi AI định hình lại. Xin thử lại.")
       }
-
-      // Regex replace func to dynamically swap out the active pair
-      const swapColors = (c1: string, c2: string) => {
-        newSvg = newSvg.replace(new RegExp(currentColor1, 'g'), c1).replace(new RegExp(currentColor2, 'g'), c2)
-      }
-
-      if (lower.includes("red") || lower.includes("warm")) {
-        swapColors("#ef4444", "#f97316")
-      } else if (lower.includes("green") || lower.includes("nature")) {
-        swapColors("#10b981", "#059669")
-      } else if (lower.includes("blue") || lower.includes("ocean")) {
-        swapColors("#3b82f6", "#2563eb")
-      } else if (lower.includes("dark") || lower.includes("black")) {
-        swapColors("#1e293b", "#334155")
-      } else if (lower.includes("round") || lower.includes("circle")) {
-        newSvg = newSvg.replace(
-          /<polygon[^/]*\/>/,
-          '<circle cx="0" cy="0" r="65" fill="white" opacity="0.95"/>'
-        )
-      } else if (lower.includes("bigger") || lower.includes("larger")) {
-        newSvg = newSvg.replace(/font-size="\d+"/, 'font-size="44"')
-      } else if (lower.includes("smaller") || lower.includes("less")) {
-        newSvg = newSvg.replace(/font-size="\d+"/, 'font-size="28"')
-      }
-
-      setSvgContent(newSvg)
-      setLastResponse(
-        newSvg !== svgContent
-          ? `✅ Đã xong — "${userMsg}"`
-          : "Không có thay đổi nào được áp dụng. Thử yêu cầu màu sắc hoặc hình dáng mới nhé."
-      )
+      setLastResponse(`❌ Lỗi: Không thể thực hiện "${userMsg}"`)
+    } finally {
       setIsProcessing(false)
-    }, 1000)
+    }
   }
 
-  const handleDownloadSVG = () => {
-    const blob = new Blob([svgContent], { type: "image/svg+xml" })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "logo.svg"
-    a.click()
-    URL.revokeObjectURL(url)
+  const handleDownloadSVG = async () => {
+    try {
+      toast.info("Đang xử lý xuất file Vector chất lượng cao...")
+      const res = await api.post(`/projects/${projectId}/export`)
+
+      const blob = new Blob([res.data.svg_content], { type: "image/svg+xml" })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement("a")
+      a.href = url
+      a.download = `Slox_Vector_${brandInfo.name}.svg`
+      a.click()
+      URL.revokeObjectURL(url)
+
+      toast.success(res.data.message || "Đã tải SVG thành công")
+      fetchUser() // Refresh balance because we spent 5 diamonds
+    } catch (error: any) {
+      if (error.response?.status === 402) {
+        toast.error("Bạn không đủ Kim Cương! Cần 5💎 để xuất file Vector.")
+      } else {
+        toast.error("Không thể xuất file lúc này.")
+      }
+    }
   }
 
   const handleDownloadPNG = (scale: number = 1) => {
