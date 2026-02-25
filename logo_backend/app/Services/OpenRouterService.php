@@ -40,11 +40,12 @@ Yêu cầu:
 3. Chữ (Tên thương hiệu) phải rõ ràng, chọn font-family thích hợp (sans-serif hoặc serif).
 4. Phải thả gradient hoặc màu solid dựa trên Bảng màu cung cấp.";
 
+        set_time_limit(180);
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Content-Type' => 'application/json',
-        ])->post($this->baseUrl, [
-                    'model' => 'google/gemini-3.1-pro-preview',
+        ])->withoutVerifying()->timeout(180)->post($this->baseUrl, [
+                    'model' => 'google/gemini-3-flash-preview',
                     'messages' => [
                         [
                             'role' => 'user',
@@ -79,10 +80,11 @@ Yêu cầu sửa đổi từ người dùng: '$command'.
 Nhiệm vụ: CHỈ trả về mã <svg> ĐÃ ĐƯỢC CHỈNH SỬA. 
 Giữ nguyên viewBox và các thành phần không bị ảnh hưởng. KHÔNG trả lời bằng văn bản, KHÔNG dùng markdown box.";
 
+        set_time_limit(180);
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Content-Type' => 'application/json',
-        ])->post($this->baseUrl, [
+        ])->withoutVerifying()->timeout(180)->post($this->baseUrl, [
                     'model' => 'google/gemini-3.1-pro-preview',
                     'messages' => [
                         [

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Sparkles, Loader2 } from "lucide-react"
 import { toast } from "sonner"
@@ -23,6 +23,7 @@ export default function GeneratingPage() {
   const [errorStatus, setErrorStatus] = useState<number | null>(null)
   const [progress, setProgress] = useState(0)
   const [messageIndex, setMessageIndex] = useState(0)
+  const hasFetched = useRef(false)
 
   useEffect(() => {
     let progressInterval: NodeJS.Timeout
@@ -44,6 +45,9 @@ export default function GeneratingPage() {
     }
 
     const generateLogo = async () => {
+      if (hasFetched.current) return
+      hasFetched.current = true
+
       try {
         const configStr = sessionStorage.getItem("logoConfig")
         if (!configStr) {
