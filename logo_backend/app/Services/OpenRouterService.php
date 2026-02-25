@@ -45,7 +45,7 @@ Yêu cầu:
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Content-Type' => 'application/json',
         ])->withoutVerifying()->timeout(180)->post($this->baseUrl, [
-                    'model' => 'google/gemini-3-flash-preview',
+                    'model' => 'minimax/minimax-m2.5',
                     'messages' => [
                         [
                             'role' => 'user',

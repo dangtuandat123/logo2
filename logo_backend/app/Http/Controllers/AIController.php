@@ -88,10 +88,15 @@ class AIController extends Controller
     {
         \Illuminate\Support\Facades\Log::info('Edit attempt data: ', $request->all());
 
-        $request->validate([
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             'project_id' => 'required|exists:projects,id',
             'command' => 'required|string|max:255',
         ]);
+
+        if ($validator->fails()) {
+            \Illuminate\Support\Facades\Log::error('Validation Failed: ', $validator->errors()->toArray());
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $user = $request->user();
         $project = Project::where('id', $request->project_id)->where('user_id', $user->id)->firstOrFail();

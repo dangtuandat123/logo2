@@ -4,10 +4,17 @@ $app = require_once __DIR__ . '/bootstrap/app.php';
 $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->bootstrap();
 
-try {
-    $service = app(App\Services\OpenRouterService::class);
-    $svg = $service->generateLogo('Test', null, null, ['#000000'], null);
-    echo "SUCCESS:\n" . substr($svg, 0, 100);
-} catch (\Throwable $e) {
-    echo "ERROR: " . get_class($e) . "\nMessage: " . $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString();
+$v = Illuminate\Support\Facades\Validator::make(
+    ['project_id' => 6, 'command' => 'PHONG CÁCH HOẠT HÌNH'],
+    [
+        'project_id' => 'required|exists:projects,id',
+        'command' => 'required|string|max:255',
+    ]
+);
+
+if ($v->fails()) {
+    echo "FAILED:\n";
+    print_r($v->errors()->toArray());
+} else {
+    echo "PASS\n";
 }
