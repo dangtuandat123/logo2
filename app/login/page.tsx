@@ -36,7 +36,7 @@ export default function LoginPage() {
             <AppLogo size={64} />
           </div>
           <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-4">
-            Chào mừng trở lại LogoAI
+            Chào mừng trở lại Slox
           </h2>
           <p className="text-muted-foreground leading-relaxed text-justify">
             Tiếp tục thiết kế logo tuyệt đẹp với AI. Các dự án đang chờ bạn.
@@ -64,7 +64,7 @@ export default function LoginPage() {
           <div className="lg:hidden flex items-center gap-2 mb-6 sm:mb-8">
             <AppLogo size={32} />
             <span className="font-bold text-lg font-[family-name:var(--font-heading)]">
-              LogoAI
+              Slox
             </span>
           </div>
 

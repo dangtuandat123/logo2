@@ -16,8 +16,8 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'LogoAI - Create Stunning Logos with AI',
-  description: 'Generate beautiful, professional logos in seconds using AI. Customize colors, styles, and typography effortlessly.',
+  title: 'Slox - Thiết Kế Logo Chuyên Nghiệp Bằng AI',
+  description: 'Tạo logo đẹp, chuyên nghiệp trong vài giây với AI. Tùy chỉnh màu sắc, phong cách và kiểu chữ dễ dàng.',
   icons: {
     icon: [
       {

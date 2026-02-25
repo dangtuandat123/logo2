@@ -17,7 +17,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2">
           <AppLogo size={32} />
           <span className="font-bold text-lg font-[family-name:var(--font-heading)]">
-            LogoAI
+            Slox
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">

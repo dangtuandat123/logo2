@@ -44,7 +44,7 @@ export default function RegisterPage() {
             <AppLogo size={64} />
           </div>
           <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-4">
-            Bắt đầu sáng tạo cùng LogoAI
+            Bắt đầu sáng tạo cùng Slox
           </h2>
           <p className="text-muted-foreground leading-relaxed text-justify">
             Gia nhập cộng đồng hàng ngàn nhà sáng tạo thiết kế thương hiệu bằng AI.
@@ -73,7 +73,7 @@ export default function RegisterPage() {
           <div className="lg:hidden flex items-center gap-2 mb-6 sm:mb-8">
             <AppLogo size={32} />
             <span className="font-bold text-lg font-[family-name:var(--font-heading)]">
-              LogoAI
+              Slox
             </span>
           </div>
 

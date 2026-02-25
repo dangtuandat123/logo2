@@ -6,9 +6,9 @@ interface AppLogoProps {
 }
 
 /**
- * Logo chính của ứng dụng LogoAI.
- * Thiết kế: Chữ "L" cách điệu kết hợp bút vẽ nghệ thuật,
- * nằm trong khung vuông bo góc với gradient tím-xanh.
+ * Logo chính của ứng dụng Slox.
+ * Thiết kế: Chữ "S" động cách điệu trên nền gradient tím-xanh,
+ * tượng trưng cho sự sáng tạo linh hoạt và hiện đại.
  */
 export function AppLogo({ className, size = 32 }: AppLogoProps) {
     return (
@@ -19,74 +19,48 @@ export function AppLogo({ className, size = 32 }: AppLogoProps) {
             width={size}
             height={size}
             className={cn("shrink-0", className)}
-            aria-label="LogoAI"
+            aria-label="Slox"
         >
-            {/* Background with premium gradient */}
             <defs>
-                <linearGradient id="logoBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient id="sloxBg" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#6366F1" />
                     <stop offset="50%" stopColor="#8B5CF6" />
-                    <stop offset="100%" stopColor="#A78BFA" />
+                    <stop offset="100%" stopColor="#06B6D4" />
                 </linearGradient>
-                <linearGradient id="accentGlow" x1="0%" y1="100%" x2="100%" y2="0%">
+                <linearGradient id="sloxAccent" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#38BDF8" />
-                    <stop offset="100%" stopColor="#818CF8" />
-                </linearGradient>
-                <linearGradient id="sparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-                    <stop offset="100%" stopColor="#C4B5FD" stopOpacity="0.7" />
+                    <stop offset="100%" stopColor="#A78BFA" />
                 </linearGradient>
             </defs>
 
             {/* Rounded square background */}
-            <rect width="512" height="512" rx="112" fill="url(#logoBg)" />
+            <rect width="512" height="512" rx="120" fill="url(#sloxBg)" />
 
-            {/* Subtle inner glow ring */}
-            <rect
-                x="24" y="24" width="464" height="464" rx="92"
-                fill="none" stroke="white" strokeOpacity="0.1" strokeWidth="2"
-            />
+            {/* Inner subtle glow ring */}
+            <rect x="20" y="20" width="472" height="472" rx="104" fill="none" stroke="white" strokeOpacity="0.08" strokeWidth="1.5" />
 
-            {/* Stylized "L" letterform — the core brand mark */}
+            {/* Stylized "S" — fluid, dynamic, modern */}
             <path
-                d="M160 120 L160 340 Q160 380 200 380 L340 380"
+                d="M320 135
+           C 280 100, 200 100, 175 140
+           C 145 190, 220 215, 260 240
+           C 310 270, 380 295, 340 365
+           C 310 410, 220 415, 185 380"
                 stroke="white"
-                strokeWidth="52"
+                strokeWidth="56"
                 strokeLinecap="round"
-                strokeLinejoin="round"
                 fill="none"
                 opacity="0.95"
             />
 
-            {/* Creative pen stroke — artistic swash extending from the L */}
-            <path
-                d="M310 380 Q360 380 380 340 Q400 300 370 260 Q340 220 360 180 Q380 140 350 120"
-                stroke="url(#accentGlow)"
-                strokeWidth="36"
-                strokeLinecap="round"
-                fill="none"
-                opacity="0.9"
-            />
-
-            {/* Sparkle star — top right */}
-            <g transform="translate(380, 100)" opacity="0.95">
-                <path
-                    d="M0 -20 L5 -5 L20 0 L5 5 L0 20 L-5 5 L-20 0 L-5 -5 Z"
-                    fill="url(#sparkGrad)"
-                />
+            {/* Creative accent — diamond/rhombus shape top-right */}
+            <g transform="translate(390, 100) rotate(45)">
+                <rect x="-16" y="-16" width="32" height="32" rx="6" fill="url(#sloxAccent)" opacity="0.85" />
             </g>
 
-            {/* Small sparkle — mid-right accent */}
-            <g transform="translate(400, 220)" opacity="0.7">
-                <path
-                    d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z"
-                    fill="white"
-                />
-            </g>
-
-            {/* Tiny sparkle dot — bottom accent */}
-            <circle cx="260" cy="420" r="6" fill="white" opacity="0.5" />
-            <circle cx="420" cy="310" r="4" fill="white" opacity="0.4" />
+            {/* Dot accent — bottom-left balance */}
+            <circle cx="130" cy="420" r="14" fill="white" opacity="0.35" />
+            <circle cx="400" cy="400" r="8" fill="white" opacity="0.2" />
         </svg>
     )
 }

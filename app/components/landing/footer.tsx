@@ -16,7 +16,7 @@ export function Footer() {
                     <div className="flex items-center gap-2">
                         <AppLogo size={32} />
                         <span className="font-bold text-lg font-[family-name:var(--font-heading)]">
-                            LogoAI
+                            Slox
                         </span>
                     </div>
                     <nav className="flex items-center gap-6">
@@ -33,7 +33,7 @@ export function Footer() {
                 </div>
                 <Separator className="my-6" />
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-                    <p>&copy; {new Date().getFullYear()} LogoAI. Đã đăng ký bản quyền.</p>
+                    <p>&copy; {new Date().getFullYear()} Slox. Đã đăng ký bản quyền.</p>
                     <p>Được xây dựng bởi AI. Dành cho nhà sáng tạo.</p>
                 </div>
             </div>
