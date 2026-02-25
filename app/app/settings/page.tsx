@@ -47,10 +47,6 @@ export default function SettingsPage() {
               <Sun className="h-3.5 w-3.5" />
               Giao Diện
             </TabsTrigger>
-            <TabsTrigger value="billing" className="gap-1.5 data-[state=active]:shadow-sm">
-              <CreditCard className="h-3.5 w-3.5" />
-              Thanh Toán
-            </TabsTrigger>
           </TabsList>
 
           {/* Profile Tab */}
@@ -135,62 +131,6 @@ export default function SettingsPage() {
                       <span className={cn("text-sm font-medium transition-colors duration-300", mounted && theme === opt.id ? "text-foreground" : "text-muted-foreground")}>{opt.label}</span>
                     </button>
                   ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Billing Tab */}
-          <TabsContent value="billing" className="space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <Card className="bg-card/40 backdrop-blur-sm border-border/60 shadow-sm relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <CardHeader className="relative z-10">
-                <CardTitle>Gói Hiện Tại</CardTitle>
-                <CardDescription className="text-justify">Quản lý chi tiết đăng ký và thanh toán</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6 relative z-10">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-xl bg-background/50 border border-border/50">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="font-semibold">Gói Pro</p>
-                      <Badge className="bg-primary/10 text-primary hover:bg-primary/20 transition-colors border-0">Hoạt động</Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground text-justify">Tạo logo không giới hạn và xuất file chất lượng cao</p>
-                  </div>
-                  <div className="text-left sm:text-right">
-                    <p className="font-bold text-xl">$19<span className="text-sm font-normal text-muted-foreground">/tháng</span></p>
-                    <p className="text-xs text-muted-foreground mt-0.5 text-justify">Gia hạn vào 15 tháng 3, 2026</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                  <Button className="w-full sm:w-auto shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all">Nâng Cấp Gói</Button>
-                  <Button variant="outline" className="w-full sm:w-auto bg-background/50 hover:bg-muted/50">Quản Lý Thanh Toán</Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Danger Zone */}
-            <Card className="border-destructive/30">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-destructive">
-                  <Shield className="h-4 w-4" />
-                  Vùng Nguy Hiểm
-                </CardTitle>
-                <CardDescription className="text-justify">Các hành động không thể hoàn tác đối với tài khoản</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Separator className="mb-4" />
-                <div className="flex items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium text-justify">Xóa Tài Khoản</p>
-                    <p className="text-xs text-muted-foreground text-justify">
-                      Xóa vĩnh viễn tài khoản và toàn bộ dữ liệu
-                    </p>
-                  </div>
-                  <Button variant="destructive" size="sm" className="shrink-0">
-                    Xóa
-                  </Button>
                 </div>
               </CardContent>
             </Card>

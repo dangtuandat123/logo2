@@ -12,6 +12,8 @@ import {
   LogOut,
   Moon,
   Sun,
+  Gem,
+  CreditCard,
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -29,6 +31,7 @@ const navItems = [
   { href: "/app", icon: Home, label: "Tổng quan" },
   { href: "/app/create", icon: PlusCircle, label: "Tạo mới" },
   { href: "/app/projects", icon: FolderOpen, label: "Logo của tôi" },
+  { href: "/app/billing", icon: CreditCard, label: "Nạp Kim Cương" },
   { href: "/app/settings", icon: Settings, label: "Cài đặt" },
 ]
 
@@ -92,6 +95,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               )
             })}
           </nav>
+
+          <div className="flex flex-col gap-1 w-full justify-center items-center">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href="/app/billing" className="flex flex-col items-center justify-center p-2 mb-2 bg-primary/10 rounded-xl cursor-pointer hover:bg-primary/20 transition-colors">
+                  <Gem className="h-5 w-5 text-primary mb-0.5" />
+                  <span className="text-[10px] font-bold text-primary">120</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right" sideOffset={8}>
+                Nhấn để nạp thêm kim cương
+              </TooltipContent>
+            </Tooltip>
+          </div>
 
           <div className="flex flex-col gap-1 mt-auto">
             <Tooltip>
