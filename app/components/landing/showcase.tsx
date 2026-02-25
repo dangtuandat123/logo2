@@ -11,7 +11,6 @@ const showcaseLogos = [
 export function Showcase() {
     // Duplicate the logos array 5 times to ensure seamless infinite scrolling even on massive ultra-wide monitors
     const marqueeLine1 = [...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos];
-    const marqueeLine2 = [...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos].reverse();
 
     return (
         <section id="showcase" className="min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 bg-muted/10 border-t border-border/50 overflow-hidden relative">
@@ -41,20 +40,6 @@ export function Showcase() {
                 <div className="flex w-max animate-[marquee_40s_linear_infinite] gap-6">
                     {marqueeLine1.map((svg, i) => (
                         <Card key={`l1-${i}`} className="w-48 h-48 sm:w-56 sm:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 shadow-xl">
-                            <CardContent className="p-0 h-full flex items-center justify-center">
-                                <div
-                                    className="w-32 h-32 sm:w-40 sm:h-40"
-                                    dangerouslySetInnerHTML={{ __html: svg }}
-                                />
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-
-                {/* Line 2 (Scrolls Left at different speed / offset) */}
-                <div className="flex w-max animate-[marquee_30s_linear_infinite] gap-6 -ml-[50%] mt-4">
-                    {marqueeLine2.map((svg, i) => (
-                        <Card key={`l2-${i}`} className="w-48 h-48 sm:w-56 sm:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 shadow-xl">
                             <CardContent className="p-0 h-full flex items-center justify-center">
                                 <div
                                     className="w-32 h-32 sm:w-40 sm:h-40"
