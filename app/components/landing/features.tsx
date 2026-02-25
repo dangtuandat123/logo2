@@ -64,16 +64,16 @@ export function Features() {
 
                 <Separator className="mb-10 sm:mb-16 max-w-sm mx-auto opacity-50" />
 
-                <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-[50vh] min-h-[400px]">
+                <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 md:h-[50vh] md:min-h-[400px]">
                     {/* Large Feature 1 (Spans 2 cols, 2 rows) */}
                     <Card className="col-span-1 md:col-span-2 md:row-span-2 relative overflow-hidden group bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-500 shadow-lg">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <CardContent className="p-8 sm:p-10 h-full flex flex-col relative z-10">
-                            <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 mb-8 border border-primary/20 shadow-[0_0_15px_-3px_var(--color-primary)]">
-                                <Sparkles className="h-7 w-7 text-primary" />
+                        <CardContent className="p-6 sm:p-10 h-full flex flex-col relative z-10 justify-center">
+                            <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary/10 mb-6 sm:mb-8 border border-primary/20 shadow-[0_0_15px_-3px_var(--color-primary)]">
+                                <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
                             </div>
-                            <h3 className="font-bold text-2xl sm:text-3xl mb-4 text-foreground group-hover:text-primary transition-colors">AI-Powered Design</h3>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
+                            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4 text-foreground group-hover:text-primary transition-colors">AI-Powered Design</h3>
+                            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                                 Describe your brand and let our AI create professional logos in seconds.
                                 Trained on millions of high-quality designs, it understands typography, layout, and color theory perfectly.
                             </p>
@@ -83,13 +83,13 @@ export function Features() {
                     {/* Medium Feature 1 (Spans 2 cols, 1 row) */}
                     <Card className="col-span-1 md:col-span-2 md:row-span-1 relative overflow-hidden group bg-card/40 backdrop-blur-xl border-border/50 hover:border-blue-500/50 transition-all duration-500 shadow-lg">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <CardContent className="p-6 h-full flex items-center gap-6 relative z-10">
+                        <CardContent className="p-6 h-full flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 relative z-10 justify-center">
                             <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 shrink-0">
                                 <MessageSquare className="h-6 w-6 text-blue-500" />
                             </div>
                             <div>
-                                <h3 className="font-bold text-xl mb-2 text-foreground group-hover:text-blue-500 transition-colors">Natural Language Editing</h3>
-                                <p className="text-base text-muted-foreground leading-relaxed">
+                                <h3 className="font-bold text-lg sm:text-xl mb-1 sm:mb-2 text-foreground group-hover:text-blue-500 transition-colors">Natural Language Editing</h3>
+                                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                                     Refine your logo by simply describing the changes you want to make.
                                 </p>
                             </div>
@@ -103,7 +103,7 @@ export function Features() {
                             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 mb-4">
                                 <Palette className="h-5 w-5 text-emerald-500" />
                             </div>
-                            <h3 className="font-bold text-lg mb-2 text-foreground">Unlimited Styles</h3>
+                            <h3 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 text-foreground">Unlimited Styles</h3>
                             <p className="text-sm text-muted-foreground">Minimal to bold, geometric to abstract.</p>
                         </CardContent>
                     </Card>

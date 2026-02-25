@@ -2,17 +2,7 @@ import Link from "next/link"
 import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-
-const showcaseLogos = [
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#6366f1"/><path d="M30 60 L60 30 L90 60 L60 90Z" fill="white" opacity="0.9"/><circle cx="60" cy="60" r="12" fill="#6366f1"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#10b981"/><path d="M60 25 C40 45 35 75 60 95 C85 75 80 45 60 25Z" fill="white" opacity="0.9"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#f59e0b"/><circle cx="60" cy="65" r="25" fill="white" opacity="0.9"/><rect x="55" y="30" width="10" height="15" rx="5" fill="white" opacity="0.7"/><rect x="30" y="55" width="15" height="10" rx="5" fill="white" opacity="0.7"/><rect x="75" y="55" width="15" height="10" rx="5" fill="white" opacity="0.7"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#8b5cf6"/><polygon points="60,25 90,75 30,75" fill="white" opacity="0.9"/><polygon points="60,45 75,70 45,70" fill="#8b5cf6" opacity="0.8"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#ec4899"/><circle cx="60" cy="55" r="12" fill="white" opacity="0.9"/><circle cx="48" cy="42" r="10" fill="white" opacity="0.6"/><circle cx="72" cy="42" r="10" fill="white" opacity="0.6"/><circle cx="45" cy="58" r="10" fill="white" opacity="0.6"/><circle cx="75" cy="58" r="10" fill="white" opacity="0.6"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#1e293b"/><circle cx="60" cy="55" r="20" fill="none" stroke="white" stroke-width="3" opacity="0.9"/><circle cx="60" cy="55" r="8" fill="white" opacity="0.9"/><rect x="30" y="85" width="60" height="4" rx="2" fill="white" opacity="0.5"/></svg>`,
-]
+import { showcaseLogos } from "@/lib/constants"
 
 export function Hero() {
     return (
@@ -20,6 +10,27 @@ export function Hero() {
             {/* Massive Ambient Glow Base */}
             <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] animate-[pulse_8s_ease-in-out_infinite]" />
             <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] animate-[pulse_10s_ease-in-out_infinite]" style={{ animationDelay: '3s' }} />
+
+            {/* Decorative Floating SVGs with Advanced 3D Animations */}
+            <div className="absolute top-[12%] left-[5%] md:top-[15%] md:left-[10%] w-16 h-16 md:w-28 md:h-28 bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl md:rounded-3xl p-3 md:p-4 shadow-[0_20px_40px_-15px_rgba(255,123,0,0.3)] animate-float-3d opacity-90 flex items-center justify-center transform-gpu">
+                <div className="w-full h-full drop-shadow-2xl" dangerouslySetInnerHTML={{ __html: showcaseLogos[0] }} />
+            </div>
+
+            <div className="absolute top-[18%] right-[2%] md:top-[15%] md:right-[5%] xl:top-[20%] xl:right-[12%] w-20 h-20 md:w-36 md:h-36 bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl md:rounded-[2rem] p-4 md:p-5 shadow-[0_20px_40px_-15px_rgba(0,242,254,0.3)] animate-float-3d-reverse opacity-95 flex items-center justify-center z-20 transform-gpu" style={{ animationDelay: '1.5s' }}>
+                <div className="w-full h-full drop-shadow-2xl" dangerouslySetInnerHTML={{ __html: showcaseLogos[1] }} />
+            </div>
+
+            <div className="absolute bottom-[22%] left-[8%] md:bottom-[20%] md:left-[15%] w-16 h-16 md:w-32 md:h-32 bg-white/5 backdrop-blur-xl border border-white/20 rounded-full p-3 md:p-6 shadow-[0_20px_40px_-15px_rgba(161,140,209,0.3)] animate-float-3d opacity-85 flex items-center justify-center transform-gpu" style={{ animationDelay: '2s' }}>
+                <div className="w-full h-full drop-shadow-2xl" dangerouslySetInnerHTML={{ __html: showcaseLogos[2] }} />
+            </div>
+
+            <div className="absolute bottom-[28%] right-[5%] md:bottom-[25%] md:right-[10%] w-14 h-14 md:w-24 md:h-24 bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl md:rounded-2xl p-2 md:p-4 shadow-[0_20px_40px_-15px_rgba(246,211,101,0.3)] animate-float-3d-reverse opacity-90 flex items-center justify-center transform-gpu" style={{ animationDelay: '0.8s' }}>
+                <div className="w-full h-full drop-shadow-2xl" dangerouslySetInnerHTML={{ __html: showcaseLogos[3] }} />
+            </div>
+
+            <div className="absolute top-[35%] left-[2%] md:top-[40%] md:left-[4%] w-12 h-12 md:w-20 md:h-20 bg-white/5 backdrop-blur-xl border border-white/20 rounded-xl md:rounded-2xl p-2 md:p-3 shadow-[0_20px_40px_-15px_rgba(79,172,254,0.3)] animate-float-3d opacity-75 hidden sm:flex items-center justify-center transform-gpu" style={{ animationDelay: '2.5s' }}>
+                <div className="w-full h-full drop-shadow-2xl" dangerouslySetInnerHTML={{ __html: showcaseLogos[5] }} />
+            </div>
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center z-10 w-full flex flex-col items-center">
                 <Badge className="mb-8 font-semibold gap-2 py-2 px-4 shadow-[0_0_20px_-5px_var(--color-primary)] bg-primary/10 text-primary border-primary/30 backdrop-blur-md animate-in fade-in slide-in-from-bottom-8 duration-1000">

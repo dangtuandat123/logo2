@@ -1,16 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card"
-
-const showcaseLogos = [
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#6366f1"/><path d="M30 60 L60 30 L90 60 L60 90Z" fill="white" opacity="0.9"/><circle cx="60" cy="60" r="12" fill="#6366f1"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#10b981"/><path d="M60 25 C40 45 35 75 60 95 C85 75 80 45 60 25Z" fill="white" opacity="0.9"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#f59e0b"/><circle cx="60" cy="65" r="25" fill="white" opacity="0.9"/><rect x="55" y="30" width="10" height="15" rx="5" fill="white" opacity="0.7"/><rect x="30" y="55" width="15" height="10" rx="5" fill="white" opacity="0.7"/><rect x="75" y="55" width="15" height="10" rx="5" fill="white" opacity="0.7"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#8b5cf6"/><polygon points="60,25 90,75 30,75" fill="white" opacity="0.9"/><polygon points="60,45 75,70 45,70" fill="#8b5cf6" opacity="0.8"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#ec4899"/><circle cx="60" cy="55" r="12" fill="white" opacity="0.9"/><circle cx="48" cy="42" r="10" fill="white" opacity="0.6"/><circle cx="72" cy="42" r="10" fill="white" opacity="0.6"/><circle cx="45" cy="58" r="10" fill="white" opacity="0.6"/><circle cx="75" cy="58" r="10" fill="white" opacity="0.6"/></svg>`,
-    `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#1e293b"/><circle cx="60" cy="55" r="20" fill="none" stroke="white" stroke-width="3" opacity="0.9"/><circle cx="60" cy="55" r="8" fill="white" opacity="0.9"/><rect x="30" y="85" width="60" height="4" rx="2" fill="white" opacity="0.5"/></svg>`,
-]
+import { showcaseLogos } from "@/lib/constants"
 export function Showcase() {
-    // Duplicate the logos array 5 times to ensure seamless infinite scrolling even on massive ultra-wide monitors
-    const marqueeLine1 = [...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos];
+    // The base repeating unit for the marquee (3 copies of logos to ensure it spans ultra-wide screens even once)
+    const baseMarquee = [...showcaseLogos, ...showcaseLogos, ...showcaseLogos];
 
     return (
         <section id="showcase" className="min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 bg-muted/10 border-t border-border/50 overflow-hidden relative">
@@ -30,24 +22,34 @@ export function Showcase() {
             </div>
 
             {/* Marquee Container */}
-            <div className="relative flex flex-col gap-6 w-full -rotate-2 scale-[1.05]">
+            <div className="relative flex flex-col gap-6 w-[110%] -left-[5%] -rotate-2 scale-[1.05]">
 
                 {/* Fade edges to trick the eye into seeing infinite scroll */}
                 <div className="absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
                 <div className="absolute inset-y-0 right-0 w-1/6 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-                {/* Line 1 (Scrolls Left) */}
-                <div className="flex w-max animate-[marquee_40s_linear_infinite] gap-6">
-                    {marqueeLine1.map((svg, i) => (
-                        <Card key={`l1-${i}`} className="w-48 h-48 sm:w-56 sm:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 shadow-xl">
-                            <CardContent className="p-0 h-full flex items-center justify-center">
-                                <div
-                                    className="w-32 h-32 sm:w-40 sm:h-40"
-                                    dangerouslySetInnerHTML={{ __html: svg }}
-                                />
-                            </CardContent>
-                        </Card>
-                    ))}
+                {/* Seamless Infinite Marquee Line */}
+                <div className="flex w-max animate-[marquee_40s_linear_infinite]">
+                    {/* First Half */}
+                    <div className="flex gap-4 sm:gap-6 pr-4 sm:pr-6">
+                        {baseMarquee.map((svg, i) => (
+                            <Card key={`l1-a-${i}`} className="w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 shadow-xl">
+                                <CardContent className="p-0 h-full flex items-center justify-center">
+                                    <div className="w-20 h-20 sm:w-32 sm:h-32 md:w-36 md:h-36 shrink-0" dangerouslySetInnerHTML={{ __html: svg }} />
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                    {/* Second Half (Exact Duplicate) */}
+                    <div className="flex gap-4 sm:gap-6 pr-4 sm:pr-6" aria-hidden="true">
+                        {baseMarquee.map((svg, i) => (
+                            <Card key={`l1-b-${i}`} className="w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 shadow-xl">
+                                <CardContent className="p-0 h-full flex items-center justify-center">
+                                    <div className="w-20 h-20 sm:w-32 sm:h-32 md:w-36 md:h-36 shrink-0" dangerouslySetInnerHTML={{ __html: svg }} />
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
                 </div>
 
             </div>
