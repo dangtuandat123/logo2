@@ -22,9 +22,9 @@ export function Header() {
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
-          <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-          <a href="#showcase" className="hover:text-foreground transition-colors">Showcase</a>
-          <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
+          <a href="#features" className="hover:text-foreground transition-colors">Tính năng</a>
+          <a href="#showcase" className="hover:text-foreground transition-colors">Sản phẩm nổi bật</a>
+          <a href="#pricing" className="hover:text-foreground transition-colors">Báo giá</a>
         </nav>
         <div className="flex items-center gap-2">
           <Button
@@ -35,13 +35,13 @@ export function Header() {
           >
             <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
+            <span className="sr-only">Chuyển đổi giao diện</span>
           </Button>
           <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex rounded-lg">
-            <Link href="/login">Sign In</Link>
+            <Link href="/login">Đăng nhập</Link>
           </Button>
           <Button size="sm" asChild className="hidden sm:inline-flex rounded-lg">
-            <Link href="/register">Get Started</Link>
+            <Link href="/register">Bắt đầu</Link>
           </Button>
           {/* Mobile menu toggle */}
           <Button
@@ -51,7 +51,7 @@ export function Header() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            <span className="sr-only">Toggle menu</span>
+            <span className="sr-only">Bật/tắt menu</span>
           </Button>
         </div>
       </div>
@@ -59,15 +59,15 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-lg">
           <div className="flex flex-col px-4 py-3 gap-1">
-            <a href="#features" onClick={() => setMobileMenuOpen(false)} className="py-2.5 text-sm font-medium text-foreground">Features</a>
-            <a href="#showcase" onClick={() => setMobileMenuOpen(false)} className="py-2.5 text-sm font-medium text-foreground">Showcase</a>
-            <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="py-2.5 text-sm font-medium text-foreground">Pricing</a>
+            <a href="#features" onClick={() => setMobileMenuOpen(false)} className="py-2.5 text-sm font-medium text-foreground">Tính năng</a>
+            <a href="#showcase" onClick={() => setMobileMenuOpen(false)} className="py-2.5 text-sm font-medium text-foreground">Sản phẩm nổi bật</a>
+            <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="py-2.5 text-sm font-medium text-foreground">Báo giá</a>
             <div className="flex gap-2 pt-2 border-t border-border mt-1">
               <Button variant="outline" size="sm" asChild className="flex-1 rounded-lg">
-                <Link href="/login">Sign In</Link>
+                <Link href="/login">Đăng nhập</Link>
               </Button>
               <Button size="sm" asChild className="flex-1 rounded-lg">
-                <Link href="/register">Get Started</Link>
+                <Link href="/register">Bắt đầu</Link>
               </Button>
             </div>
           </div>

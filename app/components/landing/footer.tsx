@@ -3,9 +3,9 @@ import { Sparkles } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 
 const footerLinks = [
-    { label: "Features", href: "#features" },
-    { label: "Showcase", href: "#showcase" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Tính năng", href: "#features" },
+    { label: "Sản phẩm", href: "#showcase" },
+    { label: "Báo giá", href: "#pricing" },
 ]
 
 export function Footer() {
@@ -35,8 +35,8 @@ export function Footer() {
                 </div>
                 <Separator className="my-6" />
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-                    <p>&copy; {new Date().getFullYear()} LogoAI. All rights reserved.</p>
-                    <p>Built with AI. Designed for creators.</p>
+                    <p>&copy; {new Date().getFullYear()} LogoAI. Đã đăng ký bản quyền.</p>
+                    <p>Được xây dựng bởi AI. Dành cho nhà sáng tạo.</p>
                 </div>
             </div>
         </footer>

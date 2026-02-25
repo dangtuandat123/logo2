@@ -10,39 +10,39 @@ import {
 const features = [
     {
         icon: Sparkles,
-        title: "AI-Powered Design",
-        description: "Describe your brand and let our AI create professional logos in seconds.",
+        title: "Thiết Kế Tự Động",
+        description: "Mô tả thương hiệu của bạn và để AI tạo ra các logo chuyên nghiệp chỉ trong tích tắc.",
         hoverText: null,
     },
     {
         icon: MessageSquare,
-        title: "Natural Language Editing",
-        description: "Refine your logo by simply describing the changes you want to make.",
+        title: "Chỉnh Sửa Bằng Lời Nói",
+        description: "Tinh chỉnh logo đơn giản bằng cách mô tả những thay đổi bạn muốn thực hiện.",
         hoverText: null,
     },
     {
         icon: Palette,
-        title: "Unlimited Styles",
-        description: "From minimal to bold, geometric to abstract. Every style at your fingertips.",
+        title: "Phong Cách Không Giới Hạn",
+        description: "Từ tối giản đến phá cách, hình học đến trừu tượng. Mọi phong cách đều nằm trong tầm tay bạn.",
         hoverText: null,
     },
     {
         icon: Zap,
-        title: "Instant Generation",
-        description: "Get your logo in under 10 seconds. No waiting, no delays.",
+        title: "Khởi Tạo Tức Thì",
+        description: "Nhận logo của bạn trong vòng chưa đầy 10 giây. Không cần chờ đợi, không có độ trễ.",
         hoverText: null,
     },
     {
         icon: Download,
-        title: "SVG Export",
-        description: "Download crisp, scalable vector files ready for any use case.",
+        title: "Xuất File SVG",
+        description: "Tải xuống các tệp vector sắc nét, có thể mở rộng kích thước, sẵn sàng cho mọi mục đích sử dụng.",
         hoverText: null,
     },
     {
         icon: Shield,
-        title: "Full Ownership",
-        description: "Every logo you create is yours. No licensing restrictions.",
-        hoverText: "You hold the full copyright to the logos you generate, including commercial rights for the Pro plan.",
+        title: "Quyền Sở Hữu Hoàn Toàn",
+        description: "Mọi logo bạn tạo ra đều thuộc về bạn. Không đi kèm bất kỳ hạn chế cấp phép nào.",
+        hoverText: "Bạn nắm giữ toàn bộ bản quyền đối với các biểu trưng bạn tạo ra, bao gồm cả quyền sử dụng thương mại đối với gói Pro.",
     },
 ]
 
@@ -52,13 +52,13 @@ export function Features() {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="text-center mb-10 sm:mb-12">
                     <div className="inline-flex items-center justify-center px-4 py-1.5 mb-6 rounded-full bg-muted border border-border text-sm font-medium">
-                        Powerful Features
+                        Tính Năng Mạnh Mẽ
                     </div>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-[family-name:var(--font-heading)] text-balance text-foreground">
-                        Everything you need for the perfect logo
+                        Mọi thứ bạn cần cho một logo hoàn hảo
                     </h2>
                     <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-pretty text-base sm:text-lg">
-                        Powerful AI tools wrapped in a simple, intuitive interface
+                        Công cụ AI mạnh mẽ được gói gọn trong một giao diện đơn giản, trực quan
                     </p>
                 </div>
 
@@ -72,10 +72,10 @@ export function Features() {
                             <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary/10 mb-6 sm:mb-8 border border-primary/20 shadow-[0_0_15px_-3px_var(--color-primary)]">
                                 <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
                             </div>
-                            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4 text-foreground group-hover:text-primary transition-colors">AI-Powered Design</h3>
+                            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4 text-foreground group-hover:text-primary transition-colors">Thiết Kế Tự Động Bằng AI</h3>
                             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                                Describe your brand and let our AI create professional logos in seconds.
-                                Trained on millions of high-quality designs, it understands typography, layout, and color theory perfectly.
+                                Mô tả thương hiệu của bạn và để AI tạo ra các logo chuyên nghiệp chỉ trong vài giây.
+                                Được đào tạo trên hàng triệu mẫu thiết kế chất lượng cao, AI của chúng tôi thấu hiểu hoàn hảo về kiểu chữ, bố cục và lý thuyết màu sắc.
                             </p>
                         </CardContent>
                     </Card>
@@ -88,9 +88,9 @@ export function Features() {
                                 <MessageSquare className="h-6 w-6 text-blue-500" />
                             </div>
                             <div>
-                                <h3 className="font-bold text-lg sm:text-xl mb-1 sm:mb-2 text-foreground group-hover:text-blue-500 transition-colors">Natural Language Editing</h3>
+                                <h3 className="font-bold text-lg sm:text-xl mb-1 sm:mb-2 text-foreground group-hover:text-blue-500 transition-colors">Chỉnh Sửa Bằng Ngôn Ngữ Tự Nhiên</h3>
                                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                                    Refine your logo by simply describing the changes you want to make.
+                                    Tinh chỉnh logo đơn giản bằng cách sử dụng lời nói hoặc văn bản để mô tả những thay đổi bạn muốn thực hiện.
                                 </p>
                             </div>
                         </CardContent>
@@ -103,8 +103,8 @@ export function Features() {
                             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 mb-4">
                                 <Palette className="h-5 w-5 text-emerald-500" />
                             </div>
-                            <h3 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 text-foreground">Unlimited Styles</h3>
-                            <p className="text-sm text-muted-foreground">Minimal to bold, geometric to abstract.</p>
+                            <h3 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 text-foreground">Đa Dạng Phong Cách</h3>
+                            <p className="text-sm text-muted-foreground">Từ tối giản đến phá cách, hình học đến linh vật trừu tượng.</p>
                         </CardContent>
                     </Card>
 
@@ -115,8 +115,8 @@ export function Features() {
                             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 mb-4">
                                 <Download className="h-5 w-5 text-orange-500" />
                             </div>
-                            <h3 className="font-bold text-lg mb-2 text-foreground">SVG Export</h3>
-                            <p className="text-sm text-muted-foreground">Download crisp, scalable vector files.</p>
+                            <h3 className="font-bold text-lg mb-2 text-foreground">Xuất File Vector</h3>
+                            <p className="text-sm text-muted-foreground">Tải xuống chất lượng cao, định dạng thay đổi kích thước dễ dàng.</p>
                         </CardContent>
                     </Card>
                 </div>

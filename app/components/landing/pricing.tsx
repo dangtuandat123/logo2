@@ -13,20 +13,20 @@ import { cn } from "@/lib/utils"
 
 const faqs = [
     {
-        question: "How does the AI logo generator work?",
-        answer: "Our AI uses advanced machine learning models trained on millions of design concepts. You provide a description of your brand, and the AI generates unique, professional logos based on your input in seconds."
+        question: "Trình tạo logo AI hoạt động như thế nào?",
+        answer: "AI của chúng tôi sử dụng các mô hình học máy tiên tiến được đào tạo trên hàng triệu mẫu thiết kế. Bạn chỉ cần mô tả thương hiệu của mình, và AI sẽ tự động tạo ra những logo chuyên nghiệp, độc đáo dựa trên yêu cầu của bạn chỉ trong vài giây."
     },
     {
-        question: "Can I use the generated logos for commercial purposes?",
-        answer: "Yes, if you are on the Pro or Team plan, you hold full commercial rights to use the logos for your business, merchandise, social media, and any other commercial application."
+        question: "Tôi có thể sử dụng logo đã tạo cho mục đích thương mại không?",
+        answer: "Có, nếu bạn đang sử dụng gói Pro hoặc Team, bạn nắm giữ toàn bộ quyền thương mại để sử dụng logo cho doanh nghiệp, sản phẩm, mạng xã hội và bất kỳ ứng dụng thương mại nào khác."
     },
     {
-        question: "What file formats do I get?",
-        answer: "All plans include high-resolution PNG downloads. Pro and Team plans also include fully scalable SVG vector files, which are perfect for printing and professional design software."
+        question: "Tôi sẽ nhận được những định dạng tệp nào?",
+        answer: "Tất cả các gói đều bao gồm tải xuống tệp PNG độ phân giải cao. Riêng gói Pro và Team sẽ bao gồm các tệp vector SVG có khả năng thay đổi kích thước hoàn hảo cho việc in ấn và phần mềm thiết kế chuyên nghiệp."
     },
     {
-        question: "Can I edit the logo after it's generated?",
-        answer: "Absolutely! Our natural language editor allows you to refine colors, fonts, layouts, and icons simply by describing what you want to change."
+        question: "Tôi có thể chỉnh sửa logo sau khi tạo không?",
+        answer: "Chắc chắn rồi! Trình chỉnh sửa ngôn ngữ tự nhiên của chúng tôi cho phép bạn tinh chỉnh màu sắc, phông chữ, bố cục và biểu tượng chỉ bằng cách mô tả những gì bạn muốn thay đổi."
     }
 ]
 
@@ -38,15 +38,15 @@ export function Pricing() {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="text-center mb-10 sm:mb-16">
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-[family-name:var(--font-heading)] text-balance">
-                        Simple, transparent pricing
+                        Bảng giá đơn giản, minh bạch
                     </h2>
                     <p className="text-muted-foreground mt-4 text-base sm:text-lg mb-8">
-                        Start free, upgrade when you need more power
+                        Bắt đầu miễn phí, nâng cấp khi bạn cần nhiều tính năng hơn
                     </p>
 
                     <div className="flex items-center justify-center gap-3">
                         <Label htmlFor="billing-switch" className={`text-sm ${!isYearly ? 'font-bold text-foreground' : 'text-muted-foreground'}`}>
-                            Monthly
+                            Theo Tháng
                         </Label>
                         <Switch
                             id="billing-switch"
@@ -54,9 +54,9 @@ export function Pricing() {
                             onCheckedChange={setIsYearly}
                         />
                         <Label htmlFor="billing-switch" className={`text-sm flex items-center gap-1.5 ${isYearly ? 'font-bold text-foreground' : 'text-muted-foreground'}`}>
-                            Yearly
+                            Theo Năm
                             <span className="inline-flex items-center justify-center px-2 py-0.5 rounded text-[10px] font-medium bg-primary/10 text-primary uppercase tracking-wider">
-                                Save 20%
+                                Tiết kiệm 20%
                             </span>
                         </Label>
                     </div>
@@ -65,27 +65,27 @@ export function Pricing() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto mb-20 sm:mb-32">
                     {[
                         {
-                            name: "Free",
+                            name: "Miễn Phí",
                             price: "$0",
-                            desc: "Perfect for trying out",
-                            features: ["5 logos per month", "Standard PNG export", "Basic styles", "Community support"],
-                            cta: "Get Started Free",
+                            desc: "Hoàn hảo để trải nghiệm",
+                            features: ["5 logo mỗi tháng", "Xuất file chuẩn PNG", "Giao diện cơ bản", "Hỗ trợ từ cộng đồng"],
+                            cta: "Bắt Đầu Miễn Phí",
                             popular: false,
                         },
                         {
-                            name: "Pro",
+                            name: "Nâng Cao (Pro)",
                             price: isYearly ? "$9" : "$12",
-                            desc: "For creators and startups",
-                            features: ["Unlimited logos", "SVG export", "All AI styles", "Priority support", "No watermarks", "Commercial rights"],
-                            cta: "Start Pro Trial",
+                            desc: "Dành cho nhà khởi nghiệp & người sáng tạo",
+                            features: ["Tạo logo không giới hạn", "Xuất file Vector SVG", "Mọi phong cách AI", "Hỗ trợ ưu tiên", "Không có hình mờ (watermark)", "Quyền sở hữu thương mại"],
+                            cta: "Dùng Thử Bản Pro",
                             popular: true,
                         },
                         {
-                            name: "Team",
+                            name: "Doanh Nghiệp (Team)",
                             price: isYearly ? "$24" : "$29",
-                            desc: "For teams and agencies",
-                            features: ["Everything in Pro", "Up to 5 team members", "Team collaboration", "Brand kit management", "API access"],
-                            cta: "Contact Sales",
+                            desc: "Dành cho đội ngũ & Agency",
+                            features: ["Tất cả tính năng của Pro", "Lên đến 5 thành viên", "Cộng tác đội nhóm", "Quản lý thương hiệu", "Quyền truy cập API"],
+                            cta: "Liên Hệ Kinh Doanh",
                             popular: false,
                         },
                     ].map((plan) => (
@@ -102,7 +102,7 @@ export function Pricing() {
                             {plan.popular && (
                                 <div className="absolute top-5 right-5 z-20">
                                     <Badge className="bg-primary/20 text-primary hover:bg-primary/30 border-0 shadow-sm backdrop-blur-md">
-                                        Most Popular
+                                        Phổ Biến Nhất
                                     </Badge>
                                 </div>
                             )}
@@ -113,7 +113,7 @@ export function Pricing() {
                                     <span className="text-5xl font-extrabold font-[family-name:var(--font-heading)] tracking-tight">
                                         {plan.price}
                                     </span>
-                                    <span className="text-muted-foreground font-medium">/month</span>
+                                    <span className="text-muted-foreground font-medium">/tháng</span>
                                 </div>
                                 <ul className="space-y-4 mb-8">
                                     {plan.features.map((f) => (
@@ -145,7 +145,7 @@ export function Pricing() {
                 <div className="max-w-3xl mx-auto">
                     <div className="text-center mb-10">
                         <h3 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-heading)]">
-                            Frequently Asked Questions
+                            Câu Hỏi Thường Gặp
                         </h3>
                     </div>
                     <Accordion type="single" collapsible className="w-full">

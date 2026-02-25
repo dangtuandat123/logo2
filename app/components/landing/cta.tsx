@@ -16,22 +16,22 @@ export function Cta() {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center relative z-10">
                 <Badge className="mb-6 font-semibold py-1.5 px-4 bg-primary/10 text-primary border-primary/20 backdrop-blur-md">
                     <Sparkles className="h-3.5 w-3.5 mr-2 inline" />
-                    Start Creating Now
+                    Bắt Đầu Sáng Tạo Ngay
                 </Badge>
 
                 <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-heading)] text-balance mb-6 text-foreground tracking-tight">
-                    Bring your <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">brand</span> to life.
+                    Thổi bùng sức sống vào <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">thương hiệu.</span>
                 </h2>
                 <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto tracking-normal">
-                    Join thousands of founders and creators who are building beautiful logos in seconds, not weeks.
+                    Tham gia cùng hàng ràn nhà sáng lập và thiết kế đang tạo ra những logo tuyệt đẹp trong vài giây, thay vì mất hàng tuần.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-md mx-auto">
                     <Button size="lg" className="w-full h-14 text-lg font-bold shadow-[0_0_30px_-5px_var(--color-primary)] hover:shadow-[0_0_40px_-5px_var(--color-primary)] hover:-translate-y-1 transition-all">
-                        Start Building Free
+                        Bắt Đầu Miễn Phí
                     </Button>
                 </div>
                 <p className="text-sm text-muted-foreground mt-6 font-medium">
-                    No credit card required. Generate 5 pristine logos on sign up.
+                    Không cần thẻ tín dụng. Nhận ngay 5 logo thiết kế hoàn hảo khi đăng ký.
                 </p>
             </div>
         </div>

@@ -13,10 +13,10 @@ export function Showcase() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 mb-12 sm:mb-20">
                 <div className="text-center">
                     <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-[family-name:var(--font-heading)] text-balance mb-6">
-                        Built by the community
+                        Sản phẩm từ cộng đồng
                     </h2>
                     <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mx-auto">
-                        Join thousands of creators generating stunning brand identities every single day.
+                        Tham gia cùng hàng ngàn nhà sáng tạo đang tạo nên những bộ nhận diện thương hiệu tuyệt đẹp mỗi ngày.
                     </p>
                 </div>
             </div>
