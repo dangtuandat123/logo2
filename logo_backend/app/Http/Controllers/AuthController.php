@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -33,6 +34,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        \Illuminate\Support\Facades\Log::info('Login attempt data: ', $request->all());
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
