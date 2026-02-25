@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { ArrowLeft, ArrowRight, Check, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -76,6 +76,14 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
   const [style, setStyle] = useState("")
   const [palette, setPalette] = useState("")
   const [description, setDescription] = useState("")
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  // Auto scroll to top when step changes
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [step])
 
   const canNext =
     (step === 1 && brandName.trim().length > 0) ||
@@ -87,7 +95,10 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-scroll overflow-x-hidden">
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 overflow-y-scroll overflow-x-hidden"
+      >
         <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto">
           {/* Progress + Step Label */}
           <div className="mb-6 sm:mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
@@ -272,12 +283,13 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                   <Separator className="opacity-50" />
                   <div className="space-y-2 relative group">
                     <Label htmlFor="description" className="text-sm font-semibold text-foreground/90 ml-1">Mô tả Bổ Sung (tùy chọn)</Label>
-                    <Textarea
+                    <Input
                       id="description"
-                      placeholder="vd: Tôi muốn logo có cảm giác tương lai với đường nét sắc gọn, kết hợp với hình tia chớp..."
+                      placeholder="vd: phong cách tối giản, neon v.v..."
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      className="mt-1.5 min-h-[120px] sm:min-h-[140px] resize-none bg-background/50 border-border/50 focus-visible:ring-primary/30 focus-visible:border-primary/50 transition-all rounded-xl shadow-sm group-hover:bg-background/80 text-base"
+                      className="mt-1.5 h-14 text-base bg-background/50 border-border/50 focus-visible:ring-primary/30 focus-visible:border-primary/50 transition-all rounded-xl shadow-sm group-hover:bg-background/80"
+                      autoComplete="off"
                     />
                   </div>
 
