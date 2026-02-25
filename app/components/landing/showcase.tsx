@@ -9,12 +9,12 @@ const showcaseLogos = [
     `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="120" rx="24" fill="#1e293b"/><circle cx="60" cy="55" r="20" fill="none" stroke="white" stroke-width="3" opacity="0.9"/><circle cx="60" cy="55" r="8" fill="white" opacity="0.9"/><rect x="30" y="85" width="60" height="4" rx="2" fill="white" opacity="0.5"/></svg>`,
 ]
 export function Showcase() {
-    // Duplicate the logos array to ensure seamless infinite scrolling
-    const marqueeLine1 = [...showcaseLogos, ...showcaseLogos].slice(0, 8);
-    const marqueeLine2 = [...showcaseLogos, ...showcaseLogos].reverse().slice(0, 8);
+    // Duplicate the logos array 5 times to ensure seamless infinite scrolling even on massive ultra-wide monitors
+    const marqueeLine1 = [...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos];
+    const marqueeLine2 = [...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos, ...showcaseLogos].reverse();
 
     return (
-        <section id="showcase" className="snap-start min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 bg-muted/10 border-t border-border/50 overflow-hidden relative">
+        <section id="showcase" className="min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 bg-muted/10 border-t border-border/50 overflow-hidden relative">
 
             {/* Ambient background glow for showcase */}
             <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-full h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
@@ -31,16 +31,16 @@ export function Showcase() {
             </div>
 
             {/* Marquee Container */}
-            <div className="relative flex flex-col gap-6 w-full -rotate-2 scale-[1.05] hover-pause">
+            <div className="relative flex flex-col gap-6 w-full -rotate-2 scale-[1.05]">
 
                 {/* Fade edges to trick the eye into seeing infinite scroll */}
                 <div className="absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
                 <div className="absolute inset-y-0 right-0 w-1/6 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
                 {/* Line 1 (Scrolls Left) */}
-                <div className="flex w-[200%] animate-marquee gap-6">
+                <div className="flex w-max animate-[marquee_40s_linear_infinite] gap-6">
                     {marqueeLine1.map((svg, i) => (
-                        <Card key={`l1-${i}`} className="w-48 h-48 sm:w-56 sm:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 hover:border-primary/50 transition-colors shadow-xl">
+                        <Card key={`l1-${i}`} className="w-48 h-48 sm:w-56 sm:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 shadow-xl">
                             <CardContent className="p-0 h-full flex items-center justify-center">
                                 <div
                                     className="w-32 h-32 sm:w-40 sm:h-40"
@@ -51,10 +51,10 @@ export function Showcase() {
                     ))}
                 </div>
 
-                {/* Line 2 (Scrolls Right) */}
-                <div className="flex w-[200%] animate-marquee-reverse gap-6 -ml-[50%]">
+                {/* Line 2 (Scrolls Left at different speed / offset) */}
+                <div className="flex w-max animate-[marquee_30s_linear_infinite] gap-6 -ml-[50%] mt-4">
                     {marqueeLine2.map((svg, i) => (
-                        <Card key={`l2-${i}`} className="w-48 h-48 sm:w-56 sm:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 hover:border-primary/50 transition-colors shadow-xl">
+                        <Card key={`l2-${i}`} className="w-48 h-48 sm:w-56 sm:h-56 shrink-0 overflow-hidden bg-white/5 backdrop-blur-md border-border/30 shadow-xl">
                             <CardContent className="p-0 h-full flex items-center justify-center">
                                 <div
                                     className="w-32 h-32 sm:w-40 sm:h-40"

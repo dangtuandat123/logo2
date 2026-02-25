@@ -48,7 +48,7 @@ const features = [
 
 export function Features() {
     return (
-        <section id="features" className="snap-start min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 border-t border-border/50 relative overflow-hidden bg-background">
+        <section id="features" className="min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 border-t border-border/50 relative overflow-hidden bg-background">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="text-center mb-10 sm:mb-12">
                     <div className="inline-flex items-center justify-center px-4 py-1.5 mb-6 rounded-full bg-muted border border-border text-sm font-medium">

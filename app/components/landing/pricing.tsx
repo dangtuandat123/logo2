@@ -34,7 +34,7 @@ export function Pricing() {
     const [isYearly, setIsYearly] = useState(false)
 
     return (
-        <section id="pricing" className="snap-start min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 border-t border-border/50 relative overflow-hidden bg-background">
+        <section id="pricing" className="min-h-[100dvh] w-full shrink-0 flex flex-col justify-center py-16 sm:py-24 border-t border-border/50 relative overflow-hidden bg-background">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="text-center mb-10 sm:mb-16">
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-[family-name:var(--font-heading)] text-balance">
