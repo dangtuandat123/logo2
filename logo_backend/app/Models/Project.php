@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Project extends Model
+{
+    protected $fillable = [
+        'user_id',
+        'brand_name',
+        'slogan',
+        'industry',
+        'style',
+        'palette',
+        'svg_content',
+        'status',
+    ];
+
+    protected $casts = [
+        'palette' => 'array',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
