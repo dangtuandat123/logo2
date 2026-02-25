@@ -41,7 +41,7 @@ export function Pricing() {
                         Bảng giá đơn giản, minh bạch
                     </h2>
                     <p className="text-muted-foreground mt-4 text-base sm:text-lg mb-8">
-                        Bắt đầu miễn phí, nâng cấp khi bạn cần nhiều tính năng hơn
+                        Bắt đầu miễn phí, nâng cấp khi cần.
                     </p>
 
                     <div className="flex items-center justify-center gap-3">
@@ -67,8 +67,8 @@ export function Pricing() {
                         {
                             name: "Miễn Phí",
                             price: "$0",
-                            desc: "Hoàn hảo để trải nghiệm",
-                            features: ["5 logo mỗi tháng", "Xuất file chuẩn PNG", "Giao diện cơ bản", "Hỗ trợ từ cộng đồng"],
+                            desc: "Trải nghiệm sức mạnh của AI",
+                            features: ["5 logo mỗi tháng", "Xuất file PNG", "Giao diện cơ bản", "Hỗ trợ cộng đồng"],
                             cta: "Bắt Đầu Miễn Phí",
                             popular: false,
                         },
@@ -76,15 +76,15 @@ export function Pricing() {
                             name: "Nâng Cao (Pro)",
                             price: isYearly ? "$9" : "$12",
                             desc: "Dành cho nhà khởi nghiệp & người sáng tạo",
-                            features: ["Tạo logo không giới hạn", "Xuất file Vector SVG", "Mọi phong cách AI", "Hỗ trợ ưu tiên", "Không có hình mờ (watermark)", "Quyền sở hữu thương mại"],
+                            features: ["Tạo logo không giới hạn", "Xuất file Vector SVG", "Đủ mọi phong cách", "Hỗ trợ ưu tiên", "Không có hình mờ (watermark)", "Sở hữu bản quyền"],
                             cta: "Dùng Thử Bản Pro",
                             popular: true,
                         },
                         {
                             name: "Doanh Nghiệp (Team)",
                             price: isYearly ? "$24" : "$29",
-                            desc: "Dành cho đội ngũ & Agency",
-                            features: ["Tất cả tính năng của Pro", "Lên đến 5 thành viên", "Cộng tác đội nhóm", "Quản lý thương hiệu", "Quyền truy cập API"],
+                            desc: "Dành cho đội ngũ làm việc",
+                            features: ["Đầy đủ tính năng Pro", "Lên đến 5 thành viên", "Làm việc nhóm", "Quản lý thương hiệu", "Truy cập API"],
                             cta: "Liên Hệ Kinh Doanh",
                             popular: false,
                         },

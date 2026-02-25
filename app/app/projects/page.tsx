@@ -90,7 +90,7 @@ export default function ProjectsPage() {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2.5">
             <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)]">
-              My Logos
+              Logo Của Tôi
             </h1>
             <Badge className="bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">{logos.length}</Badge>
           </div>
@@ -98,11 +98,11 @@ export default function ProjectsPage() {
             <TabsList className="h-8 sm:h-9">
               <TabsTrigger value="grid" className="gap-1.5 text-xs px-2.5">
                 <Grid3X3 className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Grid</span>
+                <span className="hidden sm:inline">Lưới</span>
               </TabsTrigger>
               <TabsTrigger value="list" className="gap-1.5 text-xs px-2.5">
                 <List className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">List</span>
+                <span className="hidden sm:inline">Danh Sách</span>
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -114,10 +114,10 @@ export default function ProjectsPage() {
         <div className="relative mb-4 sm:mb-6">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search logos..."
+            placeholder="Tìm kiếm logo..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-10 h-10"
+            className="pl-10 h-10 text-justify"
           />
         </div>
 
@@ -128,15 +128,15 @@ export default function ProjectsPage() {
               <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-muted mb-4">
                 <FolderOpen className="h-7 w-7 text-muted-foreground" />
               </div>
-              <p className="font-semibold text-base mb-1">No logos found</p>
-              <p className="text-sm text-muted-foreground mb-4">
-                {search ? `No results for "${search}"` : "Create your first logo to get started"}
+              <p className="font-semibold text-base mb-1 text-justify">Không tìm thấy logo</p>
+              <p className="text-sm text-muted-foreground mb-4 text-justify">
+                {search ? `Không có kết quả cho "${search}"` : "Tạo logo đầu tiên để bắt đầu"}
               </p>
               {!search && (
                 <Button asChild>
                   <Link href="/app/create">
                     <PlusCircle className="h-4 w-4 mr-2" />
-                    Create Logo
+                    Tạo Logo
                   </Link>
                 </Button>
               )}
@@ -161,28 +161,28 @@ export default function ProjectsPage() {
                   </Link>
                   <div className="p-3 sm:p-4 border-t border-border/50 flex items-center justify-between bg-background/80 backdrop-blur-md relative z-10">
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold text-sm truncate group-hover:text-primary transition-colors">{logo.name}</p>
-                      <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">{logo.date}</p>
+                      <p className="font-semibold text-sm truncate group-hover:text-primary transition-colors text-justify">{logo.name}</p>
+                      <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5 text-justify">{logo.date}</p>
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8 shrink-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                           <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">More options</span>
+                          <span className="sr-only">Tùy chọn khác</span>
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
-                          <Download className="h-4 w-4 mr-2" /> Download
+                          <Download className="h-4 w-4 mr-2" /> Tải Xuống
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                          <Copy className="h-4 w-4 mr-2" /> Duplicate
+                          <Copy className="h-4 w-4 mr-2" /> Nhân Bản
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-destructive"
                           onClick={() => setDeleteTarget(logo.id)}
                         >
-                          <Trash2 className="h-4 w-4 mr-2" /> Delete
+                          <Trash2 className="h-4 w-4 mr-2" /> Xóa
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -209,8 +209,8 @@ export default function ProjectsPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-sm sm:text-base truncate group-hover:text-primary transition-colors">{logo.name}</p>
-                      <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5 flex items-center">
+                      <p className="font-semibold text-sm sm:text-base truncate group-hover:text-primary transition-colors text-justify">{logo.name}</p>
+                      <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5 flex items-center text-justify">
                         <span className="font-medium text-foreground/70">{logo.style}</span>
                         <span className="mx-1.5 opacity-30">•</span>
                         <span>{logo.date}</span>
@@ -220,15 +220,15 @@ export default function ProjectsPage() {
                       <DropdownMenuTrigger asChild onClick={(e) => e.preventDefault()}>
                         <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground">
                           <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">More options</span>
+                          <span className="sr-only">Tùy chọn khác</span>
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
-                          <Download className="h-4 w-4 mr-2" /> Download
+                          <Download className="h-4 w-4 mr-2" /> Tải Xuống
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                          <Copy className="h-4 w-4 mr-2" /> Duplicate
+                          <Copy className="h-4 w-4 mr-2" /> Nhân Bản
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-destructive"
@@ -237,7 +237,7 @@ export default function ProjectsPage() {
                             setDeleteTarget(logo.id)
                           }}
                         >
-                          <Trash2 className="h-4 w-4 mr-2" /> Delete
+                          <Trash2 className="h-4 w-4 mr-2" /> Xóa
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -253,18 +253,18 @@ export default function ProjectsPage() {
       <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete &quot;{logoToDelete?.name}&quot;?</AlertDialogTitle>
+            <AlertDialogTitle>Xóa &quot;{logoToDelete?.name}&quot;?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the logo and all associated files.
+              Hành động này không thể hoàn tác. Logo và tất cả các file liên quan sẽ bị xóa vĩnh viễn.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Hủy</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               onClick={() => setDeleteTarget(null)}
             >
-              Delete
+              Xóa
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

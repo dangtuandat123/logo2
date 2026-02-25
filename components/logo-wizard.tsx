@@ -23,44 +23,44 @@ import {
 import { cn } from "@/lib/utils"
 
 const logoStyles = [
-  { id: "minimal", label: "Minimal", desc: "Clean and simple" },
-  { id: "modern", label: "Modern", desc: "Bold and trendy" },
-  { id: "classic", label: "Classic", desc: "Timeless elegance" },
-  { id: "playful", label: "Playful", desc: "Fun and creative" },
-  { id: "geometric", label: "Geometric", desc: "Shape-based" },
-  { id: "abstract", label: "Abstract", desc: "Artistic forms" },
+  { id: "minimal", label: "Tối giản", desc: "Gọn gàng & đơn giản" },
+  { id: "modern", label: "Hiện đại", desc: "Táo bạo & xu hướng" },
+  { id: "classic", label: "Cổ điển", desc: "Đẹp với thời gian" },
+  { id: "playful", label: "Vui nhộn", desc: "Vui nhộn & sáng tạo" },
+  { id: "geometric", label: "Hình khối", desc: "Dựa trên hình học" },
+  { id: "abstract", label: "Trừu tượng", desc: "Hình dạng nghệ thuật" },
 ]
 
 const colorPalettes = [
-  { id: "blue", colors: ["#3B82F6", "#1D4ED8", "#93C5FD"], label: "Ocean Blue" },
-  { id: "emerald", colors: ["#10B981", "#047857", "#6EE7B7"], label: "Emerald" },
-  { id: "amber", colors: ["#F59E0B", "#D97706", "#FCD34D"], label: "Amber Gold" },
-  { id: "rose", colors: ["#F43F5E", "#BE123C", "#FDA4AF"], label: "Rose" },
-  { id: "indigo", colors: ["#6366F1", "#4338CA", "#A5B4FC"], label: "Indigo" },
-  { id: "slate", colors: ["#334155", "#1E293B", "#94A3B8"], label: "Slate" },
+  { id: "blue", colors: ["#3B82F6", "#1D4ED8", "#93C5FD"], label: "Xanh Đại Dương" },
+  { id: "emerald", colors: ["#10B981", "#047857", "#6EE7B7"], label: "Ngọc Lục Bảo" },
+  { id: "amber", colors: ["#F59E0B", "#D97706", "#FCD34D"], label: "Vàng Hổ Phách" },
+  { id: "rose", colors: ["#F43F5E", "#BE123C", "#FDA4AF"], label: "Hồng Hoa Hồng" },
+  { id: "indigo", colors: ["#6366F1", "#4338CA", "#A5B4FC"], label: "Chàm" },
+  { id: "slate", colors: ["#334155", "#1E293B", "#94A3B8"], label: "Xám Đá" },
 ]
 
 const industries = [
-  { value: "", label: "Select industry", icon: "" },
-  { value: "technology", label: "Technology", icon: "💻" },
-  { value: "healthcare", label: "Healthcare", icon: "🏥" },
-  { value: "finance", label: "Finance", icon: "💰" },
-  { value: "education", label: "Education", icon: "📚" },
-  { value: "food-beverage", label: "Food & Beverage", icon: "🍔" },
-  { value: "fashion", label: "Fashion", icon: "👗" },
-  { value: "sports", label: "Sports", icon: "⚽" },
-  { value: "music", label: "Music", icon: "🎵" },
-  { value: "travel", label: "Travel", icon: "✈️" },
-  { value: "real-estate", label: "Real Estate", icon: "🏠" },
-  { value: "consulting", label: "Consulting", icon: "💼" },
-  { value: "e-commerce", label: "E-commerce", icon: "🛒" },
+  { value: "", label: "Chọn ngành nghề", icon: "" },
+  { value: "technology", label: "Công nghệ", icon: "💻" },
+  { value: "healthcare", label: "Y tế", icon: "🏥" },
+  { value: "finance", label: "Tài chính", icon: "💰" },
+  { value: "education", label: "Giáo dục", icon: "📚" },
+  { value: "food-beverage", label: "Ăn uống", icon: "🍔" },
+  { value: "fashion", label: "Thời trang", icon: "👗" },
+  { value: "sports", label: "Thể thao", icon: "⚽" },
+  { value: "music", label: "Âm nhạc", icon: "🎵" },
+  { value: "travel", label: "Du lịch", icon: "✈️" },
+  { value: "real-estate", label: "Bất động sản", icon: "🏠" },
+  { value: "consulting", label: "Tư vấn", icon: "💼" },
+  { value: "e-commerce", label: "TMĐT", icon: "🛒" },
 ]
 
 const steps = [
-  { id: 1, label: "Brand" },
-  { id: 2, label: "Style" },
-  { id: 3, label: "Colors" },
-  { id: 4, label: "Details" },
+  { id: 1, label: "Thương hiệu" },
+  { id: 2, label: "Phong cách" },
+  { id: 3, label: "Màu sắc" },
+  { id: 4, label: "Chi tiết" },
 ]
 
 interface LogoWizardProps {
@@ -93,7 +93,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
           <div className="mb-3 sm:mb-4">
             <div className="flex items-center justify-between mb-3">
               <Badge className="bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300 text-xs">
-                Step {step} of {steps.length} — {steps[step - 1].label}
+                Bước {step}/{steps.length} — {steps[step - 1].label}
               </Badge>
               <span className="text-xs text-muted-foreground">{Math.round(progressValue)}%</span>
             </div>
@@ -110,19 +110,19 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                 <div className="space-y-3 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] mb-1">
-                      Tell us about your brand
+                      Hãy kể về thương hiệu của bạn
                     </h2>
                     <p className="text-xs sm:text-sm text-muted-foreground">
-                      Start with the basics of your brand identity
+                      Bắt đầu với những thông tin cơ bản về định vị thương hiệu
                     </p>
                   </div>
                   <Separator />
                   <div className="space-y-3">
                     <div>
-                      <Label htmlFor="brandName" className="text-sm">Brand Name *</Label>
+                      <Label htmlFor="brandName" className="text-sm">Tôn Thương Hiệu *</Label>
                       <Input
                         id="brandName"
-                        placeholder="e.g., TechFlow"
+                        placeholder="vd: TechFlow"
                         value={brandName}
                         onChange={(e) => setBrandName(e.target.value)}
                         autoComplete="off"
@@ -130,10 +130,10 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="tagline" className="text-sm">Tagline (optional)</Label>
+                      <Label htmlFor="tagline" className="text-sm">Slogan (tùy chọn)</Label>
                       <Input
                         id="tagline"
-                        placeholder="e.g., Innovate with ease"
+                        placeholder="vd: Đổi mới dễ dàng"
                         value={tagline}
                         onChange={(e) => setTagline(e.target.value)}
                         autoComplete="off"
@@ -141,13 +141,13 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                       />
                     </div>
                     <div>
-                      <Label className="text-sm">Industry</Label>
+                      <Label className="text-sm">Ngành Nghề</Label>
                       <div className="mt-1">
                         <Combobox items={industries} defaultValue={industries[0]}>
                           <ComboboxTrigger render={<Button variant="outline" className="w-full justify-between font-normal h-10"><ComboboxValue /></Button>} />
                           <ComboboxContent className="!min-w-[var(--anchor-width)]">
-                            <ComboboxInput showTrigger={false} placeholder="Search industry..." />
-                            <ComboboxEmpty>No industry found.</ComboboxEmpty>
+                            <ComboboxInput showTrigger={false} placeholder="Tìm ngành nghề..." />
+                            <ComboboxEmpty>Không tìm thấy ngành nghề.</ComboboxEmpty>
                             <ComboboxList>
                               {(item) => (
                                 <ComboboxItem key={item.value} value={item}>
@@ -168,10 +168,10 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                 <div className="space-y-3 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] mb-1">
-                      Choose your style
+                      Chọn phong cách của bạn
                     </h2>
                     <p className="text-xs sm:text-sm text-muted-foreground">
-                      Select the visual direction for your logo
+                      Chọn hướng thiết kế hình ảnh cho logo của bạn
                     </p>
                   </div>
                   <Separator />
@@ -199,10 +199,10 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                 <div className="space-y-3 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] mb-1">
-                      Pick your colors
+                      Chọn màu sắc
                     </h2>
                     <p className="text-xs sm:text-sm text-muted-foreground">
-                      Choose a color palette that represents your brand
+                      Chọn bảng màu đại diện cho thương hiệu của bạn
                     </p>
                   </div>
                   <Separator />
@@ -238,18 +238,18 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                 <div className="space-y-5 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] mb-1">
-                      Any extra details?
+                      Thêm chi tiết nào khác không?
                     </h2>
                     <p className="text-xs sm:text-sm text-muted-foreground">
-                      Describe anything specific you want in your logo
+                      Mô tả bất kỳ chi tiết cụ thể nào bạn muốn có trong logo
                     </p>
                   </div>
                   <Separator />
                   <div>
-                    <Label htmlFor="description" className="text-sm">Additional Description (optional)</Label>
+                    <Label htmlFor="description" className="text-sm">Mô tả Bổ Sung (tùy chọn)</Label>
                     <Textarea
                       id="description"
-                      placeholder="e.g., I want a logo that feels futuristic with clean lines, incorporate a lightning bolt symbol..."
+                      placeholder="vd: Tôi muốn logo có cảm giác tương lai với đường nét sắc gọn, kết hợp với hình tia chớp..."
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       className="mt-1.5 min-h-[100px] sm:min-h-[120px] resize-none"
@@ -257,30 +257,30 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                   </div>
                   <Card className="bg-muted/50 border-border">
                     <CardContent className="p-4 space-y-2">
-                      <p className="text-sm font-semibold">Summary</p>
+                      <p className="text-sm font-semibold">Tóm Tắt</p>
                       <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
                         <div>
-                          <span className="text-muted-foreground">Brand:</span>{" "}
+                          <span className="text-muted-foreground">Thương Hiệu:</span>{" "}
                           <span className="font-medium">{brandName}</span>
                         </div>
                         {tagline && (
                           <div>
-                            <span className="text-muted-foreground">Tagline:</span>{" "}
+                            <span className="text-muted-foreground">Slogan:</span>{" "}
                             <span className="font-medium">{tagline}</span>
                           </div>
                         )}
                         {industry && (
                           <div>
-                            <span className="text-muted-foreground">Industry:</span>{" "}
+                            <span className="text-muted-foreground">Ngành Nghề:</span>{" "}
                             <span className="font-medium">{industry}</span>
                           </div>
                         )}
                         <div>
-                          <span className="text-muted-foreground">Style:</span>{" "}
+                          <span className="text-muted-foreground">Phong Cách:</span>{" "}
                           <span className="font-medium capitalize">{style}</span>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">Palette:</span>{" "}
+                          <span className="text-muted-foreground">Bảng Màu:</span>{" "}
                           <span className="font-medium capitalize">{palette}</span>
                         </div>
                       </div>
@@ -303,7 +303,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
             className="gap-2 h-10 sm:h-11"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Back</span>
+            <span className="hidden sm:inline">Quay Lại</span>
           </Button>
 
           {step < 4 ? (
@@ -312,7 +312,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
               disabled={!canNext}
               className="gap-2 h-10 sm:h-11"
             >
-              Next
+              Tiếp Tục
               <ArrowRight className="h-4 w-4" />
             </Button>
           ) : (
@@ -331,7 +331,7 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
               className="gap-2 h-10 sm:h-11"
             >
               <Sparkles className="h-4 w-4" />
-              Generate
+              Tạo Logo
             </Button>
           )}
         </div>

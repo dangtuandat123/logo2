@@ -35,10 +35,10 @@ export default function LoginPage() {
             <Sparkles className="h-8 w-8 text-primary-foreground" />
           </div>
           <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-4">
-            Welcome back to LogoAI
+            Chào mừng trở lại LogoAI
           </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            Continue creating stunning logos with the power of AI. Your projects are waiting for you.
+          <p className="text-muted-foreground leading-relaxed text-justify">
+            Tiếp tục thiết kế logo tuyệt đẹp với AI. Các dự án đang chờ bạn.
           </p>
           <div className="flex items-center justify-center gap-3 mt-10">
             {[
@@ -70,10 +70,10 @@ export default function LoginPage() {
           </div>
 
           <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)] mb-1">
-            Sign in
+            Đăng nhập
           </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8">
-            Enter your credentials to access your account
+          <p className="text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8 text-justify">
+            Nhập thông tin để truy cập tài khoản
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
@@ -82,31 +82,31 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="ban@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1.5 h-11 rounded-xl"
+                className="mt-1.5 h-11 rounded-xl text-justify"
                 required
               />
             </div>
             <div>
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-sm">Password</Label>
+                <Label htmlFor="password" className="text-sm">Mật khẩu</Label>
                 <Link
                   href="#"
                   className="text-xs text-primary hover:underline"
                 >
-                  Forgot password?
+                  Quên mật khẩu?
                 </Link>
               </div>
               <div className="relative mt-1.5">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
+                  placeholder="Nhập mật khẩu"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 rounded-xl pr-10"
+                  className="h-11 rounded-xl pr-10 text-justify"
                   required
                 />
                 <button
@@ -129,7 +129,7 @@ export default function LoginPage() {
               className="w-full h-11 rounded-xl"
               disabled={isLoading}
             >
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
             </Button>
           </form>
 
@@ -139,7 +139,7 @@ export default function LoginPage() {
             </div>
             <div className="relative flex justify-center">
               <span className="bg-background px-3 text-xs text-muted-foreground">
-                or continue with
+                hoặc tiếp tục với
               </span>
             </div>
           </div>
@@ -162,10 +162,10 @@ export default function LoginPage() {
             </Button>
           </div>
 
-          <p className="text-center text-xs sm:text-sm text-muted-foreground mt-5 sm:mt-6">
-            {"Don't have an account? "}
+          <p className="text-center text-xs sm:text-sm text-muted-foreground mt-5 sm:mt-6 text-justify">
+            {"Chưa có tài khoản? "}
             <Link href="/register" className="text-primary hover:underline font-medium">
-              Sign up
+              Đăng ký
             </Link>
           </p>
         </div>

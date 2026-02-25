@@ -228,7 +228,7 @@ export function LogoEditor() {
             className="flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back to projects</span>
+            <span className="sr-only">Trở lại dự án</span>
           </Link>
           <div className="h-4 w-px bg-border" />
           <h1 className="text-sm font-semibold truncate">TECHFLOW Logo</h1>
@@ -244,10 +244,10 @@ export function LogoEditor() {
                   onClick={() => setSvgContent(sampleSVG)}
                 >
                   <RotateCcw className="h-4 w-4" />
-                  <span className="sr-only">Reset</span>
+                  <span className="sr-only">Khôi phục</span>
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Reset to original</TooltipContent>
+              <TooltipContent>Khôi phục bản gốc</TooltipContent>
             </Tooltip>
 
             <DropdownMenu>
@@ -259,12 +259,12 @@ export function LogoEditor() {
                       className="rounded-lg gap-1.5 h-8 text-xs font-medium"
                     >
                       <Download className="h-3.5 w-3.5" />
-                      <span className="hidden sm:inline">Export</span>
+                      <span className="hidden sm:inline">Xuất file</span>
                       <ChevronDown className="h-3 w-3 opacity-60" />
                     </Button>
                   </DropdownMenuTrigger>
                 </TooltipTrigger>
-                <TooltipContent>Export logo</TooltipContent>
+                <TooltipContent>Xuất file logo</TooltipContent>
               </Tooltip>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={handleDownloadSVG}>
@@ -324,7 +324,7 @@ export function LogoEditor() {
               <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/15 backdrop-blur-sm animate-pulse">
                 <Sparkles className="h-6 w-6 text-primary" />
               </div>
-              <span className="text-xs font-medium text-muted-foreground">Updating...</span>
+              <span className="text-xs font-medium text-muted-foreground">Đang cập nhật...</span>
             </div>
           )}
         </div>
@@ -339,13 +339,13 @@ export function LogoEditor() {
                   className="flex items-center gap-1.5 bg-background/80 backdrop-blur-sm rounded-full border border-border shadow-sm px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <RotateCcw className="h-3 w-3" />
-                  Reset view
+                  Đặt lại góc nhìn
                 </button>
               </div>
             )}
             {(isProcessing || lastResponse) && (
               <div className="text-[11px] text-muted-foreground text-center mb-1.5 truncate">
-                {isProcessing ? "Updating logo..." : lastResponse}
+                {isProcessing ? "Đang cập nhật logo..." : lastResponse}
               </div>
             )}
             <div className="rounded-3xl border border-border bg-background/95 backdrop-blur-xl shadow-lg focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary/50 transition-all">
@@ -363,7 +363,7 @@ export function LogoEditor() {
                       processCommand(command)
                     }
                   }}
-                  placeholder="Describe changes to your logo..."
+                  placeholder="Mô tả các thay đổi cho logo của bạn..."
                   rows={1}
                   disabled={isProcessing}
                   autoComplete="off"
@@ -377,7 +377,7 @@ export function LogoEditor() {
                   className="rounded-full h-9 w-9 shrink-0 mb-0.5"
                 >
                   <ArrowUp className="h-4 w-4" />
-                  <span className="sr-only">Send</span>
+                  <span className="sr-only">Gửi</span>
                 </Button>
               </div>
             </div>

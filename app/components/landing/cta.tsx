@@ -20,10 +20,10 @@ export function Cta() {
                 </Badge>
 
                 <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-heading)] text-balance mb-6 text-foreground tracking-tight">
-                    Thổi bùng sức sống vào <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">thương hiệu.</span>
+                    Thiết kế logo <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">dễ dàng.</span>
                 </h2>
                 <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto tracking-normal">
-                    Tham gia cùng hàng ràn nhà sáng lập và thiết kế đang tạo ra những logo tuyệt đẹp trong vài giây, thay vì mất hàng tuần.
+                    Hàng ngàn nhà sáng lập đã tạo ra logo tuyệt đẹp chỉ trong vài giây. Tới lượt bạn.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-md mx-auto">
                     <Button size="lg" className="w-full h-14 text-lg font-bold shadow-[0_0_30px_-5px_var(--color-primary)] hover:shadow-[0_0_40px_-5px_var(--color-primary)] hover:-translate-y-1 transition-all">
@@ -31,7 +31,7 @@ export function Cta() {
                     </Button>
                 </div>
                 <p className="text-sm text-muted-foreground mt-6 font-medium">
-                    Không cần thẻ tín dụng. Nhận ngay 5 logo thiết kế hoàn hảo khi đăng ký.
+                    Không cần thẻ. Tặng 5 logo chất lượng cao khi đăng ký.
                 </p>
             </div>
         </div>

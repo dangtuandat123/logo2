@@ -55,10 +55,10 @@ export function Features() {
                         Tính Năng Mạnh Mẽ
                     </div>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-[family-name:var(--font-heading)] text-balance text-foreground">
-                        Mọi thứ bạn cần cho một logo hoàn hảo
+                        Công cụ mạnh mẽ, thao tác cực dễ
                     </h2>
                     <p className="text-muted-foreground mt-4 max-w-2xl mx-auto text-pretty text-base sm:text-lg">
-                        Công cụ AI mạnh mẽ được gói gọn trong một giao diện đơn giản, trực quan
+                        Mọi thứ bạn cần để tạo logo chuyên nghiệp.
                     </p>
                 </div>
 
@@ -72,10 +72,9 @@ export function Features() {
                             <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary/10 mb-6 sm:mb-8 border border-primary/20 shadow-[0_0_15px_-3px_var(--color-primary)]">
                                 <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
                             </div>
-                            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4 text-foreground group-hover:text-primary transition-colors">Thiết Kế Tự Động Bằng AI</h3>
+                            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4 text-foreground group-hover:text-primary transition-colors">Mô Tả Sinh Logo</h3>
                             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                                Mô tả thương hiệu của bạn và để AI tạo ra các logo chuyên nghiệp chỉ trong vài giây.
-                                Được đào tạo trên hàng triệu mẫu thiết kế chất lượng cao, AI của chúng tôi thấu hiểu hoàn hảo về kiểu chữ, bố cục và lý thuyết màu sắc.
+                                Chỉ cần nhập tên thương hiệu và ý tưởng. AI sẽ tự động tùy biến kiểu chữ, màu sắc và bố cục để xuất xưởng logo chuẩn xác.
                             </p>
                         </CardContent>
                     </Card>
@@ -88,9 +87,9 @@ export function Features() {
                                 <MessageSquare className="h-6 w-6 text-blue-500" />
                             </div>
                             <div>
-                                <h3 className="font-bold text-lg sm:text-xl mb-1 sm:mb-2 text-foreground group-hover:text-blue-500 transition-colors">Chỉnh Sửa Bằng Ngôn Ngữ Tự Nhiên</h3>
+                                <h3 className="font-bold text-lg sm:text-xl mb-1 sm:mb-2 text-foreground group-hover:text-blue-500 transition-colors">Nhắn Để Sửa</h3>
                                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                                    Tinh chỉnh logo đơn giản bằng cách sử dụng lời nói hoặc văn bản để mô tả những thay đổi bạn muốn thực hiện.
+                                    Không cần kỹ năng đồ họa. Chat với AI để đổi màu, đổi font hay thay icon.
                                 </p>
                             </div>
                         </CardContent>
@@ -104,7 +103,7 @@ export function Features() {
                                 <Palette className="h-5 w-5 text-emerald-500" />
                             </div>
                             <h3 className="font-bold text-base sm:text-lg mb-1 sm:mb-2 text-foreground">Đa Dạng Phong Cách</h3>
-                            <p className="text-sm text-muted-foreground">Từ tối giản đến phá cách, hình học đến linh vật trừu tượng.</p>
+                            <p className="text-sm text-muted-foreground">Từ tối giản, thanh lịch đến hiện đại, phá cách.</p>
                         </CardContent>
                     </Card>
 

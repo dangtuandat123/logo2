@@ -10,9 +10,9 @@ import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 
 const passwordReqs = [
-  { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
-  { label: "Contains uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
-  { label: "Contains a number", test: (p: string) => /[0-9]/.test(p) },
+  { label: "Ít nhất 8 ký tự", test: (p: string) => p.length >= 8 },
+  { label: "Chứa chữ in hoa", test: (p: string) => /[A-Z]/.test(p) },
+  { label: "Chứa chữ số", test: (p: string) => /[0-9]/.test(p) },
 ]
 
 export default function RegisterPage() {
@@ -43,16 +43,16 @@ export default function RegisterPage() {
             <Sparkles className="h-8 w-8 text-primary-foreground" />
           </div>
           <h2 className="text-3xl font-bold font-[family-name:var(--font-heading)] mb-4">
-            Start creating with LogoAI
+            Bắt đầu sáng tạo cùng LogoAI
           </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            Join thousands of creators building their brand identity with AI-powered logo design.
+          <p className="text-muted-foreground leading-relaxed text-justify">
+            Gia nhập cộng đồng hàng ngàn nhà sáng tạo thiết kế thương hiệu bằng AI.
           </p>
           <div className="mt-10 space-y-3 text-left max-w-xs mx-auto">
             {[
-              "Generate logos in seconds",
-              "Edit with natural language",
-              "Export as scalable SVG",
+              "Tạo logo trong vài giây",
+              "Chỉnh sửa bằng câu lệnh",
+              "Xuất file SVG sắc nét",
             ].map((feature) => (
               <div key={feature} className="flex items-center gap-3">
                 <div className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 shrink-0">
@@ -79,21 +79,21 @@ export default function RegisterPage() {
           </div>
 
           <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)] mb-1">
-            Create an account
+            Tạo tài khoản
           </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8">
-            Get started with your free account
+          <p className="text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8 text-justify">
+            Khởi đầu hoàn toàn miễn phí
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div>
-              <Label htmlFor="name" className="text-sm">Full Name</Label>
+              <Label htmlFor="name" className="text-sm">Họ và Tên</Label>
               <Input
                 id="name"
-                placeholder="John Doe"
+                placeholder="Nguyễn Văn A"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="mt-1.5 h-11 rounded-xl"
+                className="mt-1.5 h-11 rounded-xl text-justify"
                 required
               />
             </div>
@@ -102,23 +102,23 @@ export default function RegisterPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder="ban@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1.5 h-11 rounded-xl"
+                className="mt-1.5 h-11 rounded-xl text-justify"
                 required
               />
             </div>
             <div>
-              <Label htmlFor="password" className="text-sm">Password</Label>
+              <Label htmlFor="password" className="text-sm">Mật khẩu</Label>
               <div className="relative mt-1.5">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Create a strong password"
+                  placeholder="Tạo mật khẩu an toàn"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="h-11 rounded-xl pr-10"
+                  className="h-11 rounded-xl pr-10 text-justify"
                   required
                 />
                 <button
@@ -169,7 +169,7 @@ export default function RegisterPage() {
               className="w-full h-11 rounded-xl"
               disabled={isLoading}
             >
-              {isLoading ? "Creating account..." : "Create Account"}
+              {isLoading ? "Đang tạo tài khoản..." : "Tạo Tài Khoản"}
             </Button>
           </form>
 
@@ -179,7 +179,7 @@ export default function RegisterPage() {
             </div>
             <div className="relative flex justify-center">
               <span className="bg-background px-3 text-xs text-muted-foreground">
-                or continue with
+                hoặc tiếp tục với
               </span>
             </div>
           </div>
@@ -202,18 +202,18 @@ export default function RegisterPage() {
             </Button>
           </div>
 
-          <p className="text-center text-xs sm:text-sm text-muted-foreground mt-5 sm:mt-6">
-            Already have an account?{" "}
+          <p className="text-center text-xs sm:text-sm text-muted-foreground mt-5 sm:mt-6 text-justify">
+            Đã có tài khoản?{" "}
             <Link href="/login" className="text-primary hover:underline font-medium">
-              Sign in
+              Đăng nhập
             </Link>
           </p>
 
-          <p className="text-center text-[11px] sm:text-xs text-muted-foreground mt-3 sm:mt-4">
-            By creating an account, you agree to our{" "}
-            <Link href="#" className="underline hover:text-foreground">Terms</Link>{" "}
-            and{" "}
-            <Link href="#" className="underline hover:text-foreground">Privacy Policy</Link>
+          <p className="text-center text-[11px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-justify">
+            Bằng việc đăng ký, bạn đồng ý với{" "}
+            <Link href="#" className="underline hover:text-foreground">Điều Khoản</Link>{" "}
+            và{" "}
+            <Link href="#" className="underline hover:text-foreground">Chính Sách Bảo Mật</Link>
           </p>
         </div>
       </div>

@@ -49,17 +49,17 @@ export default function DashboardPage() {
 
                 <div className="relative flex-1 text-center sm:text-left z-10">
                   <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-heading)] tracking-tight">
-                    Create your next <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">masterpiece</span>
+                    Tạo nên <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">kiệt tác</span> tiếp theo
                   </h1>
                   <p className="text-balance text-muted-foreground mt-2 max-w-lg mx-auto sm:mx-0 leading-relaxed">
-                    Describe your brand and let our advanced AI design a unique, pixel-perfect logo for you in seconds.
+                    Mô tả thương hiệu của bạn, AI sẽ thiết kế logo sắc nét, độc đáo chỉ trong vài giây.
                   </p>
                 </div>
 
                 <Button asChild size="lg" className="relative z-10 gap-2 rounded-xl h-12 px-8 font-medium shadow-[0_0_20px_-5px_var(--color-primary)] hover:shadow-[0_0_30px_-5px_var(--color-primary)] transition-all duration-300 hover:-translate-y-0.5">
                   <Link href="/app/create">
                     <PlusCircle className="h-5 w-5" />
-                    Start Creating
+                    Bắt Đầu Ngay
                   </Link>
                 </Button>
               </div>
@@ -75,13 +75,13 @@ export default function DashboardPage() {
                 <Sparkles className="h-4 w-4" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)] tracking-tight">
-                Your Vault
+                Kho Lưu Trữ
               </h2>
-              <Badge variant="outline" className="ml-1 border-primary/20 bg-primary/5">{recentLogos.length} logos</Badge>
+              <Badge variant="outline" className="ml-1 border-primary/20 bg-primary/5">{recentLogos.length} logo</Badge>
             </div>
             <Button variant="ghost" size="sm" asChild className="text-muted-foreground hover:text-primary transition-colors gap-1.5 group">
               <Link href="/app/projects">
-                View All
+                Xem Tất Cả
                 <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -120,7 +120,7 @@ export default function DashboardPage() {
           >
             <Link href="/app/create">
               <PlusCircle className="h-6 w-6" />
-              <span className="sr-only">Create new logo</span>
+              <span className="sr-only">Tạo logo mới</span>
             </Link>
           </Button>
         </div>

@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation"
 import { Sparkles } from "lucide-react"
 
 const loadingMessages = [
-  "Analyzing your brand identity...",
-  "Exploring creative directions...",
-  "Generating color harmonies...",
-  "Crafting vector shapes...",
-  "Refining typography...",
-  "Polishing your logo...",
-  "Almost there...",
+  "Đang phân tích định vị thương hiệu...",
+  "Đang khám phá các hướng sáng tạo...",
+  "Đang tạo bảng màu...",
+  "Đang thiết kế các hình dạng vector...",
+  "Tinh chỉnh phông chữ...",
+  "Đang hoàn thiện logo...",
+  "Sắp xong rồi...",
 ]
 
 export default function GeneratingPage() {
@@ -60,7 +60,7 @@ export default function GeneratingPage() {
         </div>
 
         <h2 className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] mb-1.5 sm:mb-2">
-          Creating Your Logo
+          Đang Tạo Logo Của Bạn
         </h2>
         <p className="text-xs sm:text-sm text-muted-foreground mb-6 sm:mb-8 transition-all duration-300 min-h-[1.25rem]">
           {loadingMessages[messageIndex]}
