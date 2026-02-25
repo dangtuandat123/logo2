@@ -190,10 +190,10 @@ export function LogoEditor({ projectId }: { projectId: string }) {
     try {
       const res = await api.post('/edit-logo', {
         project_id: projectId,
-        prompt: userMsg
+        command: userMsg
       })
 
-      setSvgContent(res.data.svg_content)
+      setSvgContent(res.data.project.svg_content)
       setLastResponse(`✅ ${userMsg}`)
       fetchUser() // Refresh diamonds balance
     } catch (error: any) {

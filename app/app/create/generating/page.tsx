@@ -79,7 +79,7 @@ export default function GeneratingPage() {
         setTimeout(() => {
           fetchUser() // Refresh diamonds
           sessionStorage.removeItem("logoConfig")
-          router.push(`/app/editor/${response.data.project_id}`)
+          router.push(`/app/editor/${response.data.project.id}`)
         }, 500)
 
       } catch (error: any) {
