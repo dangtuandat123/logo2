@@ -58,7 +58,17 @@ export default function GeneratingPage() {
           config.palette = [config.palette]
         }
 
-        const response = await api.post('/generate-logo', config)
+        // Map frontend keys to backend expected keys
+        const apiPayload = {
+          brand_name: config.brandName,
+          slogan: config.tagline,
+          industry: config.industry,
+          style: config.style,
+          palette: config.palette,
+          description: config.description,
+        }
+
+        const response = await api.post('/generate-logo', apiPayload)
 
         // Success
         setProgress(100)

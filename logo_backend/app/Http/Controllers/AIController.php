@@ -26,6 +26,7 @@ class AIController extends Controller
             'industry' => 'nullable|string|max:100',
             'style' => 'nullable|string|max:50',
             'palette' => 'required|array|min:1',
+            'description' => 'nullable|string|max:500',
         ]);
 
         $user = $request->user();
@@ -43,7 +44,8 @@ class AIController extends Controller
                 $request->brand_name,
                 $request->industry,
                 $request->style,
-                $request->palette
+                $request->palette,
+                $request->description
             );
 
             // 3. Deduct Diamonds & Create Transaction

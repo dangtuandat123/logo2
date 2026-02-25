@@ -19,11 +19,12 @@ class OpenRouterService
     /**
      * Call OpenRouter API with Gemini 3.1 Pro Preview
      */
-    public function generateLogo(string $brandName, ?string $industry, ?string $style, array $palette)
+    public function generateLogo(string $brandName, ?string $industry, ?string $style, array $palette, ?string $description = null)
     {
         $colors = implode(', ', $palette);
         $industryText = $industry ? "Ngành nghề: $industry." : "";
         $styleText = $style ? "Phong cách: $style." : "Hiện đại, tối giản.";
+        $descriptionText = $description ? "Ghi chú thêm: $description." : "";
 
         $systemPrompt = "Bạn là một họa sĩ thiết kế logo SVG chuyên nghiệp. 
 Nhiệm vụ của bạn là CHỈ trả về đúng chuẩn mã <svg> hoàn chỉnh với viewBox='0 0 500 500'. 
@@ -31,6 +32,7 @@ KHÔNG bao gồm markdown \`\`\`svg, KHÔNG có văn bản giải thích.
 Tên Thương Hiệu: $brandName.
 $industryText
 $styleText
+$descriptionText
 Bảng màu (HEX): $colors.
 Yêu cầu:
 1. Nền của SVG phải là trong suốt (transparent).
