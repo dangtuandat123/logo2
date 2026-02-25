@@ -17,25 +17,29 @@ const showcaseLogos = [
 export function Hero() {
     return (
         <section className="relative overflow-hidden">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 md:pt-36 pb-12 sm:pb-16 md:pb-24 text-center">
-                <Badge className="mb-6 sm:mb-8 font-medium gap-2 py-1.5 px-3 bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+            {/* Animated Background Blobs */}
+            <div className="absolute top-1/4 left-1/4 -translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-[pulse_6s_ease-in-out_infinite]" />
+            <div className="absolute top-1/3 right-1/4 translate-y-1/4 translate-x-1/2 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px] animate-[pulse_6s_ease-in-out_infinite]" style={{ animationDelay: '2s' }} />
+
+            <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 md:pt-36 pb-12 sm:pb-16 md:pb-24 text-center z-10">
+                <Badge className="mb-6 sm:mb-8 font-medium gap-2 py-1.5 px-3 bg-primary/10 text-primary border-primary/20 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     AI-Powered Logo Creation
                 </Badge>
 
-                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight font-[family-name:var(--font-heading)] text-balance max-w-5xl mx-auto leading-[1.1] text-foreground">
-                    Create stunning logos in seconds
+                <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight font-[family-name:var(--font-heading)] text-balance max-w-5xl mx-auto leading-[1.1] text-foreground animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 fill-mode-both">
+                    Create <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500">stunning logos</span> in seconds
                 </h1>
 
-                <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mt-6 sm:mt-8 max-w-2xl mx-auto text-pretty leading-relaxed">
+                <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground mt-6 sm:mt-8 max-w-2xl mx-auto text-pretty leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300 fill-mode-both">
                     Describe your brand, pick your style, and let AI generate a
                     professional logo. Edit with natural language until it is perfect.
                 </p>
 
-                <Separator className="max-w-xs mx-auto my-8 sm:my-10" />
+                <Separator className="max-w-xs mx-auto my-8 sm:my-10 opacity-50 animate-in fade-in duration-700 delay-500 fill-mode-both" />
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Button size="lg" asChild className="gap-2 h-14 px-8 text-base w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-500 fill-mode-both">
+                    <Button size="lg" asChild className="gap-2 h-14 px-8 text-base w-full sm:w-auto shadow-[0_0_20px_-5px_var(--color-primary)] hover:shadow-[0_0_30px_-5px_var(--color-primary)] transition-all duration-300 hover:-translate-y-0.5">
                         <Link href="/register">
                             Start Creating
                             <ArrowRight className="h-4 w-4" />
@@ -44,7 +48,7 @@ export function Hero() {
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <Button variant="outline" size="lg" asChild className="h-14 px-8 text-base w-full sm:w-auto">
+                                <Button variant="outline" size="lg" asChild className="h-14 px-8 text-base w-full sm:w-auto bg-background/50 backdrop-blur-sm border-border/50 hover:bg-muted/50">
                                     <Link href="#showcase">View Examples</Link>
                                 </Button>
                             </TooltipTrigger>
@@ -56,7 +60,7 @@ export function Hero() {
                 </div>
 
                 {/* Logo Showcase Row */}
-                <div className="flex items-center justify-center gap-4 sm:gap-6 mt-16 sm:mt-24 overflow-x-auto no-scrollbar px-2 py-4">
+                <div className="flex items-center justify-center gap-4 sm:gap-6 mt-16 sm:mt-24 overflow-x-auto no-scrollbar px-2 py-4 animate-in fade-in duration-1000 delay-700 fill-mode-both">
                     {showcaseLogos.map((svg, i) => (
                         <div
                             key={i}

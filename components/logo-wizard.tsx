@@ -101,8 +101,11 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
           </div>
 
           {/* Step Content wrapped in Card */}
-          <Card>
-            <CardContent className="p-4 sm:p-5">
+          <Card className="bg-card/40 backdrop-blur-sm border-border/60 shadow-lg relative overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div className="absolute top-0 right-0 -mt-20 -mr-20 w-48 h-48 bg-primary/10 rounded-full blur-[48px] animate-[pulse_6s_ease-in-out_infinite]" />
+            <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-48 h-48 bg-purple-500/10 rounded-full blur-[48px] animate-[pulse_6s_ease-in-out_infinite]" style={{ animationDelay: '3s' }} />
+
+            <CardContent className="p-4 sm:p-5 relative z-10">
               {step === 1 && (
                 <div className="space-y-3 animate-in fade-in slide-in-from-right-4 duration-300">
                   <div>
@@ -178,13 +181,13 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                         key={s.id}
                         onClick={() => setStyle(s.id)}
                         className={cn(
-                          "p-4 rounded-xl border text-left transition-all active:scale-[0.97]",
+                          "p-4 rounded-xl border text-left transition-all duration-300 active:scale-[0.97]",
                           style === s.id
-                            ? "bg-primary/10 border-primary shadow-sm"
-                            : "bg-card border-border hover:border-primary/50"
+                            ? "bg-primary/10 border-primary shadow-[0_0_15px_-3px_var(--color-primary)] scale-[1.02] ring-1 ring-primary/20"
+                            : "bg-background/50 border-border/50 hover:border-primary/50 hover:bg-muted/50"
                         )}
                       >
-                        <p className="font-semibold text-sm">{s.label}</p>
+                        <p className={cn("font-semibold text-sm transition-colors", style === s.id ? "text-primary" : "text-foreground")}>{s.label}</p>
                         <p className="text-xs text-muted-foreground mt-0.5">{s.desc}</p>
                       </button>
                     ))}
@@ -209,10 +212,10 @@ export function LogoWizard({ onGenerate, isGenerating }: LogoWizardProps) {
                         key={p.id}
                         onClick={() => setPalette(p.id)}
                         className={cn(
-                          "p-4 rounded-xl border text-left transition-all active:scale-[0.97]",
+                          "p-4 rounded-xl border text-left transition-all duration-300 active:scale-[0.97]",
                           palette === p.id
-                            ? "border-primary shadow-sm ring-2 ring-primary/20"
-                            : "border-border hover:border-primary/50"
+                            ? "border-primary bg-primary/5 shadow-[0_0_15px_-3px_var(--color-primary)] scale-[1.02] ring-1 ring-primary/20"
+                            : "bg-background/50 border-border/50 hover:border-primary/50 hover:bg-muted/50"
                         )}
                       >
                         <div className="flex gap-1.5 mb-3">

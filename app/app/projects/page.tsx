@@ -143,22 +143,26 @@ export default function ProjectsPage() {
             </CardContent>
           </Card>
         ) : view === "grid" ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-            {filtered.map((logo) => (
-              <Card key={logo.id} className="group hover:border-primary/30 hover:shadow-lg transition-all duration-200 overflow-hidden py-0">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
+            {filtered.map((logo, index) => (
+              <Card
+                key={logo.id}
+                className="group hover:border-primary/50 transition-all duration-300 overflow-hidden py-0 hover:-translate-y-1.5 hover:shadow-[0_10px_40px_-10px_rgba(var(--primary),0.2)] bg-card/50 backdrop-blur-sm"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
                 <CardContent className="p-0">
                   <Link href={`/app/editor/${logo.id}`}>
-                    <div className="aspect-square bg-muted/50 flex items-center justify-center p-5 sm:p-8 group-hover:bg-muted/80 transition-colors">
+                    <div className="aspect-square bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center p-6 sm:p-10 group-hover:scale-105 transition-transform duration-500 rounded-t-xl overflow-hidden">
                       <div
-                        className="w-full h-full"
+                        className="w-full h-full drop-shadow-xl group-hover:drop-shadow-2xl transition-all duration-500"
                         dangerouslySetInnerHTML={{ __html: logo.svg }}
                       />
                     </div>
                   </Link>
-                  <div className="p-2.5 sm:p-3 border-t border-border/50 flex items-center justify-between">
+                  <div className="p-3 sm:p-4 border-t border-border/50 flex items-center justify-between bg-background/80 backdrop-blur-md relative z-10">
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium text-xs sm:text-sm truncate">{logo.name}</p>
-                      <p className="text-[10px] sm:text-xs text-muted-foreground">{logo.date}</p>
+                      <p className="font-semibold text-sm truncate group-hover:text-primary transition-colors">{logo.name}</p>
+                      <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5">{logo.date}</p>
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -188,28 +192,33 @@ export default function ProjectsPage() {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col gap-2.5">
-            {filtered.map((logo) => (
+          <div className="flex flex-col gap-3 sm:gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both">
+            {filtered.map((logo, index) => (
               <Link key={logo.id} href={`/app/editor/${logo.id}`}>
-                <Card className={cn(
-                  "group hover:border-primary/30 transition-all duration-200 active:scale-[0.99] py-0"
-                )}>
-                  <CardContent className="p-2.5 sm:p-3 flex items-center gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted/50 rounded-lg flex items-center justify-center p-1 sm:p-1.5 shrink-0">
+                <Card
+                  className={cn(
+                    "group hover:border-primary/50 transition-all duration-300 py-0 hover:-translate-y-1 hover:shadow-[0_8px_30px_-10px_rgba(var(--primary),0.2)] bg-card/50 backdrop-blur-sm overflow-hidden relative"
+                  )}
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <CardContent className="p-3 sm:p-4 flex items-center gap-4 sm:gap-6 relative z-10 bg-background/80 backdrop-blur-md">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-muted/50 to-muted/20 rounded-xl flex items-center justify-center p-2 sm:p-2.5 shrink-0 group-hover:scale-105 transition-transform duration-500 shadow-inner">
                       <div
-                        className="w-full h-full"
+                        className="w-full h-full drop-shadow-md group-hover:drop-shadow-lg transition-all duration-500"
                         dangerouslySetInnerHTML={{ __html: logo.svg }}
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm truncate">{logo.name}</p>
-                      <p className="text-[11px] sm:text-xs text-muted-foreground">
-                        {logo.style} · {logo.date}
+                      <p className="font-semibold text-sm sm:text-base truncate group-hover:text-primary transition-colors">{logo.name}</p>
+                      <p className="text-[11px] sm:text-xs text-muted-foreground mt-0.5 flex items-center">
+                        <span className="font-medium text-foreground/70">{logo.style}</span>
+                        <span className="mx-1.5 opacity-30">•</span>
+                        <span>{logo.date}</span>
                       </p>
                     </div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild onClick={(e) => e.preventDefault()}>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground">
                           <MoreHorizontal className="h-4 w-4" />
                           <span className="sr-only">More options</span>
                         </Button>

@@ -32,30 +32,30 @@ export default function SettingsPage() {
   return (
     <div className="flex-1 overflow-y-scroll overflow-x-hidden">
       <div className="p-3 sm:p-4 md:p-6 max-w-5xl mx-auto">
-        <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)] mb-2">
+        <h1 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-heading)] mb-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
           Settings
         </h1>
-        <Separator className="mb-6" />
+        <Separator className="mb-6 animate-in fade-in duration-700" />
 
-        <Tabs defaultValue="profile" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="profile" className="gap-1.5">
+        <Tabs defaultValue="profile" className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-150 fill-mode-both">
+          <TabsList className="bg-muted/50 backdrop-blur-md">
+            <TabsTrigger value="profile" className="gap-1.5 data-[state=active]:shadow-sm">
               <User className="h-3.5 w-3.5" />
               Profile
             </TabsTrigger>
-            <TabsTrigger value="appearance" className="gap-1.5">
+            <TabsTrigger value="appearance" className="gap-1.5 data-[state=active]:shadow-sm">
               <Sun className="h-3.5 w-3.5" />
               Appearance
             </TabsTrigger>
-            <TabsTrigger value="billing" className="gap-1.5">
+            <TabsTrigger value="billing" className="gap-1.5 data-[state=active]:shadow-sm">
               <CreditCard className="h-3.5 w-3.5" />
               Billing
             </TabsTrigger>
           </TabsList>
 
           {/* Profile Tab */}
-          <TabsContent value="profile" className="space-y-4 sm:space-y-6">
-            <Card>
+          <TabsContent value="profile" className="space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <Card className="bg-card/40 backdrop-blur-sm border-border/60 shadow-sm">
               <CardHeader>
                 <CardTitle>Profile Information</CardTitle>
                 <CardDescription>Update your name and email address</CardDescription>
@@ -67,7 +67,7 @@ export default function SettingsPage() {
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="mt-1.5"
+                    className="mt-1.5 bg-background/50 focus-visible:ring-primary/30"
                   />
                 </div>
                 <div>
@@ -77,15 +77,15 @@ export default function SettingsPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="mt-1.5"
+                    className="mt-1.5 bg-background/50 focus-visible:ring-primary/30"
                   />
                 </div>
-                <Button size="sm">Save Changes</Button>
+                <Button size="sm" className="shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all">Save Changes</Button>
               </CardContent>
             </Card>
 
             {/* Notifications */}
-            <Card>
+            <Card className="bg-card/40 backdrop-blur-sm border-border/60 shadow-sm">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Bell className="h-4 w-4 text-muted-foreground" />
@@ -104,7 +104,7 @@ export default function SettingsPage() {
                       <p className="text-sm font-medium">{item.label}</p>
                       <p className="text-xs text-muted-foreground">{item.desc}</p>
                     </div>
-                    <Switch defaultChecked className="shrink-0" />
+                    <Switch defaultChecked className="shrink-0 data-[state=checked]:bg-primary" />
                   </div>
                 ))}
               </CardContent>
@@ -112,8 +112,8 @@ export default function SettingsPage() {
           </TabsContent>
 
           {/* Appearance Tab */}
-          <TabsContent value="appearance">
-            <Card>
+          <TabsContent value="appearance" className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <Card className="bg-card/40 backdrop-blur-sm border-border/60 shadow-sm">
               <CardHeader>
                 <CardTitle>Theme</CardTitle>
                 <CardDescription>Choose your preferred color scheme</CardDescription>
@@ -125,14 +125,14 @@ export default function SettingsPage() {
                       key={opt.id}
                       onClick={() => setTheme(opt.id)}
                       className={cn(
-                        "flex flex-col items-center gap-2 p-4 rounded-xl border transition-all active:scale-[0.97]",
+                        "flex flex-col items-center gap-2 p-4 rounded-xl border transition-all duration-300 active:scale-[0.97]",
                         mounted && theme === opt.id
-                          ? "border-primary bg-primary/10 shadow-sm"
-                          : "border-border hover:border-primary/50"
+                          ? "border-primary bg-primary/10 shadow-[0_0_15px_-3px_var(--color-primary)] scale-[1.02]"
+                          : "border-border/50 bg-background/50 hover:border-primary/50 hover:bg-muted/50"
                       )}
                     >
-                      <opt.icon className="h-5 w-5" />
-                      <span className="text-sm font-medium">{opt.label}</span>
+                      <opt.icon className={cn("h-5 w-5 transition-colors duration-300", mounted && theme === opt.id ? "text-primary" : "text-muted-foreground")} />
+                      <span className={cn("text-sm font-medium transition-colors duration-300", mounted && theme === opt.id ? "text-foreground" : "text-muted-foreground")}>{opt.label}</span>
                     </button>
                   ))}
                 </div>
@@ -141,24 +141,31 @@ export default function SettingsPage() {
           </TabsContent>
 
           {/* Billing Tab */}
-          <TabsContent value="billing" className="space-y-4 sm:space-y-6">
-            <Card>
-              <CardHeader>
+          <TabsContent value="billing" className="space-y-4 sm:space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <Card className="bg-card/40 backdrop-blur-sm border-border/60 shadow-sm relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <CardHeader className="relative z-10">
                 <CardTitle>Current Plan</CardTitle>
-                <CardDescription>Manage your subscription and billing</CardDescription>
+                <CardDescription>Manage your subscription and billing details</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between gap-3 p-4 rounded-xl bg-muted/50 border border-border">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-semibold">Free Plan</p>
-                      <Badge className="bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300">Active</Badge>
+              <CardContent className="space-y-6 relative z-10">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-xl bg-background/50 border border-border/50">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className="font-semibold">Pro Plan</p>
+                      <Badge className="bg-primary/10 text-primary hover:bg-primary/20 transition-colors border-0">Active</Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-0.5">5 logos per month</p>
+                    <p className="text-sm text-muted-foreground">Unlimited logo generations & high-res exports</p>
                   </div>
-                  <Button size="sm" variant="outline" className="shrink-0">
-                    Upgrade
-                  </Button>
+                  <div className="text-left sm:text-right">
+                    <p className="font-bold text-xl">$19<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                    <p className="text-xs text-muted-foreground mt-0.5">Renews on Mar 15, 2026</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  <Button className="w-full sm:w-auto shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all">Upgrade Plan</Button>
+                  <Button variant="outline" className="w-full sm:w-auto bg-background/50 hover:bg-muted/50">Manage Billing</Button>
                 </div>
               </CardContent>
             </Card>
