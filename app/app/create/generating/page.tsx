@@ -37,7 +37,9 @@ export default function GeneratingPage() {
     }, 600)
 
     const timer = setTimeout(() => {
-      router.push("/app/editor/new")
+      // In a real app this would be the ID returned from the backend after generation
+      const mockProjectId = `proj_${Math.random().toString(36).substring(2, 9)}`
+      router.push(`/app/editor/${mockProjectId}`)
     }, 3800)
 
     return () => {

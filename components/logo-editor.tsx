@@ -30,6 +30,15 @@ import {
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
+const colorPalettes = {
+  blue: ["#3B82F6", "#1D4ED8", "#93C5FD"],
+  emerald: ["#10B981", "#047857", "#6EE7B7"],
+  amber: ["#F59E0B", "#D97706", "#FCD34D"],
+  rose: ["#F43F5E", "#BE123C", "#FDA4AF"],
+  indigo: ["#6366F1", "#4338CA", "#A5B4FC"],
+  slate: ["#334155", "#1E293B", "#94A3B8"],
+}
+
 const sampleSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
   <defs>
     <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -48,9 +57,10 @@ const sampleSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"
   <text x="200" y="340" font-family="system-ui, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">TECHFLOW</text>
 </svg>`
 
-
 export function LogoEditor() {
   const [svgContent, setSvgContent] = useState(sampleSVG)
+  const [originalSvg, setOriginalSvg] = useState(sampleSVG)
+  const [brandInfo, setBrandInfo] = useState({ name: "TECHFLOW", palette: "indigo" })
   const [command, setCommand] = useState("")
   const [isProcessing, setIsProcessing] = useState(false)
   const [lastResponse, setLastResponse] = useState("")
@@ -136,6 +146,49 @@ export function LogoEditor() {
     if (lastResponse) textareaRef.current?.focus()
   }, [lastResponse])
 
+  // On mount, load config from sessionStorage and generate base SVG
+  useEffect(() => {
+    const configStr = sessionStorage.getItem("logoConfig")
+    if (configStr) {
+      try {
+        const config = JSON.parse(configStr)
+        const name = config.brandName || "TECHFLOW"
+        // Ensure name isn't too long to break SVG (basic validation)
+        const safeName = name.length > 20 ? name.substring(0, 20) + "..." : name
+        const paletteId = config.palette || "indigo"
+
+        setBrandInfo({ name: safeName, palette: paletteId })
+
+        const colors = colorPalettes[paletteId as keyof typeof colorPalettes] || colorPalettes.indigo
+        const color1 = colors[0]
+        const color2 = colors[1]
+
+        const generatedSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:${color1};stop-opacity:1" />
+      <stop offset="100%" style="stop-color:${color2};stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="48" fill="url(#grad1)"/>
+  <g transform="translate(200,200)">
+    <polygon points="0,-80 69.3,40 -69.3,40" fill="white" opacity="0.95"/>
+    <circle cx="0" cy="0" r="28" fill="url(#grad1)"/>
+    <circle cx="0" cy="-80" r="8" fill="white" opacity="0.7"/>
+    <circle cx="69.3" cy="40" r="8" fill="white" opacity="0.7"/>
+    <circle cx="-69.3" cy="40" r="8" fill="white" opacity="0.7"/>
+  </g>
+  <text x="200" y="340" font-family="system-ui, sans-serif" font-size="36" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">${safeName.toUpperCase()}</text>
+</svg>`
+
+        setSvgContent(generatedSvg)
+        setOriginalSvg(generatedSvg)
+      } catch (e) {
+        console.error("Failed to parse logo config", e)
+      }
+    }
+  }, [])
+
   // Tự động điều chỉnh chiều cao textarea
   const adjustTextareaHeight = useCallback(() => {
     const textarea = textareaRef.current
@@ -155,30 +208,46 @@ export function LogoEditor() {
       let newSvg = svgContent
       const lower = userMsg.toLowerCase()
 
+      // Extract current active colors from the SVG to replace them dynamically
+      const colorMatch = svgContent.match(/stop-color:(#[a-fA-F0-9]{6})/g)
+
+      let currentColor1 = "#6366f1"
+      let currentColor2 = "#8b5cf6"
+
+      if (colorMatch && colorMatch.length >= 2) {
+        currentColor1 = colorMatch[0].replace("stop-color:", "")
+        currentColor2 = colorMatch[1].replace("stop-color:", "")
+      }
+
+      // Regex replace func to dynamically swap out the active pair
+      const swapColors = (c1: string, c2: string) => {
+        newSvg = newSvg.replace(new RegExp(currentColor1, 'g'), c1).replace(new RegExp(currentColor2, 'g'), c2)
+      }
+
       if (lower.includes("red") || lower.includes("warm")) {
-        newSvg = svgContent.replace(/#6366f1/g, "#ef4444").replace(/#8b5cf6/g, "#f97316")
+        swapColors("#ef4444", "#f97316")
       } else if (lower.includes("green") || lower.includes("nature")) {
-        newSvg = svgContent.replace(/#6366f1/g, "#10b981").replace(/#8b5cf6/g, "#059669")
+        swapColors("#10b981", "#059669")
       } else if (lower.includes("blue") || lower.includes("ocean")) {
-        newSvg = svgContent.replace(/#6366f1/g, "#3b82f6").replace(/#8b5cf6/g, "#2563eb")
+        swapColors("#3b82f6", "#2563eb")
       } else if (lower.includes("dark") || lower.includes("black")) {
-        newSvg = svgContent.replace(/#6366f1/g, "#1e293b").replace(/#8b5cf6/g, "#334155")
+        swapColors("#1e293b", "#334155")
       } else if (lower.includes("round") || lower.includes("circle")) {
-        newSvg = svgContent.replace(
+        newSvg = newSvg.replace(
           /<polygon[^/]*\/>/,
           '<circle cx="0" cy="0" r="65" fill="white" opacity="0.95"/>'
         )
       } else if (lower.includes("bigger") || lower.includes("larger")) {
-        newSvg = svgContent.replace(/font-size="36"/, 'font-size="44"')
+        newSvg = newSvg.replace(/font-size="\d+"/, 'font-size="44"')
       } else if (lower.includes("smaller") || lower.includes("less")) {
-        newSvg = svgContent.replace(/font-size="36"/, 'font-size="28"')
+        newSvg = newSvg.replace(/font-size="\d+"/, 'font-size="28"')
       }
 
       setSvgContent(newSvg)
       setLastResponse(
         newSvg !== svgContent
-          ? `✅ Done — "${userMsg}"`
-          : ""
+          ? `✅ Đã xong — "${userMsg}"`
+          : "Không có thay đổi nào được áp dụng. Thử yêu cầu màu sắc hoặc hình dáng mới nhé."
       )
       setIsProcessing(false)
     }, 1000)
@@ -231,7 +300,7 @@ export function LogoEditor() {
             <span className="sr-only">Trở lại dự án</span>
           </Link>
           <div className="h-4 w-px bg-border" />
-          <h1 className="text-sm font-semibold truncate">TECHFLOW Logo</h1>
+          <h1 className="text-sm font-semibold truncate">{brandInfo.name}</h1>
         </div>
         <TooltipProvider delayDuration={0}>
           <div className="flex items-center gap-1">
@@ -241,7 +310,7 @@ export function LogoEditor() {
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8 rounded-lg text-muted-foreground"
-                  onClick={() => setSvgContent(sampleSVG)}
+                  onClick={() => setSvgContent(originalSvg)}
                 >
                   <RotateCcw className="h-4 w-4" />
                   <span className="sr-only">Khôi phục</span>
