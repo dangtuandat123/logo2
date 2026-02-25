@@ -33,17 +33,13 @@ export function Hero() {
             </div>
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center z-10 w-full flex flex-col items-center">
-                <Badge className="mb-8 font-semibold gap-2 py-2 px-4 shadow-[0_0_20px_-5px_var(--color-primary)] bg-primary/10 text-primary border-primary/30 backdrop-blur-md animate-in fade-in slide-in-from-bottom-8 duration-1000">
-                    <Sparkles className="h-4 w-4" />
-                    Thiết Kế Logo Bằng AI
-                </Badge>
 
                 <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold tracking-tighter font-[family-name:var(--font-heading)] text-balance max-w-6xl mx-auto leading-[0.95] text-foreground animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200 fill-mode-both">
                     <span className="text-transparent bg-clip-text bg-gradient-to-br from-primary via-purple-500 to-pink-500 animate-gradient bg-300%">Logo</span> hoàn hảo <br className="hidden md:block" /> trong 10 giây.
                 </h1>
 
                 <p className="text-xl sm:text-2xl md:text-3xl text-muted-foreground mt-8 max-w-3xl mx-auto text-pretty leading-snug animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400 fill-mode-both font-medium">
-                    Thiết kế logo vector sắc nét, chuyên nghiệp mà không tốn hàng nghìn đô.
+                    Sắc nét. Chuyên nghiệp. Tối ưu chi phí.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-600 fill-mode-both">
