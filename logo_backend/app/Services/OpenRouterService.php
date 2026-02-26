@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Log;
 class OpenRouterService
 {
     protected $apiKey;
+    protected $model;
     protected $baseUrl = 'https://openrouter.ai/api/v1/chat/completions';
 
     public function __construct()
     {
         $this->apiKey = env('OPENROUTER_API_KEY');
+        $this->model = env('OPENROUTER_MODEL', 'google/gemini-3.1-pro-preview');
     }
 
     /**
@@ -45,7 +47,7 @@ Yêu cầu:
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Content-Type' => 'application/json',
         ])->withoutVerifying()->timeout(180)->post($this->baseUrl, [
-                    'model' => 'google/gemini-3.1-pro-preview',
+                    'model' => $this->model,
                     'messages' => [
                         [
                             'role' => 'user',
@@ -85,7 +87,7 @@ Giữ nguyên viewBox và các thành phần không bị ảnh hưởng. KHÔNG 
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Content-Type' => 'application/json',
         ])->withoutVerifying()->timeout(180)->post($this->baseUrl, [
-                    'model' => 'google/gemini-3.1-pro-preview',
+                    'model' => $this->model,
                     'messages' => [
                         [
                             'role' => 'user',
